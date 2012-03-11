@@ -1,2 +1,36 @@
+name=Generator Room;campaign=No Mercy;game=1;ID=2
+name=Gas Station;campaign=No Mercy;game=1;ID=3
+name=Hospital;campaign=No Mercy;game=1;ID=4
+name=Rooftop;campaign=No Mercy;game=1;ID=5
+name=Bridge;campaign=Crash Course;game=1;ID=6
+name=Truck Depot;campaign=Crash Course;game=1;ID=7
+name=Drains;campaign=Death Toll;game=1;ID=8
+name=Church;campaign=Death Toll;game=1;ID=9
+name=Main Street;campaign=Death Toll;game=1;ID=10
+name=Boathouse;campaign=Death Toll;game=1;ID=11
+name=Crane;campaign=Dead Air;game=1;ID=12
+name=Construction Site;campaign=Dead Air;game=1;ID=13
+name=Terminal;campaign=Dead Air;game=1;ID=14
+name=Runway;campaign=Dead Air;game=1;ID=15
+name=Warehouse;campaign=Blood Harvest;game=1;ID=16
+name=Bridge;campaign=Blood Harvest;game=1;ID=17
+name=Farmhouse;campaign=Blood Harvest;game=1;ID=18
+name=Lighthouse;campaign=Last Stand;game=1;ID=19
+name=Traincar;campaign=Sacrifice;game=1;ID=20
+name=Port;campaign=Sacrifice;game=1;ID=21
 name=Mall Atrium;campaign=Dead Center;game=2;ID=1
-name=Rooftop;campaign=No Mercy;game=1;ID=2
+name=Riverbank;campaign=The Passing;game=2;ID=22
+name=Underground;campaign=The Passing;game=2;ID=23
+name=Port;campaign=The Passing;game=2;ID=24
+name=Motel;campaign=Dark Carnival;game=2;ID=25
+name=Stadium Gate;campaign=Dark Carnival;game=2;ID=26
+name=Concert;campaign=Dark Carnival;game=2;ID=27
+name=Gator Village;campaign=Swamp Fever;game=2;ID=28
+name=Plantation;campaign=Swamp Fever;game=2;ID=29
+name=Burger Tank;campaign=Hard Rain;game=2;ID=30
+name=Sugar Mill;campaign=Hard Rain;game=2;ID=31
+name=Bus Depot;campaign=The Parish;game=2;ID=32
+name=Bridge;campaign=The Parish;game=2;ID=33
+name=Generator Room;campaign=No Mercy;game=2;ID=34
+name=Traincar;campaign=No Mercy;game=2;ID=35
+name=Port;campaign=The Sacrifice;game=2;ID=36

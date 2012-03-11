@@ -8,6 +8,7 @@ def import_list(filename, list):
 	f = open(filename, 'r')
 	lists = [ dict(item.split('=') for item in line.strip().split(';')) for line in f.readlines()]
 	list += lists
+	f.close()
 
 def export_players_list(file, players):
 	file.write('\n'.join(['name=%s;country=%s;ID=%d;aliases=%s' % (player['name'], player['country'], player['ID'], ','.join(player['aliases'])) for player in players]))
@@ -16,10 +17,10 @@ def export_maps_list(file, maps):
 	file.write('\n'.join(['name=%s;campaign=%s;game=%d;ID=%d' % (map['name'], map['campaign'], map['game'], map['ID']) for map in maps]))
 
 def export_records_list(file, records):
-	file.write('\n'.join(['ID=%d;date=%s;time=%s;map=%d;players=%s;common=%d;hunters=%d;smokers=%d;boomers=%d;tanks=%d' \
+	file.write('\n'.join(['ID=%d;date=%s;time=%02d:%02d:%02d.%02d;map=%d;players=%s;common=%d;hunters=%d;smokers=%d;boomers=%d;tanks=%d' \
 		% (record['ID'], \
 		record['date'], \
-		record['time'], \ #TODO: fix timedelta format
+		record['time'].seconds / 3600, record['time'].seconds % 3600 / 60, record['time'].seconds % 3600 % 60, record['time'].microseconds / 10000, \
 		record['map']['ID'], \
 		','.join(['%d' % player['ID'] for player in record['players']]), \
 		record['common'], \
@@ -87,6 +88,58 @@ def import_record_list(filename, records, players, maps):
 
 		record['map'] = find_id(maps, int(record['map']))
 		record['players'] = [find_id(players, p) for p in map(int, record['players'].split(','))]
+
+def import_player_list_csv(file, players):
+	label = file.readline().strip().split(',')
+	for line in map(strip, file.readlines())
+	name, country = line[0:1]
+	aliases = filter(lambda x: x != '', line[2:])
+	return create_player(players, name, country, aliases)
+
+def import_record_list_csv(file, records, players, maps):
+	# first line in the csv file is a label
+	label = file.readline().strip().split(',')
+
+	for line in file.readlines():
+		date_str, time_str, map_name, p1_str, p2_str, p3_str, p4_str, common_str, hunters_str, boomers_str, smokers_str, tanks_str = line.strip().split(',')
+
+		# find the matching mp
+		mp = [m for m in maps if m['name'] == map_name]
+		if mp == []: return 'Map %s not found' % map_name
+		else: mp = mp[0]
+
+		# get player names
+		playerlist = []
+		for name in [p1_str, p2_str, p3_str, p4_str]:
+			player = [p for p in players if p['name'] == name]
+			if player == []: return 'Player %s not found [%s]' % (name, ', '.join([p['name'] for p in players]))
+			else: playerlist.append(player[0])
+
+		# get time, date, counts
+		times = time_str.split(':')
+		time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
+
+		date = datetime.date(*map(int, date_str.split('-')))
+		common  = int(common_str)
+		hunters = int(hunters_str)
+		smokers = int(smokers_str)
+		boomers = int(boomers_str)
+		tanks   = int(tanks_str)
+		new_id = max([p['ID'] for p in records]) + 1
+
+		records.append(\
+		{\
+			'ID':new_id, \
+			'date':date, \
+			'time':time, \
+			'map':mp, \
+			'players':playerlist, \
+			'common':common, \
+			'hunters':hunters, \
+			'smokers':smokers, \
+			'boomers':boomers, \
+			'tanks':tanks \
+		})
 
 def create_player(players, name, country, aliases):
 	# check if name matches any other existing players or aliases
@@ -232,10 +285,13 @@ records = []
 import_player_list('players.txt', players)
 import_map_list('maps.txt', maps)
 import_record_list('records.txt', records, players, maps)
+f1 = open('new_records.csv', 'r')
+import_record_list_csv(f1, records, players, maps)
+f1.close()
 
-print_players(players)
-print_records(records)
-print input_new_record(records, maps, players, raw_input, sys.stdout)
+#print_players(players)
+#print_records(records)
+#print input_new_record(records, maps, players, raw_input, sys.stdout)
 print
 export_players_list(sys.stdout, players)
 print '\n'

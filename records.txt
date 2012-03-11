@@ -1,1 +1,1 @@
-ID=1;date=2012-03-09;time=17:00.00;map=1;players=1,2;common=1;hunters=1;smokers=1;boomers=1;tanks=2
+ID=1;date=2012-03-11;time=44:42.50;map=17;players=1,11,5,14;common=4154;hunters=25;smokers=67;boomers=14;tanks=57

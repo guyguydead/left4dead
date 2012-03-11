@@ -1,6 +1,14 @@
 name=guyguy;country=Canada;ID=1;aliases=GuyGuy
 name=sauce;country=Canada;ID=2;aliases=
 name=kev;country=US;ID=3;aliases=TheKevSham
-name=Domino Effect;country=Japan;ID=4;aliases=
+name=Domino Effect;country=Japan;ID=4;aliases=Domino
 name=Licksore;country=US;ID=5;aliases=
 name=Overdose;country=France;ID=6;aliases=
+name=accident;country=US;ID=7;aliases=
+name=AnGeR;country=Spain;ID=8;aliases=
+name=OK;country=US;ID=9;aliases=
+name=maniak-e/park ranger;country=US;ID=10;aliases=
+name=Lone Wolf McQuade;country=US;ID=11;aliases=
+name=aTastyCookie;country=US;ID=12;aliases=
+name=Bio Hazzard Bob;country=US;ID=13;aliases=
+name=FeO;country=US;ID=14;aliases=FeO's Ghost
