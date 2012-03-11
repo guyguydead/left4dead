@@ -1,0 +1,2 @@
+name=Mall Atrium;campaign=Dead Center;game=2;ID=1
+name=Rooftop;campaign=No Mercy;game=1;ID=2
