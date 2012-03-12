@@ -6,9 +6,15 @@ name=Licksore;country=US;ID=5;aliases=
 name=Overdose;country=France;ID=6;aliases=
 name=accident;country=US;ID=7;aliases=
 name=AnGeR;country=Spain;ID=8;aliases=
-name=OK;country=US;ID=9;aliases=
+name=OK;country=US;ID=9;aliases=ok,Mr. So
 name=maniak-e/park ranger;country=US;ID=10;aliases=
 name=Lone Wolf McQuade;country=US;ID=11;aliases=
 name=aTastyCookie;country=US;ID=12;aliases=
 name=Bio Hazzard Bob;country=US;ID=13;aliases=
 name=FeO;country=US;ID=14;aliases=FeO's Ghost
+name=Azimuth;country=Australia;ID=15;aliases=
+name=Fatty Ding Dongs;country=US;ID=16;aliases=Fatty,World War Fatty
+name=Sparkster;country=US;ID=17;aliases=[70th Blue Lions]Sparkster
+name=Maxim Hound;country=US;ID=18;aliases=
+name=mistabiswas;country=US;ID=19;aliases=
+name=Walmart Shoplifter;country=US;ID=20;aliases=

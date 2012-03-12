@@ -91,27 +91,28 @@ def import_record_list(filename, records, players, maps):
 
 def import_player_list_csv(file, players):
 	label = file.readline().strip().split(',')
-	for line in map(strip, file.readlines())
-	name, country = line[0:1]
-	aliases = filter(lambda x: x != '', line[2:])
-	return create_player(players, name, country, aliases)
+	for line in map(strip, file.readlines()):
+		name, country = line[0:1]
+		aliases = filter(lambda x: x != '', line[2:])
+		msg = create_player(players, name, country, aliases)
+		if msg != None: print msg
 
 def import_record_list_csv(file, records, players, maps):
 	# first line in the csv file is a label
 	label = file.readline().strip().split(',')
 
 	for line in file.readlines():
-		date_str, time_str, map_name, p1_str, p2_str, p3_str, p4_str, common_str, hunters_str, boomers_str, smokers_str, tanks_str = line.strip().split(',')
+		game_str, date_str, time_str, map_name, p1_str, p2_str, p3_str, p4_str, common_str, hunters_str, boomers_str, smokers_str, tanks_str = line.strip().split(',')
 
 		# find the matching mp
-		mp = [m for m in maps if m['name'] == map_name]
+		mp = [m for m in maps if m['name'] == map_name and m['game'] == int(game_str)]
 		if mp == []: return 'Map %s not found' % map_name
 		else: mp = mp[0]
 
 		# get player names
 		playerlist = []
 		for name in [p1_str, p2_str, p3_str, p4_str]:
-			player = [p for p in players if p['name'] == name]
+			player = [p for p in players if p['name'].lower() == name.lower()]
 			if player == []: return 'Player %s not found [%s]' % (name, ', '.join([p['name'] for p in players]))
 			else: playerlist.append(player[0])
 
@@ -278,24 +279,285 @@ def input_new_record(records, maps, players, in_fcn, out_stream=None):
 		'tanks':tanks \
 	})
 
+try:
+  from xml.etree import ElementTree
+except ImportError:
+  from elementtree import ElementTree
+import gdata.spreadsheet.service
+import gdata.service
+import atom.service
+import gdata.spreadsheet
+import atom
+import getopt
+import sys
+import string
+def _PrintFeed(feed):
+    for i, entry in enumerate(feed.entry):
+      if isinstance(feed, gdata.spreadsheet.SpreadsheetsCellsFeed):
+        print '%s %s\n' % (entry.title.text, entry.content.text)
+      elif isinstance(feed, gdata.spreadsheet.SpreadsheetsListFeed):
+        print '%s %s %s' % (i, entry.title.text, entry.content.text)
+        # Print this row's value for each column (the custom dictionary is
+        # built using the gsx: elements in the entry.)
+        print 'Contents:'
+        for key in entry.custom:  
+          print '  %s: %s' % (key, entry.custom[key].text) 
+        print '\n',
+      else:
+        print '%s %s\n' % (i, entry.title.text)
+
+def update_cell(gd_client, curr_key, curr_wksht_id, row, col, inputValue):
+    entry = gd_client.UpdateCell(row=row, col=col, inputValue=inputValue, 
+        key=curr_key, wksht_id=curr_wksht_id)
+    if isinstance(entry, gdata.spreadsheet.SpreadsheetsCell):
+      return 'Updated!'
+
+def export_maps_google_spreadsheet(user, pw, maps):
+	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+	gd_client.email = user
+	gd_client.password = pw
+	gd_client.ProgrammaticLogin()
+	curr_key = ''
+	curr_wksht_id = ''
+	list_feed = None
+
+	# Get the list of spreadsheets
+	feed = gd_client.GetSpreadsheetsFeed()
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_key = id_parts[len(id_parts) - 1]
+
+	# Get the list of worksheets
+	feed = gd_client.GetWorksheetsFeed(curr_key)
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_wksht_id = id_parts[len(id_parts) - 1]
+
+	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
+
+	row = 1
+	update(row, 1, 'Left 4 Dead 1 Maps'); row += 1
+	for m in [m for m in maps if m['game'] == 1]:
+		update_cell(gd_client, curr_key, curr_wksht_id, row, 1, m['name'])
+		update_cell(gd_client, curr_key, curr_wksht_id, row, 2, m['campaign'])
+		row += 1
+
+	update(row, 1, 'Left 4 Dead 2 Maps'); row += 1
+	for m in [m for m in maps if m['game'] == 2]:
+		update_cell(gd_client, curr_key, curr_wksht_id, row, 1, m['name'])
+		update_cell(gd_client, curr_key, curr_wksht_id, row, 2, m['campaign'])
+		row += 1
+
+def export_players_google_spreadsheet(user, pw, players):
+	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+	gd_client.email = user
+	gd_client.password = pw
+	gd_client.ProgrammaticLogin()
+	curr_key = ''
+	curr_wksht_id = ''
+	list_feed = None
+
+	# Get the list of spreadsheets
+	feed = gd_client.GetSpreadsheetsFeed()
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_key = id_parts[len(id_parts) - 1]
+
+	# Get the list of worksheets
+	feed = gd_client.GetWorksheetsFeed(curr_key)
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_wksht_id = id_parts[len(id_parts) - 1]
+
+	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
+
+	row = 1
+
+	col = 1
+	for label in ['name', 'country', 'aliases']:
+		update(row, col, label)
+		col += 1
+	row += 1
+
+	for player in players:
+		update(row, 1, player['name'])
+		update(row, 2, player['country'])
+		update(row, 3, ','.join(player['aliases']))
+		row += 1
+
+def export_records_google_spreadsheet(user, pw, records):
+	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+	gd_client.email = user
+	gd_client.password = pw
+	gd_client.ProgrammaticLogin()
+	curr_key = ''
+	curr_wksht_id = ''
+	list_feed = None
+
+	# Get the list of spreadsheets
+	feed = gd_client.GetSpreadsheetsFeed()
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_key = id_parts[len(id_parts) - 1]
+
+	# Get the list of worksheets
+	feed = gd_client.GetWorksheetsFeed(curr_key)
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_wksht_id = id_parts[len(id_parts) - 1]
+
+	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
+
+	row = 1
+
+	col = 1
+	for label in 'date,time,map,players,common,hunters,smokers,boomers,tanks'.split(','):
+		update(row, col, label)
+		col += 1
+	row += 1
+
+	for record in records:
+		update(row, 1, '%s' % record['date'])
+		update(row, 2, '%02d:%02d:%02d.%02d' % (record['time'].seconds / 3600, record['time'].seconds % 3600 / 60, record['time'].seconds % 3600 % 60, record['time'].microseconds / 10000))
+		update(row, 3, '%s' % record['map']['name'])
+		update(row, 4, ','.join(['%s' % player['name'] for player in record['players']]))
+		update(row, 5, '%d' % record['common'])
+		update(row, 6, '%d' % record['hunters'])
+		update(row, 7, '%d' % record['smokers'])
+		update(row, 8, '%d' % record['boomers'])
+		update(row, 9, '%d' % record['tanks'])
+		row += 1
+
+def test1():
+	players = []
+	maps = []
+	records = []
+
+	import_player_list('players.txt', players)
+	import_map_list('maps.txt', maps)
+	import_record_list('records.txt', records, players, maps)
+	f1 = open('new_records.csv', 'r')
+	import_record_list_csv(f1, records, players, maps)
+	f1.close()
+
+	#print_players(players)
+	#print_records(records)
+	#print input_new_record(records, maps, players, raw_input, sys.stdout)
+	print
+	export_players_list(sys.stdout, players)
+	print '\n'
+	export_maps_list(sys.stdout, maps)
+	print '\n'
+	export_records_list(sys.stdout, records)
+	print
+
+def export_text_google_spreadsheet(user, pw, text):
+	"""Send this function a list of lines, each line uses semicolon to separate columns"""
+	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+	gd_client.email = user
+	gd_client.password = pw
+	gd_client.ProgrammaticLogin()
+	curr_key = ''
+	curr_wksht_id = ''
+	list_feed = None
+
+	# Get the list of spreadsheets
+	feed = gd_client.GetSpreadsheetsFeed()
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_key = id_parts[len(id_parts) - 1]
+
+	# Get the list of worksheets
+	feed = gd_client.GetWorksheetsFeed(curr_key)
+	_PrintFeed(feed)
+	input = raw_input('\nSelection: ')
+	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
+	curr_wksht_id = id_parts[len(id_parts) - 1]
+
+	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
+
+	row = 1
+	for line in text:
+		col = 1
+		for phrase in line.split(';'):
+			update(row, col, phrase)
+			col += 1
+		row += 1
+
+def export_statistics_google_spreadsheet(user, pw, records, players, maps):
+	message_list = []
+
+	message_list.append('Best known times L4D1')
+	# find the top times for each map
+	for m in filter(lambda m: m['game'] == 1, maps):
+		poss_records = filter(lambda r: r['map'] == m, records)
+		if (poss_records == []):
+			message_list.append('%s;None' % (m['name']))
+		else:
+			best = max(poss_records, key = lambda r: r['time'])
+			message_list.append('%s;%02d:%02d:%02d.%02d;%s;%s;%s;%s' % (m['name'], best['time'].seconds / 3600, best['time'].seconds % 3600 / 60, best['time'].seconds % 3600 % 60, best['time'].microseconds / 10000, \
+				best['players'][0]['name'], best['players'][1]['name'], best['players'][2]['name'], best['players'][3]['name']))
+
+	message_list.append('')
+	message_list.append('Best known times L4D2')
+
+	for m in filter(lambda m: m['game'] == 2, maps):
+		poss_records = filter(lambda r: r['map'] == m, records)
+		if (poss_records == []):
+			message_list.append('%s;None' % (m['name']))
+		else:
+			best = max(poss_records, key = lambda r: r['time'])
+			message_list.append('%s;%02d:%02d:%02d.%02d' % (m['name'], best['time'] / 3600, best['time'] % 3600 / 60, best['time'] % 3600 % 60, best['time'].microseconds / 10000))
+
+	message_list.append('')
+	message_list.append('Most Tank Kills L4D1')
+	# find the top times for each map
+	for m in filter(lambda m: m['game'] == 1, maps):
+		poss_records = filter(lambda r: r['map'] == m, records)
+		if (poss_records == []):
+			message_list.append('%s;None' % (m['name']))
+		else:
+			best = max(poss_records, key = lambda r: r['tanks'])
+			message_list.append('%s;%s;%02d:%02d:%02d.%02d;%s;%s;%s;%s' % (m['name'], best['tanks'], best['time'].seconds / 3600, best['time'].seconds % 3600 / 60, best['time'].seconds % 3600 % 60, best['time'].microseconds / 10000, \
+				best['players'][0]['name'], best['players'][1]['name'], best['players'][2]['name'], best['players'][3]['name']))
+
+	message_list.append('')
+	message_list.append('Most Tank Kills L4D2')
+	# find the top times for each map
+	for m in filter(lambda m: m['game'] == 2, maps):
+		poss_records = filter(lambda r: r['map'] == m, records)
+		if (poss_records == []):
+			message_list.append('%s;None' % (m['name']))
+		else:
+			best = max(poss_records, key = lambda r: r['tanks'])
+			message_list.append('%s;%s;%02d:%02d:%02d.%02d;%s;%s;%s;%s' % (m['name'], best['tanks'], best['time'].seconds / 3600, best['time'].seconds % 3600 / 60, best['time'].seconds % 3600 % 60, best['time'].microseconds / 10000, \
+				best['players'][0]['name'], best['players'][1]['name'], best['players'][2]['name'], best['players'][3]['name']))
+
+	export_text_google_spreadsheet(user, pw, message_list)
+
 players = []
 maps = []
 records = []
-
 import_player_list('players.txt', players)
 import_map_list('maps.txt', maps)
 import_record_list('records.txt', records, players, maps)
 f1 = open('new_records.csv', 'r')
-import_record_list_csv(f1, records, players, maps)
+msg = import_record_list_csv(f1, records, players, maps)
+if msg != None: print msg
 f1.close()
 
-#print_players(players)
-#print_records(records)
-#print input_new_record(records, maps, players, raw_input, sys.stdout)
-print
-export_players_list(sys.stdout, players)
-print '\n'
-export_maps_list(sys.stdout, maps)
-print '\n'
-export_records_list(sys.stdout, records)
-print
+print_records(records)
+user = raw_input('user: ')
+pw = raw_input('pw: ')
+
+#export_maps_google_spreadsheet(user, pw, maps)
+#export_players_google_spreadsheet(user, pw, players)
+#export_records_google_spreadsheet(user, pw, records)
+export_statistics_google_spreadsheet(user, pw, records, players, maps)
