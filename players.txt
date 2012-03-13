@@ -18,3 +18,5 @@ name=Sparkster;country=US;ID=17;aliases=[70th Blue Lions]Sparkster
 name=Maxim Hound;country=US;ID=18;aliases=
 name=mistabiswas;country=US;ID=19;aliases=
 name=Walmart Shoplifter;country=US;ID=20;aliases=
+name=Reminiscence;country=Japan;ID=21;aliases=
+name=kris;country=UK;ID=22;aliases=
