@@ -3,6 +3,7 @@
 #==================================================
 import datetime
 import sys
+import re
 
 #--------------------------------------------------
 # import_list(filename, list)
@@ -160,9 +161,11 @@ def import_record_list_csv(file, records, players, maps):
 		# get player names
 		playerlist = []
 		for name in filter(lambda p: p != '', [p1_str, p2_str, p3_str, p4_str]):
-			player = [p for p in players if p['name'].lower() == name.lower()]
-			if player == []: return 'Player %s not found [%s]' % (name, ', '.join([p['name'] for p in players]))
-			else: playerlist.append(player[0])
+			player = [p for p in players if equal_name(p['name'], name) or is_alias(name, p['aliases'])]
+			if player == []:
+				return 'Player %s not found [%s]' % (name, ', '.join([p['name'] for p in players]))
+			else:
+				playerlist.append(player[0])
 
 		# get time, date, counts
 		times = time_str.split(':')
@@ -220,17 +223,22 @@ def import_record_list_csv(file, records, players, maps):
 				'tanks':tanks \
 			})
 
+def equal_name(name1, name2):
+	return re.sub(r'\s', '', name1).lower() == re.sub(r'\s', '', name2).lower()
+def is_alias(name1, aliases_list):
+	return filter(lambda n: equal_name(n, name1), aliases_list) != []
+
 #--------------------------------------------------
 # create_player(players, name, country, aliases)
 #--------------------------------------------------
 def create_player(players, name, country, aliases):
 	# check if name matches any other existing players or aliases
-	matches = filter(lambda p: p['name'] == name or name in p['aliases'], players)
+	matches = filter(lambda p: equal_name(p['name'], name) or is_alias(name, p['aliases']), players)
 	if len(matches > 0): return 'Name %s already matches a player' % name
 
 	# check if any of the aliases matches any existing players or aliases
 	for alias in aliases:
-		matches = filter(lambda p: p['name'] == alias or alias in p['aliases'], players)
+		matches = filter(lambda p: equal_name(p['name'], alias) or is_alias(alias, p['aliases']), players)
 		if len(matches > 0): return 'Alias %s already matches a player' % alias
 
 	# create a new ID by adding 1 to the maximum ID
@@ -411,90 +419,7 @@ def update_cell(gd_client, curr_key, curr_wksht_id, row, col, inputValue):
 #--------------------------------------------------
 # export_maps_google_spreadsheet(user, pw, maps)
 #--------------------------------------------------
-def export_maps_google_spreadsheet(user, pw, maps):
-	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
-	gd_client.email = user
-	gd_client.password = pw
-	gd_client.ProgrammaticLogin()
-	curr_key = ''
-	curr_wksht_id = ''
-	list_feed = None
-
-	# Get the list of spreadsheets
-	feed = gd_client.GetSpreadsheetsFeed()
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
-	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
-	curr_key = id_parts[len(id_parts) - 1]
-
-	# Get the list of worksheets
-	feed = gd_client.GetWorksheetsFeed(curr_key)
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
-	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
-	curr_wksht_id = id_parts[len(id_parts) - 1]
-
-	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
-
-	row = 1
-	update(row, 1, 'Left 4 Dead 1 Maps'); row += 1
-	for m in [m for m in maps if m['game'] == 1]:
-		update_cell(gd_client, curr_key, curr_wksht_id, row, 1, m['name'])
-		update_cell(gd_client, curr_key, curr_wksht_id, row, 2, m['campaign'])
-		row += 1
-
-	update(row, 1, 'Left 4 Dead 2 Maps'); row += 1
-	for m in [m for m in maps if m['game'] == 2]:
-		update_cell(gd_client, curr_key, curr_wksht_id, row, 1, m['name'])
-		update_cell(gd_client, curr_key, curr_wksht_id, row, 2, m['campaign'])
-		row += 1
-
-#--------------------------------------------------
-# export_players_google_spreadsheet(user, pw, players)
-#--------------------------------------------------
-def export_players_google_spreadsheet(user, pw, players):
-	gd_client = gdata.spreadsheet.service.SpreadsheetsService()
-	gd_client.email = user
-	gd_client.password = pw
-	gd_client.ProgrammaticLogin()
-	curr_key = ''
-	curr_wksht_id = ''
-	list_feed = None
-
-	# Get the list of spreadsheets
-	feed = gd_client.GetSpreadsheetsFeed()
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
-	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
-	curr_key = id_parts[len(id_parts) - 1]
-
-	# Get the list of worksheets
-	feed = gd_client.GetWorksheetsFeed(curr_key)
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
-	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
-	curr_wksht_id = id_parts[len(id_parts) - 1]
-
-	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
-
-	row = 1
-
-	col = 1
-	for label in ['name', 'country', 'aliases']:
-		update(row, col, label)
-		col += 1
-	row += 1
-
-	for player in players:
-		update(row, 1, player['name'])
-		update(row, 2, player['country'])
-		update(row, 3, ','.join(player['aliases']))
-		row += 1
-
-#--------------------------------------------------
-# export_records_google_spreadsheet(records, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None)
-#--------------------------------------------------
-def export_records_google_spreadsheet(records, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None):
+def export_maps_google_spreadsheet(user, pw, maps, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	if gd_client == None:
 		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
 		gd_client.email = user
@@ -510,42 +435,79 @@ def export_records_google_spreadsheet(records, user = None, pw = None, gd_client
 	if curr_wksht_id == None:
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
+	message_list = []
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
-	row = 1
+	for game in [1, 2]:
+		message_list.append('Left 4 Dead %d Maps' % game)
+		message_list += ['%s;%s' % (m['campaign'], m['name']) for m in filter(lambda m: m['game'] == game, maps)]
+		if game == 1: message_list.append('')
 
-	col = 1
-	for label in 'date,time,map,players,common,hunters,smokers,boomers,tanks'.split(','):
-		update(row, col, label)
-		col += 1
-	row += 1
+	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose=verbose)
 
-	for record in filter(lambda r: r['map']['game'] == 1, records):
-		update(row, 1, '%s' % record['date'])
-		update(row, 2, '%02d:%02d:%02d.%02d' % (record['time'].seconds / 3600, record['time'].seconds % 3600 / 60, record['time'].seconds % 3600 % 60, record['time'].microseconds / 10000))
-		update(row, 3, '%s' % record['map']['name'])
-		update(row, 4, ','.join(['%s' % player['name'] for player in record['players']]))
-		update(row, 5, '%d' % record['common'])
-		update(row, 6, '%d' % record['hunters'])
-		update(row, 7, '%d' % record['smokers'])
-		update(row, 8, '%d' % record['boomers'])
-		update(row, 9, '%d' % record['tanks'])
-		row += 1
+#--------------------------------------------------
+# export_players_google_spreadsheet(user, pw, players)
+#--------------------------------------------------
+def export_players_google_spreadsheet(user, pw, players, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
+	if gd_client == None:
+		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+		gd_client.email = user
+		gd_client.password = pw
+		gd_client.ProgrammaticLogin()
+	list_feed = None
 
-	for record in filter(lambda r: r['map']['game'] == 2, records):
-		update(row, 1, '%s' % record['date'])
-		update(row, 2, '%02d:%02d:%02d.%02d' % (record['time'].seconds / 3600, record['time'].seconds % 3600 / 60, record['time'].seconds % 3600 % 60, record['time'].microseconds / 10000))
-		update(row, 3, '%s' % record['map']['name'])
-		update(row, 4, ','.join(['%s' % player['name'] for player in record['players']]))
-		update(row, 5, '%d' % record['common'])
-		update(row, 6, '%d' % record['hunters'])
-		update(row, 7, '%d' % record['smokers'])
-		update(row, 8, '%d' % record['boomers'])
-		update(row, 9, '%d' % record['chargers'])
-		update(row, 10, '%d' % record['spitters'])
-		update(row, 11, '%d' % record['jockeys'])
-		update(row, 12, '%d' % record['tanks'])
-		row += 1
+	# Get the list of spreadsheets
+	if curr_key == None:
+		curr_key = get_key(gd_client)
+
+	# Get the list of worksheets
+	if curr_wksht_id == None:
+		curr_wksht_id = get_wksht(gd_client, curr_key)
+
+	message_list = []
+	message_list.append('name;country;aliases')
+	message_list += ['%s;%s;%s' % (m['name'], m['country'], ', '.join(m['aliases'])) for m in players]
+
+	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
+
+#--------------------------------------------------
+# export_records_google_spreadsheet(records, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None)
+#--------------------------------------------------
+def export_records_google_spreadsheet(records, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
+	if gd_client == None:
+		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+		gd_client.email = user
+		gd_client.password = pw
+		gd_client.ProgrammaticLogin()
+	list_feed = None
+
+	# Get the list of spreadsheets
+	if curr_key == None:
+		curr_key = get_key(gd_client)
+
+	# Get the list of worksheets
+	if curr_wksht_id == None:
+		curr_wksht_id = get_wksht(gd_client, curr_key)
+
+	message_list = []
+	message_list.append('Left 4 Dead 1')
+	message_list.append('date;time;map;players;common;hunters;smokers;boomers;tanks')
+
+	message_list += [ \
+		'%s;%s;%s;%s;%d;%d;%d;%d;%d' % \
+		(r['date'], format_time(r['time']), r['map']['name'], ','.join(['%s' % player['name'] for player in r['players']]), r['common'], r['hunters'], r['smokers'], r['boomers'], r['tanks']) \
+		for r in filter(lambda r: r['map']['game'] == 1, records)]
+
+	message_list.append('')
+	message_list.append('Left 4 Dead 2')
+	message_list.append('date;time;map;players;common;hunters;smokers;boomers;chargers;spitters;jockeys;tanks')
+
+	message_list += [ \
+		'%s;%s;%s;%s;%d;%d;%d;%d;%d;%d;%d;%d' % \
+		(r['date'], format_time(r['time']), r['map']['name'], ','.join(['%s' % player['name'] for player in r['players']]), r['common'], r['hunters'], r['smokers'], r['boomers'], r['chargers'], r['spitters'], r['jockeys'], r['tanks']) \
+		for r in filter(lambda r: r['map']['game'] == 2, records)]
+
+	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
 
 #--------------------------------------------------
 # test1()
@@ -618,7 +580,7 @@ def find(f, seq):
 #--------------------------------------------------
 # export_batch_text_google_spreadsheet(user, pw, text)
 #--------------------------------------------------
-def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_key = None, curr_wksht_id = None):
+def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_key = None, curr_wksht_id = None, remove_extra_text = True, verbose = False):
 	"""Send this function a list of lines, each line uses semicolon to separate columns"""
 	if gd_client == None:
 		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
@@ -639,19 +601,40 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	batchRequest = gdata.spreadsheet.SpreadsheetsCellsFeed()
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
+	batch_count = 0
 	single_update_list = []
 	for i,r in enumerate(text):
 		for j,c in enumerate(r.split(';')):
-			entry = find(lambda entry: int(entry.cell.row) == i+1 and int(entry.cell.col) == j+1, cells.entry)
+			entry = find(lambda entry: entry != None and int(entry.cell.row) == i+1 and int(entry.cell.col) == j+1, cells.entry)
 			if entry != None:
-				entry.cell.inputValue = c
-				batchRequest.AddUpdate(entry)
+				if entry.cell.text.strip() != c:
+					entry.cell.text = c
+					entry.cell.inputValue = c
+					batchRequest.AddUpdate(entry)
+					batch_count += 1
 			else:
 				single_update_list.append((i+1, j+1, c))
 
+	if remove_extra_text == True:
+		row_list = []
+		for i,r in enumerate(text):
+			for j,c in enumerate(r.split(';')):
+				row_list.append((i+1, j+1))
+
+		for entry in cells.entry:
+			if not (int(entry.cell.row), int(entry.cell.col)) in row_list and entry.cell.text.strip() != '':
+				entry.cell.inputValue = ''
+				batch_count += 1
+				batchRequest.AddUpdate(entry)
+
+	if verbose == True:
+		print '   batch update %d cells...' % (batch_count)
+	updated = gd_client.ExecuteBatch(batchRequest, cells.GetBatchLink().href)
+
+	if verbose == True:
+		print '   single update %d cells...' % (len(single_update_list))
 	for (r, c, v) in single_update_list:
 		update(r,c,v)
-
 
 def kill_factor(record):
 	"""average SI kills per minute"""
@@ -720,18 +703,20 @@ def export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
 def gen_statistics(records, players, maps, factor, n = 1):
 	return [(m, sorted(filter(lambda r: r['map'] == m, records), key = factor, reverse = True)[0:n]) for m in maps]
 
-def get_key(gd_client):
+def get_key(gd_client, prompt = True, input = None):
 	feed = gd_client.GetSpreadsheetsFeed()
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
+	if prompt == True:
+		_PrintFeed(feed)
+		input = raw_input('\nSelection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_key = id_parts[len(id_parts) - 1]
 	return curr_key
 
-def get_wksht(gd_client, curr_key):
+def get_wksht(gd_client, curr_key, prompt = True, input = None):
 	feed = gd_client.GetWorksheetsFeed(curr_key)
-	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
+	if prompt == True:
+		_PrintFeed(feed)
+		input = raw_input('\nSelection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_wksht_id = id_parts[len(id_parts) - 1]
 	return curr_wksht_id
@@ -739,7 +724,52 @@ def get_wksht(gd_client, curr_key):
 def format_time(t):
 	return '%02d:%02d:%02d.%02d' % (t.seconds / 3600, t.seconds % 3600 / 60, t.seconds % 3600 % 60, t.microseconds / 10000)
 
-def export_stats_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None):
+#--------------------------------------------------
+# export_stats_top10_google_spreadsheet
+#--------------------------------------------------
+def export_stats_top10_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
+	if gd_client == None:
+		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+		gd_client.email = user
+		gd_client.password = pw
+		gd_client.ProgrammaticLogin()
+	list_feed = None
+
+	# Get the list of spreadsheets
+	if curr_key == None:
+		curr_key = get_key(gd_client)
+
+	# Get the list of worksheets
+	if curr_wksht_id == None:
+		curr_wksht_id = get_wksht(gd_client, curr_key)
+
+	message_list = []
+
+	# get top times
+	def add_stat_message_list(label, fcn, more_info = '', add_stat = False):
+		stats = gen_statistics(records, players, maps, factor = fcn, n = 10)
+		for game in [1, 2]:
+			message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
+			for (m, rlist) in filter(lambda s: s[0]['game'] == game, stats):
+				message_list.append(m['name'])
+				for i,rec in enumerate(rlist):
+					if add_stat == True:
+						message_list.append('%d:;%s;%s;%s' % (i+1, fcn(rec), format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
+					else:
+						message_list.append('%d:;%s;%s' % (i+1, format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
+				for index in range(len(rlist) + 1, 11):
+					message_list.append('%d:;None' % (index))
+				message_list.append('')
+
+	add_stat_message_list('Time', lambda r: r['time'])
+	add_stat_message_list('Kill Factor', kill_factor, add_stat = True, more_info='avg SI kills/min')
+	#print '\n'.join(message_list)
+	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose=verbose)
+
+#--------------------------------------------------
+# export_stats_google_spreadsheet
+#--------------------------------------------------
+def export_stats_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	if gd_client == None:
 		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
 		gd_client.email = user
@@ -779,8 +809,31 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 	add_stat_message_list('Gore Factor', gore_factor, add_stat = True, more_info='total SI kills')
 	add_stat_message_list('Trash Factor', trash_factor, add_stat = True, more_info='total SI kills/min')
 	add_stat_message_list('Common Kills', lambda r: r['common'], add_stat = True, more_info='')
-	print '\n'.join(message_list)
-	export_batch_text_google_spreadsheet(user, pw, message_list)
+	#print '\n'.join(message_list)
+	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose)
+
+def test2():
+	players = []
+	maps = []
+	records = []
+	import_player_list('players.txt', players)
+	import_map_list('maps.txt', maps)
+	import_record_list('records.txt', records, players, maps)
+	f1 = open('new_records.csv', 'r')
+	msg = import_record_list_csv(f1, records, players, maps)
+	if msg != None: print msg
+	f1.close()
+
+	print_records(records)
+	user = raw_input('user: ')
+	pw = raw_input('pw: ')
+
+	#export_maps_google_spreadsheet(user, pw, maps)
+	#export_players_google_spreadsheet(user, pw, players)
+	#export_records_google_spreadsheet(user=user, pw=pw, records=records)
+	#export_stats_google_spreadsheet(user=user, pw=pw, records=records, players=players, maps=maps)
+	export_stats_top10_google_spreadsheet(records, players, maps, user = user, pw = pw, gd_client = None, curr_key = None, curr_wksht_id = None)
+	#export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
 
 players = []
 maps = []
@@ -793,12 +846,41 @@ msg = import_record_list_csv(f1, records, players, maps)
 if msg != None: print msg
 f1.close()
 
-print_records(records)
 user = raw_input('user: ')
 pw = raw_input('pw: ')
 
-#export_maps_google_spreadsheet(user, pw, maps)
-#export_players_google_spreadsheet(user, pw, players)
-#export_records_google_spreadsheet(user=user, pw=pw, records=records)
-export_stats_google_spreadsheet(user=user, pw=pw, records=records, players=players, maps=maps)
-#export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
+gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+gd_client.email = user
+gd_client.password = pw
+gd_client.ProgrammaticLogin()
+
+
+if raw_input('default spreadsheet and worksheet values? y/n: ') == 'y':
+	curr_key = get_key(gd_client, prompt=False, input='0')
+	maps_wksht = get_wksht(gd_client, curr_key, prompt=False, input='0')
+	player_wksht = get_wksht(gd_client, curr_key, prompt=False, input='1')
+	records_wksht = get_wksht(gd_client, curr_key, prompt=False, input='2')
+	stats_wksht = get_wksht(gd_client, curr_key, prompt=False, input='3')
+	top10_wksht = get_wksht(gd_client, curr_key, prompt=False, input='4')
+else:
+	curr_key = get_key(gd_client)
+	feed = gd_client.GetWorksheetsFeed(curr_key)
+	_PrintFeed(feed)
+
+	maps_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('maps wksht: '))
+	player_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('player wksht: '))
+	records_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('records wksht: '))
+	stats_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('stats wksht: '))
+	top10_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('top10 wksht: '))
+
+verbose = True
+print 'updating maps'
+export_maps_google_spreadsheet(user, pw, maps, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=maps_wksht, verbose = verbose)
+print 'updating players'
+export_players_google_spreadsheet(user, pw, players, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=player_wksht, verbose = verbose)
+print 'updating records'
+export_records_google_spreadsheet(user=user, pw=pw, records=records, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=records_wksht, verbose = verbose)
+print 'updating stats'
+export_stats_google_spreadsheet(user=user, pw=pw, records=records, players=players, maps=maps, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=stats_wksht, verbose = verbose)
+print 'updating top10'
+export_stats_top10_google_spreadsheet(records, players, maps, user = user, pw = pw, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=top10_wksht, verbose = verbose)

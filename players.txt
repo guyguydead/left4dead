@@ -1,22 +1,26 @@
 name=guyguy;country=Canada;ID=1;aliases=GuyGuy
 name=sauce;country=Canada;ID=2;aliases=
-name=kev;country=US;ID=3;aliases=TheKevSham
-name=Domino Effect;country=Japan;ID=4;aliases=Domino
+name=Kev;country=US;ID=3;aliases=TheKevSham
+name=Domino;country=Japan;ID=4;aliases=Domino Effect
 name=Licksore;country=US;ID=5;aliases=
 name=Overdose;country=France;ID=6;aliases=
 name=accident;country=US;ID=7;aliases=
 name=AnGeR;country=Spain;ID=8;aliases=
 name=OK;country=US;ID=9;aliases=ok,Mr. So
-name=maniak-e/park ranger;country=US;ID=10;aliases=
-name=Lone Wolf McQuade;country=US;ID=11;aliases=
+name=maniak;country=US;ID=10;aliases=maniak-e/park ranger
+name=Wolf;country=US;ID=11;aliases=Lone Wolf McQuade
 name=aTastyCookie;country=US;ID=12;aliases=
-name=Bio Hazzard Bob;country=US;ID=13;aliases=
+name=Bob;country=US;ID=13;aliases=Bio Hazzard Bob
 name=FeO;country=US;ID=14;aliases=FeO's Ghost
 name=Azimuth;country=Australia;ID=15;aliases=
-name=Fatty Ding Dongs;country=US;ID=16;aliases=Fatty,World War Fatty
+name=Fatty;country=US;ID=16;aliases=Fatty Ding Dongs,World War Fatty
 name=Sparkster;country=US;ID=17;aliases=[70th Blue Lions]Sparkster
 name=Maxim Hound;country=US;ID=18;aliases=
 name=mistabiswas;country=US;ID=19;aliases=
-name=Walmart Shoplifter;country=US;ID=20;aliases=
+name=Walmart;country=US;ID=20;aliases=Walmart Shoplifter
 name=Reminiscence;country=Japan;ID=21;aliases=
 name=kris;country=UK;ID=22;aliases=
+name=MudFlap;country=US;ID=23;aliases=[WDF] MudFlap
+name=sLeeK;country=US;ID=24;aliases=
+name=zeano;country=France;ID=25;aliases=
+name=Karl;country=UK;ID=26;aliases=Karl Pilkington
