@@ -24,3 +24,11 @@ name=MudFlap;country=US;ID=23;aliases=[WDF] MudFlap
 name=sLeeK;country=US;ID=24;aliases=
 name=zeano;country=France;ID=25;aliases=
 name=Karl;country=UK;ID=26;aliases=Karl Pilkington
+name=trash;country=New Zealand;ID=27;aliases=trash4cash
+name=Adept;country=Latvia;ID=28;aliases=
+name=OSwald BB;country=France;ID=29;aliases=
+name=Snookray;country=UK;ID=30;aliases=
+name=Spoon;country=Germany;ID=31;aliases=That guy with the Spoon
+name=Jumpin' Jack;country=Australia;ID=32;aliases=Jumpin' Jack Flash
+name=phoenix;country=Australia;ID=33;aliases=phoenix_advance
+name=WaRLo;country=Australia;ID=34;aliases=
