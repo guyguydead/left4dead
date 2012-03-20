@@ -83,6 +83,14 @@ def print_records(records):
 		print "%10s: %s" % ("players", ", ".join([p['name'] for p in record['players']]))
 
 #--------------------------------------------------
+# import_groups_list(filename, groups)
+#--------------------------------------------------
+def import_groups_list(filename, groups):
+	import_list(filename, groups)
+	for group in groups:
+		group['ID'] = int(group['ID'])
+
+#--------------------------------------------------
 # import_player_list(filename, players)
 #--------------------------------------------------
 def import_player_list(filename, players):
@@ -310,6 +318,50 @@ def create_player(players, name, country, aliases):
 	return None
 
 #--------------------------------------------------
+# edit_player(players, name, country, aliases)
+#--------------------------------------------------
+def edit_player(players, name, country, aliases, change_country, change_aliases):
+	# find the existing player with the matching name
+	matches = filter(lambda p: equal_name(p['name'], name) or is_alias(name, p['aliases']), players)
+	if len(matches) == 0: return 'Player %s not found' % name
+
+	player = matches[0]
+
+	if change_aliases:
+		# check if any of the aliases matches any existing players or aliases
+		for alias in aliases:
+			matches = filter(lambda p: p is not player and (equal_name(p['name'], alias) or is_alias(alias, p['aliases'])), players)
+			if len(matches) > 0: return 'Alias %s already matches a player' % alias
+
+		# change the aliases
+		player['aliases'] = aliases
+
+	if change_country:
+		# change the country
+		player['country'] = country
+	return None
+
+#--------------------------------------------------
+# edit_player_name(players, name, country, aliases)
+#--------------------------------------------------
+def edit_player_name(players, name, aliases):
+	player = None
+	for alias in aliases:
+		matches = filter(lambda p: (equal_name(p['name'], alias) or is_alias(alias, p['aliases'])), players)
+		if len(matches) > 0: player = matches[0]
+
+	if player == None:
+		return 'None of the aliases provided match a player'
+
+	# check if name matches any other existing players or aliases
+	matches = filter(lambda p: p is not player and (equal_name(p['name'], name) or is_alias(name, p['aliases'])), players)
+	if len(matches) > 0: return 'Name %s already matches a player' % name
+
+	player['name'] = name
+
+	return None
+
+#--------------------------------------------------
 # create_map(maps, name, campaign, game)
 #--------------------------------------------------
 def create_map(maps, name, campaign, game):
@@ -322,7 +374,7 @@ def create_map(maps, name, campaign, game):
 	return None
 
 #--------------------------------------------------
-# create_record(players, maps, records, date, time, mapID, plyrsID, common, hunters, smokers, boomers, tanks)
+# create_record_from_strings(players, maps, records, date, time, mapID, plyrsID, common, hunters, smokers, boomers, tanks)
 #--------------------------------------------------
 def create_record_from_strings(game, players, maps, records, date, time, m, plyrs, common, hunters, smokers, boomers, tanks, chargers = '', spitters = '', jockeys = ''):
 	"""Creates a new record, checking for any inconsistencies. This function will return None if successful and return an error message if record creation failed. All arguments should be strings.
@@ -358,9 +410,18 @@ def create_record_from_strings(game, players, maps, records, date, time, m, plyr
 
 	# get time, date, counts
 	times = time.split(':')
-	try:
-		time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
-	except (TypeError, ValueError):
+
+	if len(times) == 3:
+		try:
+			time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	elif len(times) == 2:
+		try:
+			time = datetime.timedelta(minutes = int(times[0]), seconds = int(times[1].split('.')[0]), milliseconds = 10 * int(times[1].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	else:
 		return 'time is in an invalid format'
 
 	date_arr = date.split('-')
@@ -380,40 +441,44 @@ def create_record_from_strings(game, players, maps, records, date, time, m, plyr
 		# error, duplicate
 		return 'A record with same date and time already exists'
 
+	# also make sure there are no exact duplicate players time, and maps
+	if (time, set([p['name'] for p in playerlist]), mp['name']) in [(r['time'], set([p['name'] for p in r['players']]), r['map']['name']) for r in records]:
+		return 'There is already a duplicate time, playerlist, and map.'
+
 	try:
 		common  = int(common)
-	except TypeError:
+	except (TypeError, ValueError):
 		return 'common is invalid number'
 	try:
 		hunters = int(hunters)
-	except TypeError:
+	except (TypeError, ValueError):
 		return 'hunters is invalid number'
 	try:
 		smokers = int(smokers)
-	except TypeError:
+	except (TypeError, ValueError):
 		return 'smokers is invalid number'
 	try:
 		boomers = int(boomers)
-	except TypeError:
+	except (TypeError, ValueError):
 		return 'boomers is invalid number'
 	try:
 		tanks   = int(tanks)
-	except TypeError:
+	except (TypeError, ValueError):
 		return 'tanks is invalid number'
 	new_id = max([p['ID'] for p in records]) + 1
 
 	if game == 2:
 		try:
 			chargers = int(chargers)
-		except TypeError:
+		except (TypeError, ValueError):
 			return 'chargers is invalid number'
 		try:
 			jockeys = int(jockeys)
-		except TypeError:
+		except (TypeError, ValueError):
 			return 'jockeys is invalid number'
 		try:
 			spitters = int(spitters)
-		except TypeError:
+		except (TypeError, ValueError):
 			return 'spitters is invalid number'
 
 	if game == 1:
@@ -447,6 +512,205 @@ def create_record_from_strings(game, players, maps, records, date, time, m, plyr
 			'spitters':spitters, \
 			'tanks':tanks \
 		})
+	return None
+
+def edit_record_time_from_strings(players, maps, records, date, time, m, plyrs):
+	date_arr = date.split('-')
+	if len(date_arr) != 3:
+		return 'date is in an invalid format'
+	try:
+		year = int(date_arr[0])
+		month = int(date_arr[1])
+		day = int(date_arr[2])
+		date = datetime.date(year, month, day)
+	except (TypeError, ValueError):
+		return 'date is in an invalid format'
+
+	map_name = m
+	# find the matching map
+	mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+	if mp == []: return 'Map %s not found' % map_name
+	else: mp = mp[0]
+
+	# get player names
+	playerlist = []
+	for name in filter(lambda p: p.strip() != '', plyrs.split(',')):
+		player = [p for p in players if equal_name(p['name'], name) or is_alias(name, p['aliases'])]
+		if player == []:
+			return 'Player %s not found [%s]' % (name, plyrs)
+		else:
+			playerlist.append(player[0])
+
+	# find the record with matching date, map, and players
+	matching_records = filter(lambda r: (date, mp, set([p['name'] for p in playerlist])) == (r['date'], r['map'], set([p['name'] for p in r['players']])), records)
+	if matching_records == []:
+		return 'No matching records found with matching players, date %s and map %s' % (date, mp['name'])
+
+	record = matching_records[0]
+
+	times = time.split(':')
+
+	if len(times) == 3:
+		try:
+			time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	elif len(times) == 2:
+		try:
+			time = datetime.timedelta(minutes = int(times[0]), seconds = int(times[1].split('.')[0]), milliseconds = 10 * int(times[1].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	else:
+		return 'time is in an invalid format'
+
+	record['time'] = time
+
+	return None
+
+def edit_record_date_from_strings(players, maps, records, date, time, m, plyrs):
+	# get time, date, counts
+	times = time.split(':')
+
+	if len(times) == 3:
+		try:
+			time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	elif len(times) == 2:
+		try:
+			time = datetime.timedelta(minutes = int(times[0]), seconds = int(times[1].split('.')[0]), milliseconds = 10 * int(times[1].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	else:
+		return 'time is in an invalid format'
+	map_name = m
+
+	# find the matching map
+	mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+	if mp == []: return 'Map %s not found' % map_name
+	else: mp = mp[0]
+
+	# get player names
+	playerlist = []
+	for name in filter(lambda p: p.strip() != '', plyrs.split(',')):
+		player = [p for p in players if equal_name(p['name'], name) or is_alias(name, p['aliases'])]
+		if player == []:
+			return 'Player %s not found [%s]' % (name, plyrs)
+		else:
+			playerlist.append(player[0])
+
+	# find the record with matching time, map, and players
+	matching_records = filter(lambda r: (time, mp, set([p['name'] for p in playerlist])) == (r['date'], r['map'], set([p['name'] for p in r['players']])), records)
+	if matching_records == []:
+		return 'No matching records found with matching players, date %s and map %s' % (date, mp['name'])
+
+	date_arr = date.split('-')
+	if len(date_arr) != 3:
+		return 'date is in an invalid format'
+	try:
+		year = int(date_arr[0])
+		month = int(date_arr[1])
+		day = int(date_arr[2])
+		date = datetime.date(year, month, day)
+	except (TypeError, ValueError):
+		return 'date is in an invalid format'
+	record['date'] = date
+
+#--------------------------------------------------
+# edit_record_from_strings(players, maps, records, date, time, mapID, plyrsID, common, hunters, smokers, boomers, tanks)
+#--------------------------------------------------
+def edit_record_from_strings(game, players, maps, records, date, time, m, plyrs, common, hunters, smokers, boomers, tanks, chargers = '', spitters = '', jockeys = '', edit_players = True, edit_counts = True, edit_map = True):
+
+	times = time.split(':')
+
+	if len(times) == 3:
+		try:
+			time = datetime.timedelta(hours = int(times[0]), minutes = int(times[1]), seconds = int(times[2].split('.')[0]), milliseconds = 10 * int(times[2].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	elif len(times) == 2:
+		try:
+			time = datetime.timedelta(minutes = int(times[0]), seconds = int(times[1].split('.')[0]), milliseconds = 10 * int(times[1].split('.')[1]))
+		except (TypeError, ValueError, IndexError):
+			return 'time is in an invalid format'
+	else:
+		return 'time is in an invalid format'
+
+	date_arr = date.split('-')
+	if len(date_arr) != 3:
+		return 'date is in an invalid format'
+	try:
+		year = int(date_arr[0])
+		month = int(date_arr[1])
+		day = int(date_arr[2])
+		date = datetime.date(year, month, day)
+	except (TypeError, ValueError):
+		return 'date is in an invalid format'
+
+
+	# find the record with matching time and date
+	matching_records = filter(lambda r: (date, time) == (r['date'], r['time']), records)
+	if matching_records == []:
+		return 'No matching records found with date %s and time %s' % (date, format_time(time))
+
+	record = matching_records[0]
+
+	if edit_map == True:
+		map_name = m
+		# find the matching map
+		mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+		if mp == []: return 'Map %s not found' % map_name
+
+		record['map'] = mp[0]
+
+	if edit_players == True:
+		# get player names
+		playerlist = []
+		for name in filter(lambda p: p.strip() != '', plyrs.split(',')):
+			player = [p for p in players if equal_name(p['name'], name) or is_alias(name, p['aliases'])]
+			if player == []:
+				return 'Player %s not found [%s]' % (name, plyrs)
+			else:
+				playerlist.append(player[0])
+		record['players'] = playerlist
+
+
+	if edit_counts == True:
+		try:
+			record['common']  = int(common)
+		except (TypeError, ValueError):
+			return 'common is invalid number'
+		try:
+			record['hunters'] = int(hunters)
+		except (TypeError, ValueError):
+			return 'hunters is invalid number'
+		try:
+			record['smokers'] = int(smokers)
+		except (TypeError, ValueError):
+			return 'smokers is invalid number'
+		try:
+			record['boomers'] = int(boomers)
+		except (TypeError, ValueError):
+			return 'boomers is invalid number'
+		try:
+			record['tanks']   = int(tanks)
+		except (TypeError, ValueError):
+			return 'tanks is invalid number'
+		new_id = max([p['ID'] for p in records]) + 1
+
+		if game == 2:
+			try:
+				record['chargers'] = int(chargers)
+			except (TypeError, ValueError):
+				return 'chargers is invalid number'
+			try:
+				record['jockeys'] = int(jockeys)
+			except (TypeError, ValueError):
+				return 'jockeys is invalid number'
+			try:
+				record['spitters'] = int(spitters)
+			except (TypeError, ValueError):
+				return 'spitters is invalid number'
 	return None
 
 #--------------------------------------------------
@@ -627,7 +891,7 @@ def export_maps_google_spreadsheet(user, pw, maps, gd_client = None, curr_key = 
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
 	message_list = []
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
+	#message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
 	for game in [1, 2]:
@@ -636,6 +900,22 @@ def export_maps_google_spreadsheet(user, pw, maps, gd_client = None, curr_key = 
 		if game == 1: message_list.append('')
 
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose=verbose)
+
+#--------------------------------------------------
+# export_groups_google_spreadsheet(user, pw, groups)
+#--------------------------------------------------
+def export_groups_google_spreadsheet(user, pw, groups):
+
+	message_list = []
+
+	# remove all dictionary entries where the type is missing
+	gs = filter(lambda g: 'type' in g, groups)
+
+	message_list.append('name;description')
+	for g in filter(lambda g: g['type'] == 'gamemode', gs):
+		message_list.append('%s;%s' % (g['name'], g['description']))
+
+def export_players_google_spreadsheet(user, pw, players, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 
 #--------------------------------------------------
 # export_players_google_spreadsheet(user, pw, players)
@@ -657,9 +937,9 @@ def export_players_google_spreadsheet(user, pw, players, gd_client = None, curr_
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
 	message_list = []
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	message_list.append('name;country;aliases')
-	message_list += ['%s;%s;%s' % (m['name'], m['country'], ', '.join(m['aliases'])) for m in players]
+	message_list += ['%s;%s;%s' % (m['name'], m['country'], ', '.join(m['aliases'])) for m in sorted(players, key = lambda p: p['name'].lower())]
+	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
 
@@ -683,24 +963,36 @@ def export_records_google_spreadsheet(records, user = None, pw = None, gd_client
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
 	message_list = []
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
-	message_list.append('Left 4 Dead 1')
+	message_list.append('Left 4 Dead 1;%d games recorded' % len(filter(lambda r: r['map']['game'] == 1, records)))
 	message_list.append('date;time;map;players;common;hunters;smokers;boomers;tanks')
 
-	message_list += [ \
+	message_list += \
+	[ \
 		'%s;%s;%s;%s;%d;%d;%d;%d;%d' % \
-		(r['date'], format_time(r['time']), r['map']['name'], ','.join(['%s' % player['name'] for player in r['players']]), r['common'], r['hunters'], r['smokers'], r['boomers'], r['tanks']) \
-		for r in filter(lambda r: r['map']['game'] == 1, records)]
+		( \
+			r['date'], \
+			format_time(r['time']), \
+			r['map']['name'], \
+			', '.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]), \
+			r['common'], \
+			r['hunters'], \
+			r['smokers'], \
+			r['boomers'], \
+			r['tanks'] \
+		) \
+		for r in sorted(filter(lambda r: r['map']['game'] == 1, records), key = lambda r: r['date']) \
+	]
 
 	message_list.append('')
-	message_list.append('Left 4 Dead 2')
+	message_list.append('Left 4 Dead 2;%d games recorded' % len(filter(lambda r: r['map']['game'] == 2, records)))
 	message_list.append('date;time;map;players;common;hunters;smokers;boomers;chargers;spitters;jockeys;tanks')
 
 	message_list += [ \
 		'%s;%s;%s;%s;%d;%d;%d;%d;%d;%d;%d;%d' % \
-		(r['date'], format_time(r['time']), r['map']['name'], ','.join(['%s' % player['name'] for player in r['players']]), r['common'], r['hunters'], r['smokers'], r['boomers'], r['chargers'], r['spitters'], r['jockeys'], r['tanks']) \
-		for r in filter(lambda r: r['map']['game'] == 2, records)]
+		(r['date'], format_time(r['time']), r['map']['name'], ', '.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]), r['common'], r['hunters'], r['smokers'], r['boomers'], r['chargers'], r['spitters'], r['jockeys'], r['tanks']) \
+		for r in sorted(filter(lambda r: r['map']['game'] == 2, records), key = lambda r: r['date'])]
 
+	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
 
 #--------------------------------------------------
@@ -878,7 +1170,7 @@ def export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
 		poss_records = filter(lambda r: r['map'] == m, records)
 		for i, best in enumerate(sorted(poss_records, reverse = True, key = lambda r: r['time'])[0:10]):
 			message_list.append('%d:;%02d:%02d:%02d.%02d;%s' % (i, best['time'].seconds / 3600, best['time'].seconds % 3600 / 60, best['time'].seconds % 3600 % 60, best['time'].microseconds / 10000, \
-				';'.join([p['name'] for p in best['players']])))
+				';'.join([p['name'] for p in sorted(best['players'], key = lambda p: p['name'].lower())])))
 		message_list.append('')
 	message_list.append('top10 times L4D2')
 	message_list.append('')
@@ -916,7 +1208,8 @@ def get_wksht(gd_client, curr_key, prompt = True, input = None):
 	return curr_wksht_id
 
 def format_time(t):
-	return '%02d:%02d:%02d.%02d' % (t.seconds / 3600, t.seconds % 3600 / 60, t.seconds % 3600 % 60, t.microseconds / 10000)
+	#return '%02d:%02d:%02d.%02d' % (t.seconds / 3600, t.seconds % 3600 / 60, t.seconds % 3600 % 60, t.microseconds / 10000)
+	return '%02d:%02d:%02d' % (t.seconds / 3600, t.seconds % 3600 / 60, t.seconds % 3600 % 60)
 
 #--------------------------------------------------
 # export_stats_top10_google_spreadsheet
@@ -938,10 +1231,9 @@ def export_stats_top10_google_spreadsheet(records, players, maps, user = None, p
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
 	message_list = []
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 
 	# get top times
-	def add_stat_message_list(label, fcn, more_info = '', add_stat = False):
+	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s, more_info = '', add_stat = False):
 		stats = gen_statistics(records, players, maps, factor = fcn, n = 10)
 		for game in [1, 2]:
 			message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
@@ -949,7 +1241,7 @@ def export_stats_top10_google_spreadsheet(records, players, maps, user = None, p
 				message_list.append(m['name'])
 				for i,rec in enumerate(rlist):
 					if add_stat == True:
-						message_list.append('%d:;%s;%s;%s' % (i+1, fcn(rec), format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
+						message_list.append('%d:;%s;%s;%s' % (i+1, display_fcn(fcn(rec)), format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
 					else:
 						message_list.append('%d:;%s;%s' % (i+1, format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
 				for index in range(len(rlist) + 1, 11):
@@ -957,8 +1249,10 @@ def export_stats_top10_google_spreadsheet(records, players, maps, user = None, p
 				message_list.append('')
 
 	add_stat_message_list('Time', lambda r: r['time'])
-	add_stat_message_list('Kill Factor', kill_factor, add_stat = True, more_info='avg SI kills/min')
-	#print '\n'.join(message_list)
+	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min')
+
+	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
+
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose=verbose)
 
 def export_na_stats_top10_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
@@ -990,10 +1284,9 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
 	message_list = []
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 
 	# get top times
-	def add_stat_message_list(label, fcn, more_info = '', add_stat = False):
+	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False):
 		stats = gen_statistics(records, players, maps, factor = fcn)
 		for game in [1, 2]:
 			message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
@@ -1003,18 +1296,37 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 				else:
 					rec = rlist[0]
 					if add_stat == True:
-						message_list.append('%s;%s;%s;%s' % (m['name'], fcn(rec), format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
+						message_list.append \
+						( \
+							'%s;%s;%s;%s' % \
+							( \
+								m['name'], \
+								display_fcn(fcn(rec)), \
+								format_time(rec['time']), \
+								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
+							) \
+						)
 					else:
-						message_list.append('%s;%s;%s' % (m['name'], format_time(rec['time']), ';'.join([p['name'] for p in rec['players']])))
+						message_list.append \
+						( \
+							'%s;%s;%s' % \
+							( \
+								m['name'], \
+								format_time(rec['time']), \
+								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
+							) \
+						)
 			message_list.append('')
 
 	add_stat_message_list('Time', lambda r: r['time'])
+	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min')
+	add_stat_message_list('Kill Factor', kill_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='avg SI kills/min')
+	add_stat_message_list('Gore Factor', gore_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills')
 	add_stat_message_list('Tank Kills', lambda r: r['tanks'], add_stat = True)
-	add_stat_message_list('Kill Factor', kill_factor, add_stat = True, more_info='avg SI kills/min')
-	add_stat_message_list('Gore Factor', gore_factor, add_stat = True, more_info='total SI kills')
-	add_stat_message_list('Trash Factor', trash_factor, add_stat = True, more_info='total SI kills/min')
 	add_stat_message_list('Common Kills', lambda r: r['common'], add_stat = True, more_info='')
-	#print '\n'.join(message_list)
+
+
+	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose)
 
 def export_na_stats_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
@@ -1092,6 +1404,7 @@ def add_players_google_spreadsheet(players, user = None, pw = None, gd_client = 
 		return
 
 	new_message_list = [';'.join(message_list[0])]
+	count = 0
 
 	for line in message_list[1:]:
 		try:
@@ -1118,12 +1431,38 @@ def add_players_google_spreadsheet(players, user = None, pw = None, gd_client = 
 			err_msg = create_player(players, name, country, aliases)
 			if err_msg == None:
 				new_message_list.append('added;%s;%s;%s' % (name, country, ','.join(aliases)))
+				count += 1
+			else:
+				new_message_list.append('error;%s;%s;%s;%s' % (name, country, ','.join(aliases), err_msg))
+		elif status == 'edit-name':
+			err_msg = edit_player_name(players, name, aliases)
+			if err_msg == None:
+				new_message_list.append('edited;%s;%s;%s' % (name, country, ','.join(aliases)))
+			else:
+				new_message_list.append('error;%s;%s;%s;%s' % (name, country, ','.join(aliases), err_msg))
+		elif status == 'edit':
+			err_msg = edit_player(players, name, country, aliases, change_country = True, change_aliases = True)
+			if err_msg == None:
+				new_message_list.append('edited;%s;%s;%s' % (name, country, ','.join(aliases)))
+			else:
+				new_message_list.append('error;%s;%s;%s;%s' % (name, country, ','.join(aliases), err_msg))
+		elif status == 'edit-aliases':
+			err_msg = edit_player(players, name, country, aliases, change_country = False, change_aliases = True)
+			if err_msg == None:
+				new_message_list.append('edited;%s;%s;%s' % (name, country, ','.join(aliases)))
+			else:
+				new_message_list.append('error;%s;%s;%s;%s' % (name, country, ','.join(aliases), err_msg))
+		elif status == 'edit-country':
+			err_msg = edit_player(players, name, country, aliases, change_country = True, change_aliases = False)
+			if err_msg == None:
+				new_message_list.append('edited;%s;%s;%s' % (name, country, ','.join(aliases)))
 			else:
 				new_message_list.append('error;%s;%s;%s;%s' % (name, country, ','.join(aliases), err_msg))
 		else:
 			new_message_list.append(';'.join(line))
 
 	export_batch_text_google_spreadsheet(user, pw, new_message_list, gd_client, curr_key, curr_wksht_id, verbose)
+	print "  Added %d players" % (count)
 
 def add_records_google_spreadsheet(game, records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	if gd_client == None:
@@ -1155,6 +1494,7 @@ def add_records_google_spreadsheet(game, records, players, maps, user = None, pw
 		return
 
 	new_message_list = [';'.join(message_list[0])]
+	count = 0
 
 	for i, line in enumerate(message_list[1:]):
 		v = {}
@@ -1170,7 +1510,251 @@ def add_records_google_spreadsheet(game, records, players, maps, user = None, pw
 			else:
 				err_msg = create_record_from_strings(2, players, maps, records, v['date'], v['time'], v['map'], v['players'], v['common'], v['hunters'], v['smokers'], v['boomers'], v['tanks'], v['chargers'], v['spitters'], v['jockeys'])
 			if err_msg == None:
+				count += 1
 				new_message_list.append('added;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+
+		elif v['status'] == 'edit-date':
+			err_msg = edit_record_date_from_strings \
+			( \
+				players, \
+				maps, \
+				records, \
+				v['date'], \
+				v['time'], \
+				v['map'], \
+				v['players'] \
+			)
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+		elif v['status'] == 'edit-time':
+			err_msg = edit_record_time_from_strings \
+			( \
+				players, \
+				maps, \
+				records, \
+				v['date'], \
+				v['time'], \
+				v['map'], \
+				v['players'] \
+			)
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+
+		elif v['status'] == 'edit-players':
+			if game == 1:
+				err_msg = edit_record_from_strings \
+				( \
+					1, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					edit_players = True, \
+					edit_counts = False, \
+					edit_map = False \
+				)
+			else:
+				err_msg = edit_record_from_strings \
+				( \
+					2, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					v['chargers'], \
+					v['spitters'], \
+					v['jockeys'], \
+					edit_players = True, \
+					edit_counts = False, \
+					edit_map = False \
+				)
+
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+
+		elif v['status'] == 'edit-counts':
+			if game == 1:
+				err_msg = edit_record_from_strings \
+				( \
+					1, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					edit_players = False, \
+					edit_counts = True, \
+					edit_map = False \
+				)
+			else:
+				err_msg = edit_record_from_strings \
+				( \
+					2, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					v['chargers'], \
+					v['spitters'], \
+					v['jockeys'], \
+					edit_players = False, \
+					edit_counts = True, \
+					edit_map = False \
+				)
+
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+
+		elif v['status'] == 'edit-map':
+			if game == 1:
+				err_msg = edit_record_from_strings \
+				( \
+					1, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					edit_players = True, \
+					edit_counts = True, \
+					edit_map = True \
+				)
+			else:
+				err_msg = edit_record_from_strings \
+				( \
+					2, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					v['chargers'], \
+					v['spitters'], \
+					v['jockeys'], \
+					edit_players = True, \
+					edit_counts = True, \
+					edit_map = True \
+				)
+
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
+			else:
+				if verbose:
+					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
+				new_message_list.append('error;%s;%s' % (';'.join(line[1:]), 'Error: %s' %err_msg))
+
+		elif v['status'] == 'edit':
+			if game == 1:
+				err_msg = edit_record_from_strings \
+				( \
+					1, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					edit_players = True, \
+					edit_counts = True, \
+					edit_map = True \
+				)
+			else:
+				err_msg = edit_record_from_strings \
+				( \
+					2, \
+					players, \
+					maps, \
+					records, \
+					v['date'], \
+					v['time'], \
+					v['map'], \
+					v['players'], \
+					v['common'], \
+					v['hunters'], \
+					v['smokers'], \
+					v['boomers'], \
+					v['tanks'], \
+					v['chargers'], \
+					v['spitters'], \
+					v['jockeys'], \
+					edit_players = True, \
+					edit_counts = True, \
+					edit_map = True \
+				)
+
+			if err_msg == None:
+				new_message_list.append('edited;%s' % (';'.join(line[1:])))
 			else:
 				if verbose:
 					print 'Error line %d for [%s], %s' % (i, ', '.join(line), err_msg)
@@ -1178,6 +1762,8 @@ def add_records_google_spreadsheet(game, records, players, maps, user = None, pw
 		else:
 			new_message_list.append(';'.join(line))
 
+	if verbose:
+		print '  Added %d records' % (count)
 	export_batch_text_google_spreadsheet(user, pw, new_message_list, gd_client, curr_key, curr_wksht_id, False)
 
 def test2():
@@ -1205,6 +1791,7 @@ def test2():
 
 def main():
 	pass
+
 players = []
 maps = []
 records = []
@@ -1276,10 +1863,21 @@ verbose = True
 
 print 'adding new players'
 add_players_google_spreadsheet(players, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_player_wksht, verbose = False)
+
+players_file = open('players.txt', 'w')
+export_players_list(players_file, players)
+players_file.close()
+
 print 'adding l4d1 records'
 add_records_google_spreadsheet(1, records, players, maps, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_record1_wksht, verbose = True)
 print 'adding l4d2 records'
-add_records_google_spreadsheet(2, records, players, maps, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_record2_wksht, verbose = False)
+add_records_google_spreadsheet(2, records, players, maps, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_record2_wksht, verbose = True)
+
+
+records_file = open('records.txt', 'w')
+export_records_list(records_file, records)
+records_file.close()
+
 print 'updating maps'
 export_maps_google_spreadsheet(user, pw, maps, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=maps_wksht, verbose = verbose)
 print 'updating players'
@@ -1295,13 +1893,6 @@ export_na_stats_google_spreadsheet(user=user, pw=pw, records=records, players=pl
 print 'updating na top10'
 export_na_stats_top10_google_spreadsheet(records, players, maps, user = user, pw = pw, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=na_top10_wksht, verbose = verbose)
 
-
-players_file = open('players.txt', 'w')
-export_players_list(players_file, players)
-players_file.close()
-records_file = open('records.txt', 'w')
-export_records_list(records_file, records)
-records_file.close()
 
 if __name__ == '__main__':
   main()

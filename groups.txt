@@ -1,0 +1,6 @@
+ID=1;type=playergroup;name=North American Survivors;countries=US,Canada,Mexico
+ID=2;type=playergroup;name=European Survivors;countries=France,UK,Germany,Russia,Spain,Poland,Norway,Sweden,Finland,Latvia,Czech Republic,Portugal
+ID=3;type=strategy;map=1;description=Running the circuit;records=194
+ID=4;type=playergroup;name=Adventures of Tin Tin;players=2,1,4,44,54
+ID=5;type=gamemode;name=Moved Items;description=Moved Items in Left 4 Dead 2
+ID=6;type=gamemode;name=No Moved Items;description=Did not move any items in Left 4 Dead 2

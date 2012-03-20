@@ -32,3 +32,68 @@ name=Spoon;country=Germany;ID=31;aliases=That guy with the Spoon
 name=Jumpin' Jack;country=Australia;ID=32;aliases=Jumpin' Jack Flash
 name=phoenix;country=Australia;ID=33;aliases=phoenix_advance
 name=WaRLo;country=Australia;ID=34;aliases=
+name=Toshly;country=Unknown;ID=35;aliases=
+name=Clockwatcher;country=US;ID=36;aliases=
+name=HtotheIzzle;country=Australia;ID=37;aliases=
+name=KICKER;country=Australia;ID=38;aliases=
+name=_|-|O;country=Japan;ID=39;aliases=
+name=funemui;country=Japan;ID=40;aliases=
+name=(-A-);country=Japan;ID=41;aliases=
+name=sectra100;country=Japan;ID=42;aliases=
+name=PIYA;country=Unknown;ID=43;aliases=PITA,Pain In Your Ass
+name=KAMAKAZI;country=Japan;ID=44;aliases=RC XD KAMAKAZI
+name=Yongy;country=Australia;ID=45;aliases=
+name=Daz;country=UK;ID=46;aliases=
+name=frogstomped;country=Australia;ID=47;aliases=
+name=Psy;country=Russia;ID=48;aliases=Miku Hatsune
+name=Hitman;country=Unknown;ID=49;aliases=
+name=Arkron;country=US;ID=50;aliases=
+name=explicit;country=US;ID=51;aliases=
+name=FLUX;country=Australia;ID=52;aliases=
+name=DrPepper;country=Australia;ID=53;aliases=
+name=Sakelz;country=Japan;ID=54;aliases=
+name=Pig Dog;country=US;ID=55;aliases=
+name=CHAIN;country=US;ID=56;aliases=[eM] CHAIN
+name=NaKeD;country=France;ID=57;aliases=
+name=IronMonkey21;country=Australia;ID=58;aliases=
+name=Rode;country=UK;ID=59;aliases=
+name=Johnny Cage;country=US;ID=60;aliases=-MK- Johnny Cage
+name=Lance;country=US;ID=61;aliases=
+name=Papa Licksore;country=US;ID=62;aliases=
+name=hom67;country=US;ID=63;aliases=
+name=ANKER;country=US;ID=64;aliases=
+name=Jordan.17;country=Czech Republic;ID=65;aliases=
+name=El Tounsie;country=Unknown;ID=66;aliases=
+name=RAPTOR;country=Austria;ID=67;aliases=
+name=Ricky;country=Unknown;ID=68;aliases=
+name=aNsvoo;country=Unknown;ID=69;aliases=
+name=Gaius;country=US;ID=70;aliases=Gaius Marius
+name=Russian;country=US;ID=71;aliases=Russian Sleep Experiment
+name=wilson2234;country=US;ID=72;aliases=
+name=Blaksilver;country=US;ID=73;aliases=[eM] Blaksilver
+name=Mr.Nice;country=US;ID=74;aliases=[eM] Mr.Nice
+name=Sax;country=Unknown;ID=75;aliases=
+name=Clutch;country=US;ID=76;aliases=Clutch McDoogle
+name=Thal;country=US;ID=77;aliases=
+name=Dark Warrior;country=Peru;ID=78;aliases=
+name=Wussy;country=Canada;ID=79;aliases=WussyPillow
+name=quickflint;country=US;ID=80;aliases=
+name=Taxi;country=US;ID=81;aliases=Taxi Service
+name=Kitten;country=US;ID=82;aliases=Kamakazi Kitten
+name=StarLight;country=France;ID=83;aliases=
+name=XBloodyR;country=Unknown;ID=84;aliases=
+name=Big Smoke;country=Unknown;ID=85;aliases=Big Smoke ^.^
+name=My Name Is;country=Unknown;ID=86;aliases=
+name=Tim TeBow;country=Unknown;ID=87;aliases=
+name=Mr.Madness;country=Unknown;ID=88;aliases=
+name=Traf;country=Unknown;ID=89;aliases=
+name=TeSSai;country=Unknown;ID=90;aliases=
+name=Aaron;country=US;ID=91;aliases=
+name=Tom;country=US;ID=92;aliases=
+name=Stud Fox;country=US;ID=93;aliases=
+name=tolazytothink;country=US;ID=94;aliases=
+name=Gol D. Roger;country=Unknown;ID=95;aliases=Gol D. Roger (Survival Gamer)
+name=Ralle;country=Unknown;ID=96;aliases=[NBA] Ralle
+name=X-0ut;country=Unknown;ID=97;aliases=
+name=Ari;country=Unknown;ID=98;aliases=Ari/guitar
+name=I like it;country=Unknown;ID=99;aliases=

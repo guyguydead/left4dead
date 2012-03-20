@@ -34,3 +34,4 @@ name=Bridge;campaign=The Parish;game=2;ID=33
 name=Generator Room;campaign=No Mercy;game=2;ID=34
 name=Traincar;campaign=No Mercy;game=2;ID=35
 name=Port (S);campaign=The Sacrifice;game=2;ID=36
+name=Rooftop;campaign=No Mercy;game=2;ID=37
