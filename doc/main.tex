@@ -1,0 +1,155 @@
+\section{Spreadsheet Overview}
+This section will explain how the Google Spreadsheet works without going into the details of the underlying script. This section is for users that want to look at the survival records through the web browser and are not necessarily concerned with how it is updated. The spreadsheet is divided up into a number of different worksheets. Each worksheet will be explained in the following sections. The steps to adding records to the spreadsheets will be explained in Section \ref{sec:adding}.
+
+\subsection{Maps}
+The worksheet titled maps displays the list of official survival maps in Left 4 Dead 1 and 2 (see \figurename\ \ref{fig:sample_maps}). The first column indicates the campaign and the second column indicates the map. The names used here should be used in the rest of the document. For example, refer to the map as ``Street'' as shown and not other variations such as ``The Street''.
+
+\subsection{Players}
+This worksheet displays a list of survival players (see \figurename\ \ref{fig:sample_players}). Note that firstly, this is definitely not a complete list of all the players, only the players that are registered in the system. Secondly, the names of some players have been modified for readability. Their full name might appear under the aliases column. When referring to a player, you can use either the player's name or one of his aliases.
+
+The country where the player is located is only a guess based on looking at public steam profiles, and might not actually be accurate. In the cases where I didn't know where the player was located, his country is listed as ``Unknown''.
+
+\subsection{Records}
+This worksheet (\figurename\ \ref{fig:sample_records}) displays the lists of all records in the system. These are the master lists of all records, not just best time, best kills, and also there are no exceptions or special groupings considered.
+
+\paragraph{Dates}
+Since the date is not an important factor in the survival statistics, not all the dates may be accurate. Firstly, the dates recorded consider the North American central timezone. Secondly, when the actual date that the survival game took place could not be found due to lack of screenshots, I made up an approximate date.
+
+\begin{figure}[htb!]
+\centering
+\subfigure[Maps Worksheet] {
+\includegraphics[width=0.30\columnwidth]{sample_maps}
+\label{fig:sample_maps}
+}
+\subfigure[Players Worksheet] {
+\includegraphics[width=0.30\columnwidth]{sample_players}
+\label{fig:sample_players}
+}
+\subfigure[Records Worksheet] {
+\includegraphics[width=0.30\columnwidth]{sample_records}
+\label{fig:sample_records}
+}
+\caption{Examples of the Worksheets}
+\end{figure}
+
+\subsection{Statistics}
+This worksheet is where all the major statistics are calculated. It consists of a number of tables for Left 4 Dead 1 and 2, which are mostly self-explanatory. The tables show the best record in the system for all of the official Left 4 Dead 1 and 2 maps. I will now explain all the possible statistics that are tracked.
+
+\subsubsection{Time}
+This statistic measures the time the round has lasted. It is traditionally how all survival games have been rated.
+
+\subsubsection{Trash Factor}
+This statistic was named the trash factor or trash4cash factor after the player who first started mentioning this statistic to be used for measuring the difficulty of survival games. It is the ratio of total SI kills to minutes played. Specifically,
+\begin{align}
+TF_{1} &= \frac{smokers + boomers + hunters}{minutes} \\
+TF_{2} &= \frac{smokers + boomers + hunters + chargers + spitters + jockeys}{minutes} \text{.}
+\end{align}
+
+This factor is meant to be interpreted as a difficulty rating of 1-10, where 10 is a most difficult round due to high number of special infected. In actuality, the trash factor may also exceed 10, but this seems to happen rarely, during survival rounds that should be considered difficult.
+
+\subsubsection{Kill Factor}
+This statistic takes the average kills of each kind of special infected including tanks. The reasoning for this is to penalize rounds that have a small number of a specific kind of special infected due to them getting stuck. For example, if all jockeys are stuck at some point, the number of special infected may still be significant, but the difficulty in dealing with jockeys are removed and the survival round was overall less challenging. Kill factor is calculated as follows:
+\begin{align}
+KF_{1} &= \frac{(smokers + boomers + hunters + tanks) / 4}{minutes} \\
+KF_{2} &= \frac{(smokers + boomers + hunters + chargers + spitters + jockeys + tanks) / 7}{minutes} \text{.}
+\end{align}
+
+This factor should yield values around 1.0. Factors well below 1.0 should be considered easy rounds and factors well above 1.0 should be considered difficult rounds.
+
+\subsubsection{Other Factors}
+Other factors include tank factor, gore factor, and common factor. These are pretty self-explanatory; tank factor is the total tank kills, common factor is the total common kills, and gore factors is the total amount of SI kills.
+
+\subsection{Top 10}
+This shows the same statistics as before, except the best 10 times are recorded for each map.
+
+\subsection{NA Statistics}
+These statistics are the same as the previous section's statistics, except that it only includes records with over 50\% of the players residing in North America. The players with ``Unknown'' country are not counted as players from North America.
+
+\subsection{Groups} \label{sec:groups}
+The groups worksheet lists three kinds of groups: game modes, strategies, and player groups. Another worksheet, the group statistics worksheet, shows the statistics for records restricted to various groupings. The groups are described in the following sections.
+
+\subsubsection{Playergroups}
+Player groups are groups of players. Some statistics might only count records with members belonging to the player group, e.g., North American statistics.
+
+\subsubsection{Strategies}
+The strategies are used to record the various strategies used in survival. These are specific to a map. For example, the \texttt{circuit} strategy for Mall Atrium involves running from tanks in a circuit, which is unique to that map. Most of the strategies are explained by the description. Also note that many of the strategies listed are alternative strategies that differ considerably from the main (typically most effective) strategies.
+
+\subsubsection{Game Modes}
+The game modes are modes of play that can be applied to any map. However, some game modes only apply to either Left 4 Dead 1 or Left 4 Dead 2. Most of the game modes are explained by the description.
+
+\paragraph{\texttt{hardmode} Game Mode}
+A common problem in both Left 4 Dead 1 and 2 is the fact that the special infected get eventually get stuck in almost all maps, which makes survival rounds actually easier as time progresses. \texttt{hardmode} is a server plugin (yet to be released, currently only for Left 4 Dead 2\ldots) that removes special infected that are frozen in position and not attacking, allowing new special infected to attack. This makes the game harder than the normal (buggy) survival game settings.
+
+\paragraph{\texttt{nomv} Game Mode}
+In Left 4 Dead 2, it is considered acceptable to move throwables, health items, and weapons to any holdout spots. The \texttt{nomv} mode means to play Left 4 Dead 2 survival without moving any of the items except for the gascans and propane tanks. Note that moving items is generally not accepted in Left 4 Dead 1.
+
+\paragraph{\texttt{smashtv} Game Mode}
+This mode involves players that are not really in fixed positions and not camping in one particular spot, but hovering around an area, killing zombies in all directions.
+
+\section{Adding to the Spreadsheet} \label{sec:adding}
+This section explains the steps to adding new records through the Google Spreadsheet.
+\paragraph{Important Note}
+Remember that in order for any new records or players to be added to the system, the Python script must first be ran by the spreadsheet maintainer. This means that any additions that you make onto the spreadsheets will not show up automatically.
+
+\subsection{Adding Players}
+Before the players can be considered for records, they must be added to the system. This is performed inside the \texttt{Add Player} worksheet. The \texttt{Add Player} has four columns that must be filled out: status, name, country, and aliases.  To add a player, first select an empty row. Then fill out the desired name for the player (preferably in short form using normal ASCII characters), the country to list the player under, and a list of aliases, separated by commas (no spaces). Then under the status, type \texttt{add}. The errors column should be left blank. \figurename\ \ref{fig:add_player} shows an example of adding a player.
+\begin{figure}[htb!]
+\centering
+\subfigure[Adding a New Player]{
+\includegraphics[width=0.80\columnwidth]{add_player}
+\label{fig:add_player}
+}
+\subfigure[Add Player Error]{
+\includegraphics[width=0.80\columnwidth]{add_player_error}
+\label{fig:add_player_error}
+}
+\caption{Adding a Player}
+\end{figure}
+
+If the status remains on add, then the player has not yet been added but will be added once the spreadsheet has been updated via the script. Once the player has actually been added to the system, the status will change from \texttt{add} to \texttt{added}. If there was some kind of error during adding, such as a duplicate player, then the status will be changed to \texttt{error} as seen in \figurename\ \ref{fig:add_player_error}.
+
+\subsection{Adding Records}
+The most involved process is adding a record. Adding a record is available through the \texttt{Add Record1} worksheet for Left 4 Dead 1 records and the \texttt{add Record 2} worksheet for Left 4 Dead 2 records. When adding records, the names used must already exist in the system. Otherwise, errors will appear during the script update process. The following fields must be filled out to add a record:
+\begin{description}
+\item[status] Set status to \texttt{add}.
+\item[date] Put the date that the game took place in the format year-month-day, e.g., \texttt{2012-03-21} for March 21, 2012.
+\item[time] Put the time that the game lasted here. There are two possible formats.
+	\begin{itemize}
+	\item minutes:seconds.hundredths of a second, e.g., \texttt{38:29.73} for 38 minutes, 29 seconds, and 73 hundredths of a second or 730 milliseconds. The number of minutes can exceed 60.
+	\item hours:minutes:seconds.hundredths of a second, e.g., \texttt{01:28:29.23} means 1 hour, 28 minutes, 29 seconds, 230 milliseconds.
+	\end{itemize}
+\item[map] The name of the map played. This name must be the same name listed in the \texttt{Maps} worksheet.
+\item[players] The name of all the players that played the game separated by commas (no spaces). Each of the names written here must match either a name or alias in the \texttt{Players} worksheet.
+\item[common] Number of common infected killed
+\item[hunters] Number of hunters killed
+\item[smokers] Number of smokers killed
+\item[boomers] Number of boomers killed
+\item[chargers] Number of chargers killed (Left 4 Dead 2 only)
+\item[spitters] Number of spitters killed (Left 4 Dead 2 only)
+\item[jockeys] Number of jockeys killed (Left 4 Dead 2 only)
+\item[tanks] Number of tanks
+\item[groups] Add either a game mode or a strategy here (explained in Section \ref{sec:groups}) that applied to this survival game. Do not add playergroups. If there are multiple groups applicable, separate them with commas (no spaces).
+\end{description}
+
+Once the record has been added to the list, the status will say \texttt{added} and the record will be considered for all of the statistics that apply including normal statistics, top 10 statistics, and group statistics. If there was an error due to incorrect values, the status will say \texttt{error} and a corresponding error message will show up in the \texttt{errors} column. An example of adding a record is shown in \figurename\ \ref{fig:add_record} and an example error message is shown in \figurename\ \ref{fig:add_record_error}.
+\begin{figure}[htb!]
+\centering
+\subfigure[Adding a New Record]{
+\includegraphics[width=\columnwidth]{add_record_example}
+\label{fig:add_record}
+}
+\subfigure[Add Record Error]{
+\includegraphics[width=\columnwidth]{add_record_error}
+\label{fig:add_record_error}
+}
+\caption{Adding a Record}
+\end{figure}
+
+\section{Future Work}
+A major future work addition will be to migrate the records into a proper database such as MySQL or SQLite. This was not done in the first place because of my lack of knowledge of databases. However, I might be willing to learn more about them and how to interface with them through Python as a hobby. I might also consider creating a graphical user interface for the script in the future. Other future work:
+\begin{itemize}
+\item Basic error checking has been added but more can be made for invalid inputs
+\item Some basic functionality has been added for groups but creating and editing groups should be added.
+\item More work on the documentation, specifically for spreadsheet maintainers and script developers.
+\item The script is very slow and feels hacked together. Some major refactoring would be in order but I may never get around to doing this.
+\end{itemize}

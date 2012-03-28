@@ -1,0 +1,9 @@
+*.pyc
+.*.swp
+survival_doc.aux
+survival_doc.fdb_latexmk
+survival_doc.lof
+survival_doc.log
+survival_doc.lot
+survival_doc.out
+survival_doc.toc

@@ -23,7 +23,7 @@ name=Riverbank;campaign=The Passing;game=2;ID=22
 name=Underground;campaign=The Passing;game=2;ID=23
 name=Port (P);campaign=The Passing;game=2;ID=24
 name=Motel;campaign=Dark Carnival;game=2;ID=25
-name=Stadium Gate;campaign=Dark Carnival;game=2;ID=26
+name=Stadium Gates;campaign=Dark Carnival;game=2;ID=26
 name=Concert;campaign=Dark Carnival;game=2;ID=27
 name=Gator Village;campaign=Swamp Fever;game=2;ID=28
 name=Plantation;campaign=Swamp Fever;game=2;ID=29

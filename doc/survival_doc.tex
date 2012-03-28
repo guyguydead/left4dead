@@ -1,0 +1,102 @@
+%--------------------------------------------------
+% IR Tracking Documentation
+%--------------------------------------------------
+\documentclass[letterpaper,11pt]{article}
+
+%--------------------------------------------------
+% Declaration section
+%--------------------------------------------------
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage[pdfauthor={GuyGuy}, pdftitle={Survival Records Documentation}, pdfsubject={Software Manual}, pdflang={English}]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{ccaption}
+\usepackage{times}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{url}
+\usepackage{breakurl}
+%\usepackage{mnsymbol}
+\usepackage{tikz}
+
+\hypersetup{linktocpage=true,colorlinks=false,linkcolor=blue,citecolor=blue,pdfpagemode=UseNone,pdfstartview={XYZ 1000 1000 1}}
+
+% Change the format of a figure caption
+% For more options see the package documentation
+\captionnamefont{\bfseries}
+\captiontitlefont{\small}
+\captiondelim{ --- }
+\hangcaption
+\renewcommand{\figurename}{Figure}
+
+\renewcommand{\thesubfigure}{\thefigure.\arabic{subfigure}}
+\makeatletter
+\renewcommand{\p@subfigure}{}
+\renewcommand{\@thesubfigure}{\thesubfigure:\hskip\subfiglabelskip}
+\makeatother
+
+\hypersetup{linktocpage=true,colorlinks=false,linkcolor=blue,citecolor=blue,pdfpagemode=UseNone,pdfstartview={XYZ 1000 1000 1}}
+
+
+%--------------------------------------------------
+% Headings
+%--------------------------------------------------
+\fancypagestyle{plain}{
+\fancyhead{} % clear all header fields
+\fancyhead[LO,RE]{\normalsize \slshape Survival Records Documentation}
+\fancyhead[RO,LE]{\normalsize \slshape \leftmark}
+
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{\normalsize \thepage\ of \pageref*{LastPage}} % insert page numbers
+\renewcommand{\headrulewidth}{0.7pt}
+\renewcommand{\footrulewidth}{0.7pt}
+}
+
+\renewcommand{\sectionmark}[1]{\markboth{\thesection.\ #1}}
+
+\setcounter{tocdepth}{2}
+
+%--------------------------------------------------
+% Document Environment
+%--------------------------------------------------
+\begin{document}
+
+\pagenumbering{roman}
+\begin{titlepage}
+\begin{flushright}
+\footnotesize
+Written by: \texttt{guyguy}
+\today
+\end{flushright}
+
+\vspace*{\fill}
+\begin{center}
+\begin{tikzpicture}
+	\draw (0, 0) node[align=center, inner sep=0] {\includegraphics[width=\columnwidth]{cover}};
+	\draw (0, 1) node[align=center] {\textsc{\huge \color{White} Survival Records Documentation}};
+\end{tikzpicture}
+\end{center}
+\tableofcontents
+\vspace*{\fill}
+\end{titlepage}
+\newpage
+
+%\listoftables
+%\listoffigures
+%\newpage
+
+\pagenumbering{arabic}
+\pagestyle{plain}
+\input{intro.tex}
+\input{main.tex} 
+%\bibliographystyle{IEEEtran}
+%\bibliography{./refs}
+
+%\marginpar{\centering $\diamondtimes$}
+\end{document}
