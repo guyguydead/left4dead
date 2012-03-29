@@ -7,7 +7,7 @@ The worksheet titled maps displays the list of official survival maps in Left 4 
 \subsection{Players}
 This worksheet displays a list of survival players (see \figurename\ \ref{fig:sample_players}). Note that firstly, this is definitely not a complete list of all the players, only the players that are registered in the system. Secondly, the names of some players have been modified for readability. Their full name might appear under the aliases column. When referring to a player, you can use either the player's name or one of his aliases.
 
-The country where the player is located is only a guess based on looking at public steam profiles, and might not actually be accurate. In the cases where I didn't know where the player was located, his country is listed as ``Unknown''.
+Some extra information displayed are the number of records with that player in the system and the country. The country where the player is located is only a guess based on looking at public steam profiles, and might not actually be accurate. In the cases where I didn't know where the player was located, his country is listed as ``Unknown''.
 
 \subsection{Records}
 This worksheet (\figurename\ \ref{fig:sample_records}) displays the lists of all records in the system. These are the master lists of all records, not just best time, best kills, and also there are no exceptions or special groupings considered.
@@ -145,6 +145,97 @@ Once the record has been added to the list, the status will say \texttt{added} a
 \caption{Adding a Record}
 \end{figure}
 
+\section{Setting up the Script}
+In this section, I go over how to setup the Python script on your system such that it can automatically update the google spreadsheet.
+\paragraph{Note}
+It is very possible that this section gets obsolete quickly.
+\subsection{Prerequisites}
+Install the following prerequisites:
+\begin{description}
+\item[git] \url{http://git-scm.com/download} This step is optional and can be avoided for Windows users.
+\item[Python 2.7] Use the Python 2.x version, not Python 3 \url{http://www.python.org/getit/}
+\item[Google Data Python Library] See this getting started guide: \url{http://code.google.com/apis/gdata/articles/python_client_lib.html}. The steps are basically to download the library and run \texttt{python ./setup.py install}.
+\item[Google Account] Register for a free account for Google Docs: \url{https://docs.google.com}. A gmail account will suffice.
+\end{description}
+
+\subsubsection{Setting up the Google Spreadsheet}
+First, log in to Google Docs and create a spreadsheet as seen in \figurename\ \ref{fig:create_spreadsheet}.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.40\columnwidth]{create_spreadsheet}
+\caption{Creating a Spreadsheet through the Google Docs Web Interface}
+\label{fig:create_spreadsheet}
+\end{figure}
+\paragraph{Note} Do not use an existing spreadsheet because all of the data will be erased. This cannot be undone!
+
+Next, create twelve worksheets within the newly created google spreadsheet. By default, they should be named and ordered as follows:
+\begin{enumerate}
+\item Maps
+\item Players
+\item All Records
+\item Statistics
+\item Statistics Top 10
+\item NA Statistics
+\item NA Top 10
+\item Group Stats
+\item Add Player
+\item Add Record1
+\item Add Record2
+\item Groups
+\end{enumerate}
+The worksheets that are not involved with adding can be locked from public users editing it. This is because the script will overwrite any changes made to the spreadsheet anyway.
+
+\subsubsection{Default Settings}
+Currently the script will use the default settings and assume that the worksheets are ordered as mentioned in the previous section. Also, the script assumes that the google spreadsheet is actually the first document on your google account. If this is not true, you need to change the script from the default settings. Open up the script \texttt{survival\_records.py} and near the bottom (line 2357) find the line that says:
+
+\begin{lstlisting}
+use_defaults = True
+\end{lstlisting}
+
+Change the \texttt{True} to \texttt{False} and you will no longer be using the default settings. You will be able to specify which spreadsheet and which worksheets the script will write to.
+\subsection{Windows Instructions}
+In order to download the code from the git repository, you can visit the github webpage: \url{https://github.com/guyguydead/left4dead}. Now download the repository as a zip file as shown in \figurename\ \ref{fig:download_repository}.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.40\columnwidth]{download_repository}
+\caption{Downloading the Repository from the github Webpage}
+\label{fig:download_repository}
+\end{figure}
+Extract the zip file and rename the folder \texttt{left4dead-script} (your choice of name).
+
+Open up a command prompt using \texttt{start\ldots{}run\ldots{}cmd}. Ensure that your Python program can run by typing \texttt{python}. The command should be found and you get the prompt of \texttt{>>>} as seen in \figurename\ \ref{fig:python_windows}. press CTRL-D to exit the python shell. If it's not working see instructions for finding python.exe at \url{http://www.imladris.com/Scripts/PythonForWindows.html}.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.4\columnwidth]{python_windows}
+\caption{Ensuring that the Python Program Runs Under Windows}
+\label{fig:python_windows}
+\end{figure}
+
+Now that your command prompt is working, go to the left4dead script folder using the cd (change directory) command:
+\begin{lstlisting}
+c:
+cd \left4dead-scripts
+\end{lstlisting}
+run the script, supplying the username and password of your google account:
+\begin{lstlisting}
+python ./survival_records.py --user=guyguydead --pw=your_password
+\end{lstlisting}
+
+Now the script will run and update the Google Spreadsheet. Please be patient and wait for the script to complete.
+
+\subsection{Linux Instructions}
+Clone a copy of the repository to get the source code and also enter the directory:
+\begin{lstlisting}
+git clone git://github.com/guyguydead/left4dead.git
+cd left4dead
+\end{lstlisting}
+run the script, supplying the username and password of your google account:
+\begin{lstlisting}
+python ./survival_records.py --user=guyguydead --pw=your_password
+\end{lstlisting}
+
+Now the script will run and update the Google Spreadsheet. Please be patient and wait for the script to complete.
+
 \section{Future Work}
 A major future work addition will be to migrate the records into a proper database such as MySQL or SQLite. This was not done in the first place because of my lack of knowledge of databases. However, I might be willing to learn more about them and how to interface with them through Python as a hobby. I might also consider creating a graphical user interface for the script in the future. Other future work:
 \begin{itemize}
@@ -153,3 +244,4 @@ A major future work addition will be to migrate the records into a proper databa
 \item More work on the documentation, specifically for spreadsheet maintainers and script developers.
 \item The script is very slow and feels hacked together. Some major refactoring would be in order but I may never get around to doing this.
 \end{itemize}
+

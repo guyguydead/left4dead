@@ -1,18 +1,18 @@
-name=Generator Room;campaign=No Mercy;game=1;ID=2
-name=Gas Station;campaign=No Mercy;game=1;ID=3
+name=Generator Room;campaign=No Mercy;game=1;ID=2;aliases=Gen,Gen Room
+name=Gas Station;campaign=No Mercy;game=1;ID=3;aliases=Gas
 name=Hospital;campaign=No Mercy;game=1;ID=4
 name=Rooftop;campaign=No Mercy;game=1;ID=5
-name=Bridge (CC);campaign=Crash Course;game=1;ID=6
-name=Truck Depot;campaign=Crash Course;game=1;ID=7
+name=Bridge (CC);campaign=Crash Course;game=1;ID=6;aliases=CC Bridge
+name=Truck Depot;campaign=Crash Course;game=1;ID=7;aliases=Truck
 name=Drains;campaign=Death Toll;game=1;ID=8
 name=Church;campaign=Death Toll;game=1;ID=9
-name=Street;campaign=Death Toll;game=1;ID=10
-name=Boathouse;campaign=Death Toll;game=1;ID=11
+name=Street;campaign=Death Toll;game=1;ID=10;aliases=The Streets
+name=Boathouse;campaign=Death Toll;game=1;ID=11;aliases=Boat
 name=Crane;campaign=Dead Air;game=1;ID=12
-name=Construction Site;campaign=Dead Air;game=1;ID=13
-name=Terminal;campaign=Dead Air;game=1;ID=14
-name=Runway;campaign=Dead Air;game=1;ID=15
-name=Warehouse;campaign=Blood Harvest;game=1;ID=16
+name=Construction Site;campaign=Dead Air;game=1;ID=13;aliases=Con,Cons
+name=Terminal;campaign=Dead Air;game=1;ID=14;aliases=Term
+name=Runway;campaign=Dead Air;game=1;ID=15;aliases=run
+name=Warehouse;campaign=Blood Harvest;game=1;ID=16;aliases=ware
 name=Bridge (BH);campaign=Blood Harvest;game=1;ID=17
 name=Farmhouse;campaign=Blood Harvest;game=1;ID=18
 name=Lighthouse;campaign=Last Stand;game=1;ID=19

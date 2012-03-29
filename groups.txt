@@ -1,63 +1,74 @@
-type=playergroup;ID=1;name=North American Survivors;countries=US,Canada,Mexico
-type=playergroup;ID=2;name=European Survivors;countries=France,UK,Germany,Russia,Spain,Poland,Norway,Sweden,Finland,Latvia,Czech Republic,Portugal
-type=playergroup;ID=8;name=Asian Survivors;countries=Japan,China,India
-type=playergroup;ID=9;name=Oceanic Survivors;countries=Australia,NZ
+countries=US,Canada,Mexico;type=playergroup;ID=1;name=North American Survivors
+countries=France,UK,Germany,Russia,Spain,Poland,Norway,Sweden,Finland,Latvia,Czech Republic,Portugal;type=playergroup;ID=2;name=European Survivors
+countries=Japan,China,India;type=playergroup;ID=8;name=Asian Survivors
+countries=Australia,NZ;type=playergroup;ID=9;name=Oceanic Survivors
 map=1;description=Running the circuit;records=194;type=strategy;ID=3;name=circuit
 players=2,1,4,44,54;type=playergroup;ID=4;name=Adventures of Tin Tin
-description=Moved Items in Left 4 Dead 2;records=;game=2;type=gamemode;ID=5;name=mv
-description=Did not move any items in Left 4 Dead 2;name=nomv;records=249,250,251,252,234,209,235,242,236,158,138,256;game=2;type=gamemode;ID=6;aliases=NoMove,No Moved Items,No Moved
-map=36;type=strategy;description=Running the circuit using the poolroom;name=poolcircuit;ID=7
+description=Did not move any items in Left 4 Dead 2;records=249,250,251,252,234,209,235,242,236,158,138,256;game=2;aliases=NoMove,No Moved Items,No Moved;type=gamemode;ID=6;name=nomv
+map=36;ID=7;type=strategy;description=Running the circuit using the poolroom;name=poolcircuit
 map=1;description=Defending the bridge;records=254;type=strategy;ID=8;name=mallbridge
-map=1;type=strategy;description=Defending the saferoom;name=saferoom;ID=9
-map=1;type=strategy;description=Defending the Kiosk;name=kiosk;ID=10
-map=22;type=strategy;description=Defending the gazebo;name=gazebo;ID=11
-map=22;type=strategy;description=Defending the second ammo stack;name=ammostack2;ID=12
-map=23;type=strategy;description=Defending the alley;name=alley;ID=13
-map=23;type=strategy;description=Defending the construction yard;name=consyard;ID=14
-map=23;type=strategy;description=Defending the poolroom;name=poolroom;ID=15
-map=23;type=strategy;description=Defending the corner by the cars;name=cornercars;ID=16
-map=24;type=strategy;description=Defending the bridge;name=bridge;ID=17
-map=24;type=strategy;description=Defending the poolroom;name=poolroom;ID=18
-map=24;type=strategy;description=Defending the bar;name=bar;ID=19
-map=25;type=strategy;description=Defending under the bridge;name=bridge;ID=20
-map=25;type=strategy;description=Defending the roof;name=roof;ID=21
-map=25;type=strategy;description=Defending a room;name=room;ID=22
-map=26;type=strategy;description=Defend the scaffolding;name=scaffolding;ID=23
-map=26;type=strategy;description=Defend the rooftops;name=rooftops;ID=24
-map=26;type=strategy;description=Defend the stuffed animals;name=animals;ID=25
-map=27;type=strategy;description=Defend the stage;name=stage;ID=26
-map=27;type=strategy;description=Defend the lightswitch;name=lightswitch;ID=27
-map=27;type=strategy;description=Defend the tower;name=tower;ID=28
-map=28;type=strategy;description=Defend the boat;name=boat;ID=29
-map=28;type=strategy;description=Defend the ammo stack;name=ammo;ID=30
-map=29;type=strategy;description=Defend the stairs;name=stairs;ID=31
-map=29;type=strategy;description=Defend the hedges;name=hedges;ID=32
-map=29;type=strategy;description=Defend the balcony;name=balcony;ID=33
-map=30;type=strategy;description=Defend the roof;name=roof;ID=34
-map=30;type=strategy;description=Defend behind the truck;name=truck;ID=35
-map=30;type=strategy;description=Defend the weapon spawns;name=weapons;ID=36
-map=30;type=strategy;description=Defend the outside area;name=outside;ID=37
-map=32;type=strategy;description=Defend the tower;name=tower;ID=38
-map=32;type=strategy;description=Defend the ground floor;name=ground;ID=39
-map=32;type=strategy;description=Defend the fences;name=fences;ID=40
-records=;type=gamemode;description=Smash TV style;name=smashtv;ID=41
-map=33;type=strategy;description=Defend upstairs;name=upstairs;ID=42
-map=33;type=strategy;description=Defend the helecopter pad;name=helecopter;ID=43
-map=33;type=strategy;description=Defend the fences;name=fences;ID=44
-map=34;type=strategy;description=Defend the ground floor;name=ground;ID=45
-map=34;type=strategy;description=Defend the underground;name=underground;ID=46
-map=34;type=strategy;description=Defend the back of the building;name=back;ID=47
-map=37;type=strategy;description=Defend the shotgun spawn;name=shotgun;ID=48
-map=37;type=strategy;description=Runnning the circuit;name=circuit;ID=49
-map=35;type=strategy;description=Defend the ammo stack;name=ammo;ID=50
-map=35;type=strategy;description=Defend the ammo stack without bile;name=nobile;ID=51
-map=35;type=strategy;description=Defend the corner;name=corner;ID=52
-map=36;type=strategy;description=Defend the bridge;name=bridge;ID=53
-map=36;type=strategy;description=Defend the poolroom;name=poolroom;ID=54
-map=36;type=strategy;description=Defend the bar;name=bar;ID=55
+map=1;ID=9;type=strategy;description=Defending the saferoom;name=saferoom
+map=1;ID=10;type=strategy;description=Defending the Kiosk;name=kiosk
+map=22;ID=11;type=strategy;description=Defending the gazebo;name=gazebo
+map=22;ID=12;type=strategy;description=Defending the second ammo stack;name=ammostack2
+map=23;ID=13;type=strategy;description=Defending the alley;name=alley
+map=23;ID=14;type=strategy;description=Defending the construction yard;name=consyard
+map=23;ID=15;type=strategy;description=Defending the poolroom;name=poolroom
+map=23;ID=16;type=strategy;description=Defending the corner by the cars;name=cornercars
+map=24;ID=17;type=strategy;description=Defending the bridge;name=bridge
+map=24;ID=18;type=strategy;description=Defending the poolroom;name=poolroom
+map=24;ID=19;type=strategy;description=Defending the bar;name=bar
+map=25;ID=20;type=strategy;description=Defending under the bridge;name=bridge
+map=25;ID=21;type=strategy;description=Defending the roof;name=roof
+map=25;ID=22;type=strategy;description=Defending a room;name=room
+map=26;ID=23;type=strategy;description=Defend the scaffolding;name=scaffolding
+map=26;ID=24;type=strategy;description=Defend the rooftops;name=rooftops
+map=26;ID=25;type=strategy;description=Defend the stuffed animals;name=animals
+map=27;ID=26;type=strategy;description=Defend the stage;name=stage
+map=27;ID=27;type=strategy;description=Defend the lightswitch;name=lightswitch
+map=27;ID=28;type=strategy;description=Defend the tower;name=tower
+map=28;ID=29;type=strategy;description=Defend the boat;name=boat
+map=28;ID=30;type=strategy;description=Defend the ammo stack;name=ammo
+map=29;ID=31;type=strategy;description=Defend the stairs;name=stairs
+map=29;ID=32;type=strategy;description=Defend the hedges;name=hedges
+map=29;ID=33;type=strategy;description=Defend the balcony;name=balcony
+map=30;ID=34;type=strategy;description=Defend the roof;name=roof
+map=30;ID=35;type=strategy;description=Defend behind the truck;name=truck
+map=30;ID=36;type=strategy;description=Defend the weapon spawns;name=weapons
+map=30;ID=37;type=strategy;description=Defend the outside area;name=outside
+map=32;ID=38;type=strategy;description=Defend the tower;name=tower
+map=32;ID=39;type=strategy;description=Defend the ground floor;name=ground
+map=32;ID=40;type=strategy;description=Defend the fences;name=fences
+records=;ID=41;type=gamemode;description=Smash TV style;name=smashtv
+map=33;ID=42;type=strategy;description=Defend upstairs;name=upstairs
+map=33;ID=43;type=strategy;description=Defend the helecopter pad;name=helecopter
+map=33;ID=44;type=strategy;description=Defend the fences;name=fences
+map=34;ID=45;type=strategy;description=Defend the ground floor;name=ground
+map=34;ID=46;type=strategy;description=Defend the underground;name=underground
+map=34;ID=47;type=strategy;description=Defend the back of the building;name=back
+map=37;ID=48;type=strategy;description=Defend the shotgun spawn;name=shotgun
+map=37;ID=49;type=strategy;description=Runnning the circuit;name=circuit
+map=35;ID=50;type=strategy;description=Defend the ammo stack;name=ammo
+map=35;ID=51;type=strategy;description=Defend the ammo stack without bile;name=nobile
+map=35;ID=52;type=strategy;description=Defend the corner;name=corner
+map=36;ID=53;type=strategy;description=Defend the bridge;name=bridge
+map=36;ID=54;type=strategy;description=Defend the poolroom;name=poolroom
+map=36;ID=55;type=strategy;description=Defend the bar;name=bar
 description=All shotguns;records=;game=2;type=gamemode;ID=56;name=shotguns
-records=;description=All snipers;type=gamemode;ID=57;name=snipers
+records=;type=gamemode;description=All snipers;name=snipers;ID=57
 description=All melee weapons;records=;game=2;type=gamemode;ID=58;name=melee
-records=;description=All pistols;type=gamemode;ID=59;name=pistols
+records=;type=gamemode;description=All pistols;name=pistols;ID=59
 description=Increased SI rates;records=254;game=2;type=gamemode;ID=60;name=hardmode
-map=31;type=strategy;description=Defend the sugar mills;name=sugarmill;ID=61
+map=31;ID=61;type=strategy;description=Defend the sugar mills;name=sugarmill
+description=One player only;numplayers=1;records=;type=gamemode;ID=62;name=solo
+description=Two players only;numplayers=2;records=;type=gamemode;ID=62;name=duo
+description=Three players only;numplayers=3;records=;type=gamemode;ID=62;name=trio
+players=;type=playergroup;ID=63;name=House of Sauce
+players=;type=playergroup;ID=64;name=House of McQuade
+players=;type=playergroup;ID=65;name=House of Cookie
+players=;type=playergroup;ID=66;name=randomgroup21
+players=;type=playergroup;ID=67;name=24 Carat Survival
+players=;type=playergroup;ID=68;name=L4D Pro Survivors
+players=;type=playergroup;ID=69;name=WDF
+players=;type=playergroup;ID=70;name=Elite Murderers
+players=;type=playergroup;ID=70;name=4 Survival

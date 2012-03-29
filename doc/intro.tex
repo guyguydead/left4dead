@@ -11,7 +11,7 @@ There are many people playing survival mode in Left 4 Dead 1 and Left 4 Dead 2 f
 After each game of survival, the game displays the statistics of the round that you just played. This includes the duration of the round and the number of common infected, special infected and tanks killed. The numbers will typed by someone (maybe you!) onto a Google Spreadsheet for the purpose of keeping track of records. Once the numbers are input onto the spreadsheet, the spreadsheet maintainer runs the provided Python script in order to update the spreadsheet. The best time, kills, and other statistics are calculated and displayed on the updated spreadsheet. In the next sections, the software behind the recording system will be explained.
 
 \subsubsection{Google Spreadsheets}
-Google spreadsheets is part of the Google Docs office suite, which is an online service designed to allow users to collaborate on office documents. The spreadsheets are a collection of tables, and consist of multiple pages called worksheets. \figurename\ \ref{fig:sample1} shows what a Google Spreadsheet looks like in a web browser.
+Google spreadsheets is part of the Google Docs office suite, which is an online service designed to allow users to collaborate on office documents \cite{web:google_spreadsheets}, \cite{web:google_docs}. The spreadsheets are a collection of tables, and consist of multiple pages called worksheets. \figurename\ \ref{fig:sample1} shows what a Google Spreadsheet looks like in a web browser.
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.40\columnwidth]{sample_screen_1}
@@ -22,10 +22,10 @@ Google spreadsheets is part of the Google Docs office suite, which is an online 
 One of the interesting features of Google Docs is that any changes made to the web documents are instantly updated and seen by people on the Internet. In this way, we can imagine having a document that outputs real-time statistics, in our case, of the game Left 4 Dead.
 
 \subsubsection{Google Data API}
-As well as being able to edit spreadsheets from a web browser, Google has provided a way to communicate to their servers and automatically update Google Spreadsheets: the Google Data API (Application Programming Interface). What this means is that anyone can download the provided programming library and use it to read from and write to a Google Spreadsheet by writing a simple program.
+As well as being able to edit spreadsheets from a web browser, Google has provided a way to communicate to their servers and automatically update Google Spreadsheets: the Google Data API (Application Programming Interface) \cite{web:google_api}. What this means is that anyone can download the provided programming library and use it to read from and write to a Google Spreadsheet by writing a simple program.
 
 \subsubsection{Python}
-Python is a relatively new programming language suitable for scripting. I chose Python because it is an interesting language that I wanted to learn through this project. \figurename\ \ref{fig:sample2} shows the output of a sample run of the Python script to update the Google Spreadsheet.
+Python is a relatively new programming language suitable for scripting \cite{web:python}. I chose Python because it is an interesting language that I wanted to learn through this project. \figurename\ \ref{fig:sample2} shows the output of a sample run of the Python script to update the Google Spreadsheet.
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.30\columnwidth]{sample_screen_2}
