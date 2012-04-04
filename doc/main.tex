@@ -2,7 +2,7 @@
 This section will explain how the Google Spreadsheet works without going into the details of the underlying script. This section is for users that want to look at the survival records through the web browser and are not necessarily concerned with how it is updated. The spreadsheet is divided up into a number of different worksheets. Each worksheet will be explained in the following sections. The steps to adding records to the spreadsheets will be explained in Section \ref{sec:adding}.
 
 \subsection{Maps}
-The worksheet titled maps displays the list of official survival maps in Left 4 Dead 1 and 2 (see \figurename\ \ref{fig:sample_maps}). The first column indicates the campaign and the second column indicates the map. The names used here should be used in the rest of the document. For example, refer to the map as ``Street'' as shown and not other variations such as ``The Street''.
+The worksheet titled maps displays the list of official survival maps in Left 4 Dead 1 and 2 (see \figurename\ \ref{fig:sample_maps}). The first column indicates the campaign and the second column indicates the map. The third column indicates the total number of records existing for that map. The names used here should be used in the rest of the document. For example, refer to the map as ``Street'' as shown and not other variations such as ``The Street''.
 
 \subsection{Players}
 This worksheet displays a list of survival players (see \figurename\ \ref{fig:sample_players}). Note that firstly, this is definitely not a complete list of all the players, only the players that are registered in the system. Secondly, the names of some players have been modified for readability. Their full name might appear under the aliases column. When referring to a player, you can use either the player's name or one of his aliases.
@@ -109,7 +109,7 @@ Before the players can be considered for records, they must be added to the syst
 If the status remains on add, then the player has not yet been added but will be added once the spreadsheet has been updated via the script. Once the player has actually been added to the system, the status will change from \texttt{add} to \texttt{added}. If there was some kind of error during adding, such as a duplicate player, then the status will be changed to \texttt{error} as seen in \figurename\ \ref{fig:add_player_error}.
 
 \subsection{Adding Records}
-The most involved process is adding a record. Adding a record is available through the \texttt{Add Record1} worksheet for Left 4 Dead 1 records and the \texttt{add Record 2} worksheet for Left 4 Dead 2 records. When adding records, the names used must already exist in the system. Otherwise, errors will appear during the script update process. The following fields must be filled out to add a record:
+The most involved process is adding a record. Adding a record is available through the \texttt{Add Record1} worksheet for Left 4 Dead 1 records and the \texttt{Add Record 2} worksheet for Left 4 Dead 2 records. When adding records, the names used must already exist in the system. Otherwise, errors will appear during the script update process. The following fields must be filled out to add a record:
 \begin{description}
 \item[status] Set status to \texttt{add}.
 \item[date] Put the date that the game took place in the format year-month-day, e.g., \texttt{2012-03-21} for March 21, 2012.
@@ -145,6 +145,65 @@ Once the record has been added to the list, the status will say \texttt{added} a
 \caption{Adding a Record}
 \end{figure}
 
+\subsection{Editing Records}
+A number of commands allow you to edit existing records through the \texttt{Add Record1} and \texttt{Add Record 2} worksheets.
+
+\subsubsection{Adding a Group}
+This allows you to add additional groups to an existing record. The required entries are:
+\begin{itemize}
+\item The date and time are required.
+\item The additional groups to be added should be entered either in the \texttt{groups} field or under the \texttt{players} field.
+\item The status should be set to \texttt{add-group}.
+\end{itemize}
+
+\subsubsection{Editing the Date}
+This allows you to edit the date of an existing record.
+\begin{itemize}
+\item The correct time is required.
+\item The correct map is required.
+\item The correct list of players is required (Player names separated by commas, no spaces).
+\item Fill out the new date under the \texttt{date} field.
+\item The status should be set to \texttt{edit-date}.
+\end{itemize}
+
+\subsubsection{Editing the Players}
+This allows you to edit the players in an existing record.
+\begin{itemize}
+\item The time is required.
+\item The date is required.
+\item The new list of players is required (Player names separated by commas, no spaces).
+\item The status should be set to \texttt{edit-players}.
+\end{itemize}
+
+\subsubsection{Editing the Counts}
+This allows you to edit the common infected, special infected, and tank counts in an existing record.
+\begin{itemize}
+\item The time is required.
+\item The date is required.
+\item All counts of common infected, special infected, and tank counts will be changed simultaneously and should be filled in.
+\item The status should be set to \texttt{edit-counts}.
+\end{itemize}
+
+\subsubsection{Editing the Map}
+This allows you to edit the map in an existing record.
+\begin{itemize}
+\item The time is required.
+\item The date is required.
+\item The new map is required.
+\item The status should be set to \texttt{edit-map}.
+\end{itemize}
+
+\subsubsection{Editing Players, Maps, and Counts}
+This allows you to edit the map, players, and counts simultaneously.
+\begin{itemize}
+\item The time is required.
+\item The date is required.
+\item The new map is required.
+\item All counts of common infected, special infected, and tank counts will be changed simultaneously and should be filled in.
+\item The new list of players is required (Player names separated by commas, no spaces).
+\item The status should be set to \texttt{edit}.
+\end{itemize}
+
 \section{Setting up the Script}
 In this section, I go over how to setup the Python script on your system such that it can automatically update the google spreadsheet.
 \paragraph{Note}
@@ -152,7 +211,7 @@ It is very possible that this section gets obsolete quickly.
 \subsection{Prerequisites}
 Install the following prerequisites:
 \begin{description}
-\item[git] \url{http://git-scm.com/download} This step is optional and can be avoided for Windows users.
+\item[git] \burl{http://git-scm.com/download} This step is optional and can be avoided for Windows users.
 \item[Python 2.7] Use the Python 2.x version, not Python 3 \url{http://www.python.org/getit/}
 \item[Google Data Python Library] See this getting started guide: \url{http://code.google.com/apis/gdata/articles/python_client_lib.html}. The steps are basically to download the library and run \texttt{python ./setup.py install}.
 \item[Google Account] Register for a free account for Google Docs: \url{https://docs.google.com}. A gmail account will suffice.
@@ -218,7 +277,7 @@ cd \left4dead-scripts
 \end{lstlisting}
 run the script, supplying the username and password of your google account:
 \begin{lstlisting}
-python ./survival_records.py --user=guyguydead --pw=your_password
+python ./survival_records.py --user=you_username --pw=your_password
 \end{lstlisting}
 
 Now the script will run and update the Google Spreadsheet. Please be patient and wait for the script to complete.

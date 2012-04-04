@@ -6,13 +6,21 @@ import sys
 import re
 import getopt
 
+"""
+def import_list(filename, list):
+	f = open(filename, 'r')
+	lists = [ dict(item.split('=') for item in line.strip().split(';')) for line in f.readlines()]
+	list += lists
+	f.close()
+"""
 #--------------------------------------------------
 # import_list(filename, list)
 #--------------------------------------------------
 def import_list(filename, list):
 	f = open(filename, 'r')
-	lists = [ dict(item.split('=') for item in line.strip().split(';')) for line in f.readlines()]
-	list += lists
+	for line in f.readlines():
+		lists = dict([ (item[:item.index('=')], item[item.index('=')+1:]) for item in line.strip().split(';') ])
+		list.append(lists)
 	f.close()
 
 #--------------------------------------------------
@@ -30,8 +38,13 @@ def export_maps_list(file, maps):
 			return m['aliases']
 		else:
 			return []
+	def get_type(m):
+		if 'type' in m:
+			return m['type']
+		else:
+			return ''
 
-	file.write('\n'.join(['ID=%d;name=%s;campaign=%s;game=%d;aliases=%s' % (map['name'], map['campaign'], map['game'], map['ID'], ','.join(get_aliases(map))) for map in maps]))
+	file.write('\n'.join(['ID=%d;name=%s;campaign=%s;game=%d;aliases=%s;type=%s' % (map['ID'], map['name'], map['campaign'], map['game'], ','.join(get_aliases(map)), get_type(map)) for map in maps]))
 
 #--------------------------------------------------
 # export_groups_list(file, groups)
@@ -153,7 +166,6 @@ def import_groups_list(filename, groups, players, records, maps):
 		for k in ['countries', 'aliases']:
 			if k in group:
 				group[k] = filter(lambda s: s != '', map(lambda str: str.strip(), group[k].split(',')))
-
 
 
 #--------------------------------------------------
@@ -475,7 +487,7 @@ def create_record_from_strings(game, players, maps, records, groups, date, time,
 
 	map_name = m
 	# find the matching map
-	mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+	mp = [m for m in maps if (equal_name(m['name'], map_name) or ('aliases' in m and is_alias(map_name, m['aliases']))) and m['game'] == game]
 	if mp == []: return 'Map %s not found' % map_name
 	else: mp = mp[0]
 
@@ -626,7 +638,7 @@ def edit_record_time_from_strings(game, players, maps, records, date, time, m, p
 
 	map_name = m
 	# find the matching map
-	mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+	mp = [m for m in maps if (equal_name(m['name'], map_name) or ('aliases' in m and is_alias(map_name, m['aliases']))) and m['game'] == game]
 	if mp == []: return 'Map %s not found' % map_name
 	else: mp = mp[0]
 
@@ -684,7 +696,7 @@ def edit_record_date_from_strings(game, players, maps, records, date, time, m, p
 	map_name = m
 
 	# find the matching map
-	mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+	mp = [m for m in maps if (equal_name(m['name'], map_name) or ('aliases' in m and is_alias(map_name, m['aliases']))) and m['game'] == game]
 	if mp == []: return 'Map %s not found' % map_name
 	else: mp = mp[0]
 
@@ -816,7 +828,7 @@ def edit_record_from_strings(game, players, maps, records, date, time, m, plyrs,
 	if edit_map == True:
 		map_name = m
 		# find the matching map
-		mp = [m for m in maps if equal_name(m['name'], map_name) and m['game'] == game]
+		mp = [m for m in maps if (equal_name(m['name'], map_name) or ('aliases' in m and is_alias(map_name, m['aliases']))) and m['game'] == game]
 		if mp == []: return 'Map %s not found' % map_name
 
 		record['map'] = mp[0]
@@ -1038,12 +1050,12 @@ def campaign_name_order(m):
 		try:
 			m1 = cs1.index(m['campaign'])
 		except ValueError:
-			m1 = len(cs1)
+			m1 = len(cs1) + len(cs2) + ('type' in m and m['type'] == 'custom')
 	else: # l4d2
 		try:
-			m1 = cs2.index(m['campaign'])
+			m1 = len(cs1) + cs2.index(m['campaign'])
 		except ValueError:
-			m1 = len(cs2)
+			m1 = len(cs1) + len(cs2) + ('type' in m and m['type'] == 'custom')
 
 	try:
 		m2 = names.index(m['name'])
@@ -1051,6 +1063,42 @@ def campaign_name_order(m):
 		m2 = len(names)
 
 	return (m1, m2)
+
+def custom_maps(maps):
+	return filter(lambda m: 'type' in m and m['type'] == 'custom', maps)
+def official_maps(maps):
+	return filter(lambda m: 'type' in m and m['type'] == 'official', maps)
+
+#--------------------------------------------------
+# combine_message_lists
+#--------------------------------------------------
+def combine_message_lists(list1, list2, column_spacing = 0):
+	def count(line):
+		return line.count(';') - line.count('\\;')
+
+	# find the maximum number of semicolons
+	max_list1 = max([count(line) for line in list1])
+
+	for i, line in enumerate(list1):
+		list1[i] += ((max_list1 - count(line)) * ';')
+
+	# find the max number of lines
+	max_lines = max([len(list1), len(list2)])
+	list1 += [';' * (max_list1)] * (max_lines - len(list1))
+	list2 += [''] * (max_lines - len(list2))
+
+	combined_list = [x + (';' * (column_spacing + 1)) + y for (x,y) in zip(list1,list2)]
+	return combined_list
+
+#--------------------------------------------------
+# combine_all_message_lists
+#--------------------------------------------------
+def combine_all_message_lists(lists, column_spacing = 0):
+	combined = lists[0]
+	for l in lists[1:]:
+		combined = combine_message_lists(combined, l, column_spacing)
+	return combined
+
 
 #--------------------------------------------------
 # export_maps_google_spreadsheet(user, pw, maps)
@@ -1071,22 +1119,49 @@ def export_maps_google_spreadsheet(user, pw, maps, records, gd_client = None, cu
 	if curr_wksht_id == None:
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
-	message_list = []
+	#message_list = []
 	#message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
-	for game in [1, 2]:
-		message_list.append('Left 4 Dead %d Maps' % game)
-		message_list.append('campaign;name;records')
-		message_list += ['%s;%s;%d' % (m['campaign'], m['name'], len(filter(lambda r: r['map'] == m, records))) for m in \
-			sorted \
-			( \
-				filter(lambda m: m['game'] == game, maps), \
-				key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()) \
-			)]
-		if game == 1: message_list.append('')
+	message_lists = []
+	for i,typ in enumerate(['official', 'custom']):
+		for game in [1, 2]:
+			message_list = []
+			message_list.append('Left 4 Dead %d %s Maps' % (game, typ))
+			if typ == 'official':
+				message_list.append('campaign;name;records')
+				message_list += ['%s;%s;%d' % (m['campaign'], m['name'], len(filter(lambda r: r['map'] == m, records))) for m in \
+					sorted \
+					( \
+						filter(lambda m: m['game'] == game, official_maps(maps) if typ == 'official' else custom_maps(maps)), \
+						key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()) \
+					)]
+			else:
+				#message_list.append('campaign;name;records;url')
+				message_list.append('campaign;name;records;url')
+				"""
+				message_list += ['%s;%s;%d' % (m['campaign'], m['name'], len(filter(lambda r: r['map'] == m, records))) for m in \
+					sorted \
+					( \
+						filter(lambda m: m['game'] == game, custom_maps(maps)), \
+						key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()) \
+					)]
+				"""
+				#"""
+				message_list += ['%s;%s;%d;=HYPERLINK("%s"\\;"link")' % (m['campaign'], m['name'], len(filter(lambda r: r['map'] == m, records)), m['url']) for m in \
+					sorted \
+					( \
+						filter(lambda m: m['game'] == game, custom_maps(maps)), \
+						key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()) \
+					)]
+				#"""
+			#if game == 1 or i == 0: message_list.append('')
 
-	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose=verbose)
+			message_lists.append(message_list)
+	#print message_lists
+	combined = combine_all_message_lists(message_lists, 1)
+
+	export_batch_text_google_spreadsheet(user, pw, combined, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose=verbose)
 
 #--------------------------------------------------
 # export_groups_google_spreadsheet(user, pw, groups)
@@ -1125,10 +1200,10 @@ def export_groups_google_spreadsheet(user, pw, groups, gd_client = None, curr_ke
 	message_list2.append('Strategies')
 	message_list2.append('map;name;description;records')
 	for g in sorted \
-		( \
-			filter(lambda g: g['type'] == 'strategy', gs), \
-			key = lambda g: (campaign_name_order(g['map']), g['name'].lower()) \
-		):
+	( \
+		filter(lambda g: g['type'] == 'strategy', gs), \
+		key = lambda g: (campaign_name_order(g['map']), g['name'].lower()) \
+	):
 		message_list2.append \
 		( \
 			'%s;%s;%s;%d' % \
@@ -1141,20 +1216,26 @@ def export_groups_google_spreadsheet(user, pw, groups, gd_client = None, curr_ke
 		)
 	message_list3 = []
 	message_list3.append('Player Groups')
-	message_list3.append('name;total members')
+	message_list3.append('name;total members;url')
 	for g in sorted \
-		( \
-			filter(lambda g: g['type'] == 'playergroup' and 'countries' in g, gs), \
-			key = lambda g: g['name'].lower() \
-		):
-		message_list3.append('%s;%d' % (g['name'], len(find_group_members(g, players))))
+	( \
+		filter(lambda g: g['type'] == 'playergroup' and 'countries' in g, gs), \
+		key = lambda g: g['name'].lower() \
+	):
+		msg = '%s;%d' % (g['name'], len(find_group_members(g, players)))
+		if 'url' in g:
+			msg += ';=HYPERLINK("%s"\;"link")' % g['url']
+		message_list3.append(msg);
 	message_list3.append('')
 	for g in sorted \
-		( \
-			filter(lambda g: g['type'] == 'playergroup' and not 'countries' in g, gs), \
-			key = lambda g: g['name'].lower() \
-		):
-		message_list3.append('%s;%d' % (g['name'], len(find_group_members(g, players))))
+	( \
+		filter(lambda g: g['type'] == 'playergroup' and not 'countries' in g, gs), \
+		key = lambda g: g['name'].lower() \
+	):
+		msg = '%s;%d' % (g['name'], len(find_group_members(g, players)))
+		if 'url' in g:
+			msg += ';=HYPERLINK("%s"\;"link")' % g['url']
+		message_list3.append(msg);
 
 	message_list = combine_all_message_lists([message_list1, message_list2, message_list3], 1)
 
@@ -1204,27 +1285,6 @@ def export_players_google_spreadsheet(user, pw, players, gd_client = None, curr_
 
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
 
-def combine_message_lists(list1, list2, column_spacing = 0):
-	# find the maximum number of semicolons
-	max_list1 = max([line.count(';') for line in list1])
-
-	for i, line in enumerate(list1):
-		list1[i] = line + (max_list1 - line.count(';')) * ';'
-
-	# find the max number of lines
-	max_lines = max([len(list1), len(list2)])
-	list1 += [';' * (max_list1)] * (max_lines - len(list1))
-	list2 += [''] * (max_lines - len(list2))
-
-	combined_list = [x + (';' * (column_spacing + 1)) + y for (x,y) in zip(list1,list2)]
-	return combined_list
-
-def combine_all_message_lists(lists, column_spacing = 0):
-	combined = lists[0]
-	for l in lists[1:]:
-		combined = combine_message_lists(combined, l, column_spacing)
-	return combined
-
 #--------------------------------------------------
 # export_records_google_spreadsheet(records, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None)
 #--------------------------------------------------
@@ -1246,7 +1306,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 
 	message_list1 = []
 	message_list1.append('Left 4 Dead 1;%d games recorded' % len(filter(lambda r: r['map']['game'] == 1, records)))
-	message_list1.append('date;time;map;players;common;hunters;smokers;boomers;tanks;trash factor;kill factor;score factor;groups')
+	message_list1.append('date;time;map;p1;p2;p3;p4;common;hunters;smokers;boomers;tanks;trash factor;kill factor;score factor;groups')
 
 	message_list1 += \
 	[ \
@@ -1255,7 +1315,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 			r['date'], \
 			format_time(r['time']), \
 			r['map']['name'], \
-			', '.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]), \
+			';'.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]) + ';' * (4 - len(r['players'])), \
 			r['common'], \
 			r['hunters'], \
 			r['smokers'], \
@@ -1272,7 +1332,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 	#message_list.append('')
 	message_list2 = []
 	message_list2.append('Left 4 Dead 2;%d games recorded' % len(filter(lambda r: r['map']['game'] == 2, records)))
-	message_list2.append('date;time;map;players;common;hunters;smokers;boomers;chargers;spitters;jockeys;tanks;trash factor;kill factor;score factor;groups')
+	message_list2.append('date;time;map;p1;p2;p3;p4;common;hunters;smokers;boomers;chargers;spitters;jockeys;tanks;trash factor;kill factor;score factor;groups')
 
 	message_list2 += \
 	[ \
@@ -1281,7 +1341,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 			r['date'], \
 			format_time(r['time']), \
 			r['map']['name'], \
-			', '.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]), \
+			';'.join(['%s' % player['name'] for player in sorted(r['players'], key = lambda p: p['name'].lower())]) + ';' * (4 - len(r['players'])), \
 			r['common'], \
 			r['hunters'], \
 			r['smokers'], \
@@ -1298,11 +1358,9 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 		for r in sorted(filter(lambda r: r['map']['game'] == 2, records), key = lambda r: (campaign_name_order(r['map']), r['date'], r['time'])) \
 	]
 
-	message_list1.append('')
-	message_list1.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
-	message_list2.append('')
-	message_list2.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 	message_list = combine_message_lists(message_list1, message_list2, 1)
+	message_list.append('')
+	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 
 	#print '\n'.join(message_list)
 	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = curr_wksht_id, verbose = verbose)
@@ -1375,6 +1433,31 @@ def find(f, seq):
 	for item in seq:
 		if f(item): 
 			return item
+
+def splitting(text, delimiter):
+	array = []
+	status = 0 #0 NORMAL, 1 TOKEN
+	current_word = ''
+	for i, t in enumerate(text):
+		if status == 0:
+			if t == delimiter:
+				array.append(current_word)
+				current_word = ''
+			elif t == '\\':
+				status = 1
+			else:
+				current_word += t
+				if i == len(text) - 1 and current_word != '':
+					array.append(current_word)
+					current_word = ''
+		else:
+			current_word += t
+			status = 0
+			if i == len(text) - 1 and current_word != '':
+				array.append(current_word)
+				current_word = ''
+	return array
+
 #--------------------------------------------------
 # export_batch_text_google_spreadsheet(user, pw, text)
 #--------------------------------------------------
@@ -1399,10 +1482,33 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	batchRequest = gdata.spreadsheet.SpreadsheetsCellsFeed()
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
+	"""
+	def splitting(T):
+		S = '\;'
+		starts = [match.start() for match in re.finditer(re.escape(S), T)]
+		T2 = T.replace('\;', '##')
+		Tsplit = T2.split(';')
+
+		for i, s in enumerate(starts):
+			pos = s
+			start_word = 0
+			for j, word in enumerate(Tsplit):
+				if pos > len(word):
+					pos -= len(word) + 1
+					start_word = j+1
+
+			starts[i] = (pos, start_word)
+
+		for t in starts:
+			Tsplit[t[1]] = Tsplit[t[1]][:t[0]] + ';' + Tsplit[t[1]][t[0]+2:]
+		return Tsplit
+	"""
+
+
 	batch_count = 0
 	single_update_list = []
 	for i,r in enumerate(text):
-		for j,c in enumerate(r.split(';')):
+		for j,c in enumerate(splitting(r, ';')):
 			entry = find(lambda entry: entry != None and int(entry.cell.row) == i+1 and int(entry.cell.col) == j+1, cells.entry)
 			if entry != None:
 				if entry.cell.text.strip() != c.strip():
@@ -1486,7 +1592,7 @@ def export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
 	message_list.append('top10 times L4D1')
 	message_list.append('')
 	# find the top times for each map
-	for m in filter(lambda m: m['game'] == 1, maps):
+	for m in filter(lambda m: m['game'] == 1, official_maps(maps)):
 		message_list.append(m['name'])
 		poss_records = filter(lambda r: r['map'] == m, records)
 		for i, best in enumerate(sorted(poss_records, reverse = True, key = lambda r: r['time'])[0:10]):
@@ -1495,7 +1601,7 @@ def export_statistics_top10_google_spreadsheet(user, pw, records, players, maps)
 		message_list.append('')
 	message_list.append('top10 times L4D2')
 	message_list.append('')
-	for m in filter(lambda m: m['game'] == 2, maps):
+	for m in filter(lambda m: m['game'] == 2, official_maps(maps)):
 		message_list.append(m['name'])
 		poss_records = filter(lambda r: r['map'] == m, records)
 		for i, best in enumerate(sorted(poss_records, reverse = True, key = lambda r: r['time'])[0:10]):
@@ -1629,7 +1735,7 @@ def export_stats_top10_google_spreadsheet(records, players, maps, user = None, p
 
 	# get top times
 	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s, more_info = '', add_stat = False):
-		stats = gen_statistics(records, players, maps, factor = fcn, n = 10)
+		stats = gen_statistics(records, players, official_maps(maps), factor = fcn, n = 10)
 		for game in [1, 2]:
 			message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
 			for (m, rlist) in filter(lambda s: s[0]['game'] == game, stats):
@@ -1677,7 +1783,7 @@ def export_na_stats_top10_google_spreadsheet(records, players, maps, user = None
 	export_stats_top10_google_spreadsheet(records=na_records, players=players, maps=maps, user=user, pw=pw, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose=verbose)
 
 #--------------------------------------------------
-# export_stats_google_spreadsheet
+# export_group_stats_google_spreadsheet
 #--------------------------------------------------
 def export_group_stats_google_spreadsheet(records, players, maps, groups, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	if gd_client == None:
@@ -1697,17 +1803,18 @@ def export_group_stats_google_spreadsheet(records, players, maps, groups, user =
 
 	message_list = []
 	message_list.append('Best Times (Strategy Specific)')
-	message_list.append('map;strategy;time;player 1;player 2; player 3; player 4')
-	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False):
-		stats = gen_statistics_group_strategy(records, players, maps, \
-			sorted(filter(lambda g: g['type'] == 'strategy', groups), key = lambda g: (campaign_name_order(g['map']), g['name'].lower())), factor = fcn)
-		for (g, rlist) in stats:
+	message_list.append('map;strategy;time;p1;p2;p3;p4')
+	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False, mlist = message_list):
+		stats = gen_statistics_group_strategy(records, players, sorted(official_maps(maps), key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower())), \
+			filter(lambda g: g['type'] == 'strategy', groups), factor = fcn)
+
+		for (g, rlist) in sorted(stats, key = lambda (g,r): (campaign_name_order(g['map']), g['map']['campaign'].lower(), g['map']['name'].lower(), g['name'].lower())):
 			if rlist == []:
-				message_list.append('%s;%s;' % (g['map']['name'], g['name']))
+				mlist.append('%s;%s;' % (g['map']['name'], g['name']))
 			else:
 				rec = rlist[0]
 				if add_stat == True:
-					message_list.append \
+					mlist.append \
 					( \
 						'%s;%s;%s;%s;%s' % \
 						( \
@@ -1719,7 +1826,7 @@ def export_group_stats_google_spreadsheet(records, players, maps, groups, user =
 						) \
 					)
 				else:
-					message_list.append \
+					mlist.append \
 					( \
 						'%s;%s;%s;%s' % \
 						( \
@@ -1729,13 +1836,15 @@ def export_group_stats_google_spreadsheet(records, players, maps, groups, user =
 							';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
 						) \
 					)
+		return mlist
 
 	# get top times
 	def add_stat_message_list_gamemode(label, fcn, gamemode, message_list, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False):
-		stats = gen_statistics(find_group_records(gamemode, records), players, filter(lambda m: ('game' in gamemode and m['game'] == gamemode['game']) or (not 'game' in gamemode), maps), factor = fcn)
+		stats = gen_statistics(find_group_records(gamemode, records), players, filter(lambda m: ('game' in gamemode and m['game'] == gamemode['game']) or (not 'game' in gamemode), sorted(official_maps(maps), key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()))), factor = fcn)
 		for game in [1, 2]:
 			#message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
-			for (m, rlist) in filter(lambda s: s[0]['game'] == game, stats):
+			for (m, rlist) in filter(lambda s: s[0]['game'] == game, \
+				sorted(stats, key = lambda (m, rlist): (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()))):
 				if rlist == []:
 					message_list.append('%s' % m['name'])
 				else:
@@ -1761,19 +1870,26 @@ def export_group_stats_google_spreadsheet(records, players, maps, groups, user =
 								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
 							) \
 						)
+			if game == 1:
+				message_list.append('')
+		return message_list
 
+	lists = []
 	add_stat_message_list('Time', lambda r: r['time'])
+	lists.append(message_list)
 
-	message_list.append('')
-	for gamemode in filter(lambda g: g['type'] == 'gamemode', groups):
-		message_list.append('Best Times mode %s' % gamemode['name'])
-		message_list.append('map;time;player 1;player 2;player 3;player 4')
-		add_stat_message_list_gamemode('Time', lambda r: r['time'], gamemode, message_list)
-		message_list.append('')
+	gamemodes = ['smashtv', 'solo', 'nomv']
+	list1 = []
+	for gamemode in filter(lambda g: g['type'] == 'gamemode' and g['name'] in gamemodes, groups):
+		list1.append('Best Timess mode %s' % gamemode['name'])
+		list1.append('map;time;player 1;player 2;player 3;player 4')
+		add_stat_message_list_gamemode('Time', lambda r: r['time'], gamemode, list1)
+		list1.append('')
+	lists.append(list1)
 
-	#message_list.append('')
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
-	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose)
+	combined = combine_all_message_lists(lists, 1)
+	combined.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
+	export_batch_text_google_spreadsheet(user, pw, combined, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose)
 
 #--------------------------------------------------
 # export_stats_google_spreadsheet
@@ -1797,17 +1913,21 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 	message_list = []
 
 	# get top times
-	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False):
-		stats = gen_statistics(records, players, maps, factor = fcn)
+	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False, map_type = 'official', mlist = message_list):
+		stats = gen_statistics(records, players, official_maps(maps) if map_type == 'official' else custom_maps(maps), factor = fcn)
 		for game in [1, 2]:
-			message_list.append('Best %s L4D%d;;;;;%s' % (label,game,more_info))
+			if more_info == '':
+				mlist.append('Best %s L4D%d' % (label,game))
+			else:
+				mlist.append('Best %s L4D%d (%s)' % (label,game,more_info))
+
 			for (m, rlist) in filter(lambda s: s[0]['game'] == game, stats):
 				if rlist == []:
-					message_list.append('%s;None' % m['name'])
+					mlist.append('%s' % m['name'])
 				else:
 					rec = rlist[0]
 					if add_stat == True:
-						message_list.append \
+						mlist.append \
 						( \
 							'%s;%s;%s;%s;%s' % \
 							( \
@@ -1819,7 +1939,7 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 							) \
 						)
 					else:
-						message_list.append \
+						mlist.append \
 						( \
 							'%s;%s;%s;%s' % \
 							( \
@@ -1829,19 +1949,27 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 								'%s%s' % (';' * (4 - len(rec['players'])), rec['date']) \
 							) \
 						)
-			message_list.append('')
+			mlist.append('')
 
-	add_stat_message_list('Time', lambda r: r['time'])
-	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min')
-	add_stat_message_list('Kill Factor', kill_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='avg SI kills/min')
-	add_stat_message_list('Score Factor', score_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='')
-	add_stat_message_list('Gore Factor', gore_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills')
-	add_stat_message_list('Tank Kills', lambda r: r['tanks'], add_stat = True)
-	add_stat_message_list('Common Kills', lambda r: r['common'], add_stat = True, more_info='')
+	message_list1 = []
+	add_stat_message_list('Time', lambda r: r['time'], mlist = message_list1)
+	add_stat_message_list('Gore Factor', gore_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills', mlist = message_list1)
+	add_stat_message_list('Tank Kills', lambda r: r['tanks'], add_stat = True, mlist = message_list1)
+	add_stat_message_list('Common Kills', lambda r: r['common'], add_stat = True, more_info='', mlist = message_list1)
+
+	message_list2 = []
+	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min', mlist = message_list2)
+	add_stat_message_list('Kill Factor', kill_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='avg SI kills/min', mlist = message_list2)
+	add_stat_message_list('Score Factor', score_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='', mlist = message_list2)
+
+	message_list3 = []
+	add_stat_message_list('Time', lambda r: r['time'], map_type = 'custom', mlist=message_list3)
 
 
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
-	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose)
+	combined = combine_all_message_lists([message_list1, message_list2, message_list3], 1)
+
+	combined.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
+	export_batch_text_google_spreadsheet(user, pw, combined, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose = verbose, remove_extra_text = True)
 
 def export_na_stats_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	na = ['US', 'Canada', 'Mexico']
