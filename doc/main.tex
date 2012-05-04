@@ -54,7 +54,32 @@ KF_{1} &= \frac{(smokers + boomers + hunters + tanks) / 4}{minutes} \\
 KF_{2} &= \frac{(smokers + boomers + hunters + chargers + spitters + jockeys + tanks) / 7}{minutes} \text{.}
 \end{align}
 
-This factor should yield values around 1.0. Factors well below 1.0 should be considered easy rounds and factors well above 1.0 should be considered difficult rounds.
+\subsubsection{Score Factor}
+This factor awards points for every zombie killed and also points for every second survived. The factor is calculated differently for Left 4 Dead 1 and 2. For Left 4 Dead 1, points are awarded as follows:
+\begin{itemize}
+\item 2 points for each second survived
+\item 1 point for each common infected killed
+\item 10 points for every hunter, smoker, and boomer killed
+\item 30 points for each tank killed
+\end{itemize}
+For Left 4 Dead 2, points are awarded as follows:
+\begin{itemize}
+\item 2 points for each second survived
+\item 0.5 points for each common infected killed
+\item 6 points for every hunter, smoker, boomer, charger, spitter, and jockey killed
+\item The special infected score is multiplied by a bonus amount, which is the total special infected killed per minute (trash factor).
+\item 25 points for each tank killed
+\end{itemize}
+
+In actuality, there is some rounding in the calculations. Therefore, the exact formulas for calculating the score factors $SF_{1}$ and $SF_{2}$ are as follows:
+
+\begin{align}
+SF_{1} &= \operatorname{round}(seconds) + 0.5common + 6(hunters + smokers + boomers) + 25 tanks \\
+SI_{2} &= 6(hunters + smokers + boomers + chargers + spitters + jockeys) \\
+SIPPM_{2} &= \operatorname{round}\left(\frac{hunters + smokers + boomers + chargers + spitters + jockeys}{minutes}, 2\right) \\
+bonus_{2} &= SI_{2}\left(\frac{SIPPM_{2}}{10} + 1\right) \\
+SF_{2} &= \operatorname{round}(seconds) + \operatorname{round}(0.5 common) + bonus_{2} + 25 tanks
+\end{align}
 
 \subsubsection{Other Factors}
 Other factors include tank factor, gore factor, and common factor. These are pretty self-explanatory; tank factor is the total tank kills, common factor is the total common kills, and gore factors is the total amount of SI kills.

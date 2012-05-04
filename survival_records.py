@@ -1,10 +1,16 @@
 #==================================================
 # survival_records.py - Script to keep track of left 4 dead survival records. The information is tracked inside of dictionaries, which can be imported and exported to text files.
+#
+# TODO list:
+# - NAS group list
+# - high honors
 #==================================================
 import datetime
 import sys
 import re
 import getopt
+
+DAYS = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
 
 """
 def import_list(filename, list):
@@ -59,7 +65,7 @@ def export_groups_list(file, groups):
 		for (k, v) in group.iteritems():
 			if k == 'ID':
 				line.append('ID=%d' % (group['ID']))
-			elif k == 'players':
+			elif k == 'players' and v != None:
 				line.append('players=%s' % ','.join(['%d' % p['ID'] for p in v]))
 			elif k == 'records':
 				line.append('records=%s' % ','.join(['%d' % p['ID'] for p in v]))
@@ -729,7 +735,7 @@ def edit_record_date_from_strings(game, players, maps, records, date, time, m, p
 #--------------------------------------------------
 # add_group_record_from_strings
 #--------------------------------------------------
-def add_group_record_from_strings(game, players, maps, records, groups, date, time, m, plyrs, grps):
+def add_group_record_from_strings(game, players, maps, records, groups, date, time, map_name, plyrs, grps):
 
 	times = time.split(':')
 
@@ -765,10 +771,15 @@ def add_group_record_from_strings(game, players, maps, records, groups, date, ti
 
 	record = matching_records[0]
 
+	# find the matching map
+	mp = [m for m in maps if (equal_name(m['name'], map_name) or ('aliases' in m and is_alias(map_name, m['aliases']))) and m['game'] == game]
+	if mp == []: return 'Map %s not found' % map_name
+	else: mp = mp[0]
+
 	# find the matching groups
 	grouplist = []
 	for name in filter(lambda p: p != '', map(lambda s: s.strip(), grps.split(','))):
-		group = filter(lambda g: match_group(g, game, m, name), groups)
+		group = filter(lambda g: match_group(g, game, mp, name), groups)
 		if group == []:
 			return 'Group %s not found' % name
 		else:
@@ -1044,7 +1055,7 @@ def update_cell(gd_client, curr_key, curr_wksht_id, row, col, inputValue):
 def campaign_name_order(m):
 	cs1 = ['No Mercy', 'Crash Course', 'Death Toll', 'Dead Air', 'Blood Harvest', 'Last Stand', 'Sacrifice']
 	cs2 = ['Dead Center', 'The Passing', 'Dark Carnival', 'Swamp Fever', 'Hard Rain', 'The Parish', 'No Mercy', 'The Sacrifice']
-	names = [ 'Generator Room', 'Gas Station', 'Hospital', 'Rooftop', 'Bridge (CC)', 'Truck Depot', 'Drains', 'Church', 'Street', 'Boathouse', 'Crane', 'Construction Site', 'Terminal', 'Runway', 'Warehouse', 'Bridge (BH)', 'Farmhouse', 'Lighthouse', 'Traincar', 'Port', 'Mall Atrium', 'Riverbank', 'Underground', 'Port (P)', 'Motel', 'Stadium Gates', 'Concert', 'Gator Village', 'Plantation', 'Burger Tank', 'Sugar Mill', 'Bus Depot', 'Bridge', 'Generator Room', 'Traincar', 'Port (S)', 'Rooftop' ]
+	names = [ 'Generator Room', 'Gas Station', 'Hospital', 'Rooftop', 'Bridge (CC)', 'Truck Depot', 'Drains', 'Church', 'Street', 'Boathouse', 'Crane', 'Construction Site', 'Terminal', 'Runway', 'Warehouse', 'Bridge (BH)', 'Farmhouse', 'Lighthouse', 'Traincar', 'Port', 'Mall Atrium', 'Riverbank', 'Underground', 'Port (P)', 'Motel', 'Stadium Gate', 'Concert', 'Gator Village', 'Plantation', 'Burger Tank', 'Sugar Mill', 'Bus Depot', 'Bridge', 'Generator Room', 'Traincar', 'Port (S)', 'Rooftop' ]
 
 	if m['game'] == 1:
 		try:
@@ -1124,16 +1135,16 @@ def export_maps_google_spreadsheet(user, pw, maps, records, gd_client = None, cu
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
 	message_lists = []
-	for i,typ in enumerate(['official', 'custom']):
+	for i,typ in enumerate(['Official', 'Custom']):
 		for game in [1, 2]:
 			message_list = []
 			message_list.append('Left 4 Dead %d %s Maps' % (game, typ))
-			if typ == 'official':
+			if typ == 'Official':
 				message_list.append('campaign;name;records')
 				message_list += ['%s;%s;%d' % (m['campaign'], m['name'], len(filter(lambda r: r['map'] == m, records))) for m in \
 					sorted \
 					( \
-						filter(lambda m: m['game'] == game, official_maps(maps) if typ == 'official' else custom_maps(maps)), \
+						filter(lambda m: m['game'] == game, official_maps(maps)), \
 						key = lambda m: (campaign_name_order(m), m['campaign'].lower(), m['name'].lower()) \
 					)]
 			else:
@@ -1202,7 +1213,7 @@ def export_groups_google_spreadsheet(user, pw, groups, gd_client = None, curr_ke
 	for g in sorted \
 	( \
 		filter(lambda g: g['type'] == 'strategy', gs), \
-		key = lambda g: (campaign_name_order(g['map']), g['name'].lower()) \
+		key = lambda g: (campaign_name_order(g['map']), g['map']['campaign'].lower(), g['map']['name'].lower(), g['name'].lower()) \
 	):
 		message_list2.append \
 		( \
@@ -1326,7 +1337,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 			score_factor(r), \
 			', '.join([group['name'] for group in sorted(find_records_group(r, groups), key = lambda g: g['name'].lower())]) \
 		) \
-		for r in sorted(filter(lambda r: r['map']['game'] == 1, records), key = lambda r: (campaign_name_order(r['map']), r['date'], r['time'])) \
+		for r in sorted(filter(lambda r: r['map']['game'] == 1, records), key = lambda r: (campaign_name_order(r['map']), r['map']['campaign'], r['map']['name'], r['date'], r['time'])) \
 	]
 
 	#message_list.append('')
@@ -1355,7 +1366,7 @@ def export_records_google_spreadsheet(records, groups, user = None, pw = None, g
 			score_factor(r), \
 			', '.join([group['name'] for group in sorted(find_records_group(r, groups), key = lambda g: g['name'].lower())]) \
 		) \
-		for r in sorted(filter(lambda r: r['map']['game'] == 2, records), key = lambda r: (campaign_name_order(r['map']), r['date'], r['time'])) \
+		for r in sorted(filter(lambda r: r['map']['game'] == 2, records), key = lambda r: (campaign_name_order(r['map']), r['map']['campaign'].lower(), r['map']['name'].lower(), r['date'], r['time'])) \
 	]
 
 	message_list = combine_message_lists(message_list1, message_list2, 1)
@@ -1407,14 +1418,14 @@ def export_text_google_spreadsheet(user, pw, text):
 	# Get the list of spreadsheets
 	feed = gd_client.GetSpreadsheetsFeed()
 	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
+	input = raw_input('Selection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_key = id_parts[len(id_parts) - 1]
 
 	# Get the list of worksheets
 	feed = gd_client.GetWorksheetsFeed(curr_key)
 	_PrintFeed(feed)
-	input = raw_input('\nSelection: ')
+	input = raw_input('Selection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_wksht_id = id_parts[len(id_parts) - 1]
 
@@ -1482,29 +1493,6 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	batchRequest = gdata.spreadsheet.SpreadsheetsCellsFeed()
 	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
 
-	"""
-	def splitting(T):
-		S = '\;'
-		starts = [match.start() for match in re.finditer(re.escape(S), T)]
-		T2 = T.replace('\;', '##')
-		Tsplit = T2.split(';')
-
-		for i, s in enumerate(starts):
-			pos = s
-			start_word = 0
-			for j, word in enumerate(Tsplit):
-				if pos > len(word):
-					pos -= len(word) + 1
-					start_word = j+1
-
-			starts[i] = (pos, start_word)
-
-		for t in starts:
-			Tsplit[t[1]] = Tsplit[t[1]][:t[0]] + ';' + Tsplit[t[1]][t[0]+2:]
-		return Tsplit
-	"""
-
-
 	batch_count = 0
 	single_update_list = []
 	for i,r in enumerate(text):
@@ -1522,11 +1510,13 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	if remove_extra_text == True:
 		row_list = []
 		for i,r in enumerate(text):
-			for j,c in enumerate(r.split(';')):
-				row_list.append((i+1, j+1))
+			for j,c in enumerate(splitting(r, ';')):
+				if c.strip() != '':
+					row_list.append((i+1, j+1))
 
 		for entry in cells.entry:
-			if not (int(entry.cell.row), int(entry.cell.col)) in row_list and entry.cell.text.strip() != '':
+			if (int(entry.cell.row), int(entry.cell.col)) not in row_list and entry.cell.text.strip() != '':
+				entry.cell.text = ''
 				entry.cell.inputValue = ''
 				batch_count += 1
 				batchRequest.AddUpdate(entry)
@@ -1540,14 +1530,17 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	for (r, c, v) in single_update_list:
 		update(r,c,v)
 
+"""
+=(ROUND(REGEXEXTRACT(I12, "(.*):")*60+REGEXEXTRACT(I12, ":(.*)"))+(J12/2)+(K12*6+L12*6+M12*6)+(P12*25))
+"""
 def score_factor(r):
 	if r['map']['game'] == 1:
-		return int(round(r['time'].seconds + r['time'].microseconds / 1e6) * 2 + r['common'] + (r['hunters'] + r['smokers'] + r['boomers']) * 10 + r['tanks'] * 30)
+		return int(round(r['time'].seconds + r['time'].microseconds / 1e6) + r['common']/2.0 + (r['hunters'] + r['smokers'] + r['boomers']) * 6 + r['tanks'] * 25)
 	elif r['map']['game'] == 2:
-		si_score = (r['hunters'] + r['smokers'] + r['boomers'] + r['chargers'] + r['spitters'] + r['jockeys']) * 7
+		si_score = (r['hunters'] + r['smokers'] + r['boomers'] + r['chargers'] + r['spitters'] + r['jockeys']) * 6
 		si_per_min = round((r['hunters'] + r['smokers'] + r['boomers'] + r['chargers'] + r['spitters'] + r['jockeys']) / (r['time'].seconds + r['time'].microseconds / 1e6) * 60, 2)
-		bonus = (si_per_min / 10 + 1) * si_score - si_score
-		return int(round(r['time'].seconds + r['time'].microseconds / 1e6) + round(r['common'] * 0.5) + (r['hunters'] + r['smokers'] + r['boomers'] + r['chargers'] + r['spitters'] + r['jockeys']) * 7 + r['tanks'] * 25 + bonus)
+		bonus = (si_per_min / 10 + 1) * si_score
+		return int(round(r['time'].seconds + r['time'].microseconds / 1e6) + round(r['common'] * 0.5) + bonus + r['tanks'] * 25)
 
 def kill_factor(record):
 	"""average SI kills per minute"""
@@ -1652,6 +1645,13 @@ def find_group_members(group, players):
 
 	return playerlist
 
+
+#--------------------------------------------------
+# Checks that the record does not use a gamemode that is a mutation
+#--------------------------------------------------
+def mutation_record(rec, groups):
+	return filter(lambda g: g['type'] == 'gamemode' and g['mutation'] == 'yes', find_records_group(rec, groups)) != []
+
 #--------------------------------------------------
 # gen_statistics
 #--------------------------------------------------
@@ -1689,12 +1689,28 @@ def gen_statistics(records, players, maps, factor, n = 1):
 		) \
 		for m in sorted(maps, key = lambda m: campaign_name_order(m)) \
 	]
+#--------------------------------------------------
+# get_key_match
+#--------------------------------------------------
+def get_key_match(gd_client, prompt = True, input = None):
+	feed = gd_client.GetSpreadsheetsFeed()
+	if prompt == True:
+		_PrintFeed(feed)
+		input = raw_input('Selection: ')
+	match  = filter(lambda e: e.title.text.strip().lower() == input.strip().lower(), feed.entry)
+	if match == []:
+		return None
+	else:
+		return match[0].id.text.split('/')[-1]
 
+#--------------------------------------------------
+# get_key
+#--------------------------------------------------
 def get_key(gd_client, prompt = True, input = None):
 	feed = gd_client.GetSpreadsheetsFeed()
 	if prompt == True:
 		_PrintFeed(feed)
-		input = raw_input('\nSelection: ')
+		input = raw_input('Selection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_key = id_parts[len(id_parts) - 1]
 	return curr_key
@@ -1703,7 +1719,7 @@ def get_wksht(gd_client, curr_key, prompt = True, input = None):
 	feed = gd_client.GetWorksheetsFeed(curr_key)
 	if prompt == True:
 		_PrintFeed(feed)
-		input = raw_input('\nSelection: ')
+		input = raw_input('Selection: ')
 	id_parts = feed.entry[string.atoi(input)].id.text.split('/')
 	curr_wksht_id = id_parts[len(id_parts) - 1]
 	return curr_wksht_id
@@ -1731,47 +1747,55 @@ def export_stats_top10_google_spreadsheet(records, players, maps, user = None, p
 	if curr_wksht_id == None:
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
-	message_list = []
-
 	# get top times
-	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s, more_info = '', add_stat = False):
-		stats = gen_statistics(records, players, official_maps(maps), factor = fcn, n = 10)
-		for game in [1, 2]:
-			message_list.append('Best %s L4D%d;%s' % (label,game,more_info))
+	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s, more_info = '', add_stat = False, message_list = []):
+		stats = gen_statistics(filter(lambda r: not mutation_record(r, groups), records), players, official_maps(maps), factor = fcn, n = 10)
+		mlists = []
+		for (game, mlist) in [(1, []), (2, [])]:
+			mlist.append('Best %s L4D%d;%s' % (label,game,more_info))
 			for (m, rlist) in filter(lambda s: s[0]['game'] == game, stats):
-				message_list.append(m['name'])
+				mlist.append(m['name'])
 				for i,rec in enumerate(rlist):
 					if add_stat == True:
-						message_list.append \
+						mlist.append \
 						( \
-							'%d:;%s;%s;%s' % \
+							'%d:;%s;%s;%s;%s' % \
 							( \
 								i+1, \
 								display_fcn(fcn(rec)), \
 								format_time(rec['time']), \
-								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
+								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]), \
+								rec['date'] \
 							) \
 						)
 					else:
-						message_list.append \
+						mlist.append \
 						( \
-							'%d:;%s;%s' % \
+							'%d:;%s;%s;%s' % \
 							( \
 								i+1, \
 								format_time(rec['time']), \
-								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]) \
+								';'.join([p['name'] for p in sorted(rec['players'], key = lambda p: p['name'].lower())]), \
+								rec['date'] \
 							) \
 						)
 				for index in range(len(rlist) + 1, 11):
-					message_list.append('%d:' % (index))
-				message_list.append('')
+					mlist.append('%d:' % (index))
+				mlist.append('')
+			mlists.append(mlist)
+		message_list += combine_all_message_lists(mlists, 1)
+		return message_list
 
-	add_stat_message_list('Time', lambda r: r['time'])
-	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min')
+	message_list = []
+	add_stat_message_list('Time', lambda r: r['time'], message_list=message_list)
+	message_list2 = []
+	add_stat_message_list('Score Factor', score_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='', message_list=message_list2)
+	add_stat_message_list('Trash Factor', trash_factor, display_fcn = lambda s: '%.03f' % s, add_stat = True, more_info='total SI kills/min', message_list=message_list2)
+	combined = combine_message_lists(message_list, message_list2, 1)
 
-	message_list.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
+	combined.append('last updated:;%s UTC' % (datetime.datetime.utcnow()))
 
-	export_batch_text_google_spreadsheet(user, pw, message_list, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose=verbose)
+	export_batch_text_google_spreadsheet(user, pw, combined, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=curr_wksht_id, verbose=verbose)
 
 def export_na_stats_top10_google_spreadsheet(records, players, maps, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	na = ['US', 'Canada', 'Mexico']
@@ -1914,7 +1938,7 @@ def export_stats_google_spreadsheet(records, players, maps, user = None, pw = No
 
 	# get top times
 	def add_stat_message_list(label, fcn, display_fcn = lambda s: '%s' % s,more_info = '', add_stat = False, map_type = 'official', mlist = message_list):
-		stats = gen_statistics(records, players, official_maps(maps) if map_type == 'official' else custom_maps(maps), factor = fcn)
+		stats = gen_statistics(filter(lambda r: not mutation_record(r, groups), records), players, official_maps(maps) if map_type == 'official' else custom_maps(maps), factor = fcn)
 		for game in [1, 2]:
 			if more_info == '':
 				mlist.append('Best %s L4D%d' % (label,game))
@@ -2021,6 +2045,91 @@ def import_text_google_spreadsheet(user = None, pw = None, gd_client = None, cur
 		rowlist.append(collist)
 	return rowlist
 
+def weekly_achievements(players, maps, groups, records, message_list = [], display_date = datetime.date.today()):
+	"""Gets the list of weekly achievements for players."""
+	# get the sunday
+	start_day = display_date - datetime.timedelta(days=(display_date.weekday()))
+
+	# get the last day, saturday
+	end_day = display_date + datetime.timedelta(days=(6 - display_date.weekday()))
+
+	# get all records of the week
+	week_records = filter(lambda r: start_day <= r['date'] <= end_day, records)
+
+	# find the honor groups
+	l4d1_20 = filter(lambda g: g['name'] == 'Left 4 Dead 1 All 20s', groups)[0]
+	l4d1_30 = filter(lambda g: g['name'] == 'Left 4 Dead 1 All 30s', groups)[0]
+	l4d1_40 = filter(lambda g: g['name'] == 'Left 4 Dead 1 All 40s', groups)[0]
+	l4d2_20 = filter(lambda g: g['name'] == 'Left 4 Dead 2 All 20s', groups)[0]
+
+	player_records = []
+
+	for player in sorted(players, key = lambda p: p['name'].lower()):
+		"""
+		The threshold for records is:
+
+		over 20 min if in all 20 honor group
+		over 30 min if in all 30 honor group
+		over 15 min if in no honor groups
+
+		at least 80% of best recorded time
+		"""
+		if player in l4d1_40['players']:
+			l4d1_thresh = datetime.timedelta(minutes=40)
+		elif player in l4d1_30['players']:
+			l4d1_thresh = datetime.timedelta(minutes=30)
+		elif player in l4d1_20['players']:
+			l4d1_thresh = datetime.timedelta(minutes=20)
+		else:
+			l4d1_thresh = datetime.timedelta(minutes=15)
+
+		if player in l4d2_20['players']:
+			l4d2_thresh = datetime.timedelta(minutes=20)
+		else:
+			l4d2_thresh = datetime.timedelta(minutes=15)
+
+		# only count the official maps
+		for game in [1, 2]:
+			for m in \
+				sorted \
+				( \
+					official_maps(filter(lambda m: m['game'] == game, maps)), \
+					key = lambda m: (campaign_name_order(m)) \
+				):
+
+				# determine the best time on this map
+				try:
+					best_time = sorted(filter(lambda r: r['map'] == m and r['date'] <= end_day and player in r['players'], records), key = lambda r: r['time'], reverse = True)[0]
+					best_time_thresh = datetime.timedelta(days = best_time['time'].days * 0.9, seconds = best_time['time'].seconds * 0.9, microseconds = best_time['time'].microseconds * 0.9)
+				except IndexError:
+					best_time = None
+					best_time_thresh = None
+
+				# find the week's records with the matching map and matching player
+				try:
+					best_rec = sorted(filter(lambda r: r['map'] == m and player in r['players'], week_records), key = lambda r: r['time'], reverse = True)[0]
+
+					if ((game == 1 and best_rec['time'] >= l4d1_thresh) or (game == 2 and best_rec['time'] >= l4d2_thresh)) and best_rec['time'] >= best_time_thresh:
+						pb = sorted(filter(lambda r: r['map'] == m and r['date'] <= best_rec['date'] and player in r['players'], records), key = lambda r: r['time'], reverse = True)[0]
+						player_records.append((player, best_rec, best_rec == pb))
+				except IndexError:
+					pass
+	for (p,r,pb) in player_records:
+		message_list.append \
+		( \
+			'%s achieved %.1f minutes on %s with %s%s' % \
+			( \
+				p['name'], \
+				round(r['time'].seconds / 60.0 * 2) / 2, \
+				r['map']['name'], \
+				', '.join([ player['name'] for player in sorted(r['players'], key = lambda pl: (0 if p == pl else 1, pl['name'].lower()))[1:] ]), \
+				' (PB!)' if pb else ''
+			) \
+		) \
+
+	return message_list
+
+
 def add_players_google_spreadsheet(players, user = None, pw = None, gd_client = None, curr_key = None, curr_wksht_id = None, verbose = False):
 	if gd_client == None:
 		gd_client = gdata.spreadsheet.service.SpreadsheetsService()
@@ -2041,7 +2150,8 @@ def add_players_google_spreadsheet(players, user = None, pw = None, gd_client = 
 
 	if len(message_list) == 0 or not set(message_list[0]) <= set(['name', 'country', 'aliases', 'status', 'errors']):
 		new_message_list = ['status;name;country;aliases;errors']
-		new_message_list.append([';'.join(col_list) for col_list in message for message in message[1:]])
+		for msg in message_list[1:]:
+			new_message_list.append([';'.join(col_list) for col_list in msg])
 		export_batch_text_google_spreadsheet(user, pw, new_message_list, gd_client, curr_key, curr_wksht_id, verbose)
 		return
 
@@ -2509,7 +2619,8 @@ gd_client.password = pw
 gd_client.ProgrammaticLogin()
 
 if use_defaults == True or raw_input('default spreadsheet and worksheet values? y/n: ') == 'y':
-	curr_key = get_key(gd_client, prompt=False, input='0')
+	#curr_key = get_key(gd_client, prompt=False, input='0')
+	curr_key = get_key_match(gd_client, prompt=False, input='Survival Records Beta 2.0')
 	maps_wksht = get_wksht(gd_client, curr_key, prompt=False, input='0')
 	player_wksht = get_wksht(gd_client, curr_key, prompt=False, input='1')
 	records_wksht = get_wksht(gd_client, curr_key, prompt=False, input='2')
@@ -2561,6 +2672,16 @@ records_file.close()
 groups_file = open('groups.txt', 'w')
 export_groups_list(groups_file, groups)
 groups_file.close()
+
+week_file = open('week.txt', 'w')
+mlist = []
+for i, day in enumerate([datetime.date.today() - datetime.timedelta(days = 7 * i) for i in range(3, -1, -1)]):
+	na_group = filter(lambda g: g['name'] == 'North American Survivors', groups)[0]
+	mlist += ['Week of %s to %s' % (day - datetime.timedelta(days = day.weekday()), day + datetime.timedelta(days = 6-day.weekday()))]
+	weekly_achievements(filter(lambda p: p in find_group_members(na_group, players), players), maps, groups, records, message_list = mlist, display_date = day)
+
+week_file.write('\n'.join(mlist))
+week_file.close()
 
 print 'updating maps'
 export_maps_google_spreadsheet(user, pw, maps, records, gd_client=gd_client, curr_key=curr_key, curr_wksht_id=maps_wksht, verbose = verbose)

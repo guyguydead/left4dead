@@ -2,11 +2,11 @@ url=http://steamcommunity.com/groups/NorthAmericanSurvivors;type=playergroup;ID=
 type=playergroup;ID=2;name=European Survivors;countries=France,UK,Germany,Russia,Spain,Poland,Norway,Sweden,Finland,Latvia,Czech Republic,Portugal
 type=playergroup;ID=8;name=Asian Survivors;countries=Japan,China,India
 type=playergroup;ID=9;name=Oceanic Survivors;countries=Australia,NZ
-map=1;description=Running the circuit;records=194;type=strategy;ID=3;name=circuit
+map=1;description=Running the circuit;records=194,464,566;type=strategy;ID=3;name=circuit
 url=http://steamcommunity.com/groups/TINTINs;players=2,1,4,44,54;type=playergroup;ID=4;name=Adventures of Tin Tin
-description=Did not move any items in Left 4 Dead 2;name=nomv;records=249,250,251,252,234,209,235,242,236,158,138,256,259,260,261,262,246,237,311,313,315,317,330,331,332,333;game=2;type=gamemode;ID=6;aliases=NoMove,No Moved Items,No Moved
-map=36;description=Running the circuit using the poolroom;records=307;type=strategy;ID=7;name=poolcircuit
-map=1;description=Defending the bridge;records=254,314;type=strategy;ID=8;name=mallbridge
+description=Did not move any items in Left 4 Dead 2;name=nomv;records=249,250,251,252,234,209,235,242,236,158,138,256,259,260,261,262,246,237,311,313,315,317,330,331,332,333,371,372,373,388,389,390,391,392,395,446,447,448,450,451,470,480,481,492,506,507,530,531,532,533,548,556,565;game=2;mutation=no;type=gamemode;ID=6;aliases=NoMove,No Moved Items,No Moved
+map=36;description=Running the circuit using the poolroom;records=307,371,500;type=strategy;ID=7;name=poolcircuit
+map=1;description=Defending the bridge;records=254,314,503,548;type=strategy;ID=8;name=mallbridge
 map=1;type=strategy;description=Defending the saferoom;name=saferoom;ID=9
 map=1;type=strategy;description=Defending the Kiosk;name=kiosk;ID=10
 map=22;type=strategy;description=Defending the gazebo;name=gazebo;ID=11
@@ -25,7 +25,7 @@ map=26;type=strategy;description=Defend the scaffolding;name=scaffolding;ID=23
 map=26;type=strategy;description=Defend the rooftops;name=rooftops;ID=24
 map=26;type=strategy;description=Defend the stuffed animals;name=animals;ID=25
 map=27;type=strategy;description=Defend the stage;name=stage;ID=26
-map=27;type=strategy;description=Defend the lightswitch;name=lightswitch;ID=27
+map=27;description=Defend the lightswitch;records=415;type=strategy;ID=27;name=lightswitch
 map=27;type=strategy;description=Defend the tower;name=tower;ID=28
 map=28;type=strategy;description=Defend the boat;name=boat;ID=29
 map=28;type=strategy;description=Defend the ammo stack;name=ammo;ID=30
@@ -33,13 +33,13 @@ map=29;type=strategy;description=Defend the stairs;name=stairs;ID=31
 map=29;type=strategy;description=Defend the hedges;name=hedges;ID=32
 map=29;type=strategy;description=Defend the balcony;name=balcony;ID=33
 map=30;type=strategy;description=Defend the roof;name=roof;ID=34
-map=30;type=strategy;description=Defend behind the truck;name=truck;ID=35
+map=30;description=Defend behind the truck;records=491;type=strategy;ID=35;name=truck
 map=30;type=strategy;description=Defend the weapon spawns;name=weapons;ID=36
 map=30;type=strategy;description=Defend the outside area;name=outside;ID=37
 map=32;type=strategy;description=Defend the tower;name=tower;ID=38
 map=32;type=strategy;description=Defend the ground floor;name=ground;ID=39
 map=32;type=strategy;description=Defend the fences;name=fences;ID=40
-records=330;type=gamemode;description=Smash TV style;name=smashtv;ID=41
+description=Smash TV style;records=330;mutation=no;type=gamemode;ID=41;name=smashtv
 map=33;type=strategy;description=Defend upstairs;name=upstairs;ID=42
 map=33;type=strategy;description=Defend the helecopter pad;name=helecopter;ID=43
 map=33;type=strategy;description=Defend the fences;name=fences;ID=44
@@ -54,22 +54,20 @@ map=35;type=strategy;description=Defend the corner;name=corner;ID=52
 map=36;type=strategy;description=Defend the bridge;name=bridge;ID=53
 map=36;type=strategy;description=Defend the poolroom;name=poolroom;ID=54
 map=36;type=strategy;description=Defend the bar;name=bar;ID=55
-description=All shotguns;records=;game=2;type=gamemode;ID=56;name=shotguns
-records=;description=All snipers;type=gamemode;ID=57;name=snipers
-description=All melee weapons;records=;game=2;type=gamemode;ID=58;name=melee
-records=;description=All pistols;type=gamemode;ID=59;name=pistols
-description=Increased SI rates;records=254;game=2;type=gamemode;ID=60;name=hardmode
+description=All shotguns;records=;game=2;mutation=no;type=gamemode;ID=56;name=shotguns
+description=All snipers;records=;mutation=no;type=gamemode;ID=57;name=snipers
+description=All melee weapons;records=452;game=2;mutation=no;type=gamemode;ID=58;name=melee
+description=All pistols;records=;mutation=no;type=gamemode;ID=59;name=pistols
+description=Increased SI rates;records=254;game=2;mutation=yes;type=gamemode;ID=60;name=hardmode
 map=31;type=strategy;description=Defend the sugar mills;name=sugarmill;ID=61
-description=One player only;numplayers=1;records=;type=gamemode;ID=62;name=solo
-description=Two players only;numplayers=2;records=;type=gamemode;ID=62;name=duo
-description=Three players only;numplayers=3;records=;type=gamemode;ID=62;name=trio
-players=1,2,11;type=playergroup;ID=63;name=House of Sauce
-players=1,2,11;type=playergroup;ID=64;name=House of McQuade
+description=One player only;numplayers=1;records=;mutation=no;type=gamemode;ID=62;name=solo
+description=Two players only;numplayers=2;records=;mutation=no;type=gamemode;ID=62;name=duo
+description=Three players only;numplayers=3;records=;mutation=no;type=gamemode;ID=62;name=trio
+url=http://steamcommunity.com/groups/houseofsauce;players=1,2,11;type=playergroup;ID=63;name=House of Sauce
 players=;type=playergroup;ID=65;name=House of Cookie
 url=http://steamcommunity.com/groups/randomgroup21;players=22,26,30,6,11;type=playergroup;ID=66;name=randomgroup21
 url=http://steamcommunity.com/groups/24KtSvL;players=1,2,11;type=playergroup;ID=67;name=24 Carat Survival
-players=1,70;type=playergroup;ID=68;name=L4D Pro Survivors
-players=;type=playergroup;ID=69;name=WDF
+url=http://steamcommunity.com/groups/L4DPS;players=1,70;type=playergroup;ID=68;name=L4D Pro Survivors
 players=56,73,74;type=playergroup;ID=70;name=Elite Murderers
 players=4,21;type=playergroup;ID=71;name=4 Survival
 type=playergroup;ID=72;name=Unknown;countries=Unknown
@@ -80,19 +78,36 @@ url=http://steamcommunity.com/groups/customgoldminers;players=1,2;type=playergro
 url=http://steamcommunity.com/groups/L4DSurvivalRecords;players=;type=playergroup;ID=76;name=Left4Dead 1 & 2 Survival Records
 url=http://steamcommunity.com/groups/Rayman1103_Group;players=;type=playergroup;ID=77;name=Rayman1103's Mutation Mod Group
 map=2;name=upstairs;description=Defend the top floor;type=strategy;ID=77;aliases=topfloor,top
-records=;type=gamemode;description=No Ladder Block;name=noblock;ID=78
+description=No Ladder Block;records=;mutation=no;type=gamemode;ID=78;name=noblock
 map=2;type=strategy;description=Defend the ammo pile;name=ammo;ID=79
 map=4;name=smallroom;description=Defend a small room;type=strategy;ID=80;aliases=small,room
 map=4;type=strategy;description=Defend the reception desk;name=desk;ID=81
-name=cross;description=Cross-sniping, players are split into two groups;records=;type=gamemode;ID=82;aliases=cross_sniping,cross-sniping,dualgroups
-map=1;name=noweapons;description=No Weapons;type=strategy;ID=81;aliases=propane
-map=1;name=noweapons;description=No Weapons;type=strategy;ID=82;aliases=propane
-map=37;name=noweapons;description=Defend the bottom floor;type=strategy;ID=83;aliases=propane
-map=5;name=noweapons;description=Defend the bottom floor;type=strategy;ID=84;aliases=propane
-description=Tank Assault Mutation;records=;game=2;type=gamemode;ID=85;name=tankassault
-records=;type=gamemode;description=No Gascans, Propane, or Throwables;name=nofire;ID=86
-description=Hunter Survival;records=;game=2;type=gamemode;ID=87;name=hunters
-description=Smoker Survival;records=;game=2;type=gamemode;ID=88;name=smokers
-description=Jockey Survival;records=;game=2;type=gamemode;ID=89;name=jockeys
+name=cross;description=Cross-sniping, players are split into two groups;records=;mutation=no;type=gamemode;ID=82;aliases=cross_sniping,cross-sniping,dualgroups
+map=37;name=bottom;description=Defend the bottom floor;type=strategy;ID=83;aliases=propane
+map=5;name=bottom;description=Defend the bottom floor;type=strategy;ID=84;aliases=propane
+description=Tank Assault Mutation;records=;game=2;mutation=yes;type=gamemode;ID=85;name=tankassault
+description=No Gascans, Propane, or Throwables;records=;mutation=no;type=gamemode;ID=86;name=nofire
+description=Hunter Survival;records=;game=2;mutation=yes;type=gamemode;ID=87;name=hunters
+description=Smoker Survival;records=354;game=2;mutation=yes;type=gamemode;ID=88;name=smokers
+description=Jockey Survival;records=353;game=2;mutation=yes;type=gamemode;ID=89;name=jockeys
 map=14;name=washroom;description=Defend the Washroom;type=strategy;ID=90;aliases=bathroom
-players=23,12,98,141,187,27;type=playergroup;ID=91;name=What Dee Fuck!?;aliases=WDF;url=http://steamcommunity.com/groups/wdfsc
+name=What Dee Fuck!?;url=http://steamcommunity.com/groups/wdfsc;players=23,12,98,141,27;type=playergroup;ID=91;aliases=WDF
+players=1;type=honorlist;ID=92;name=Left 4 Dead 1 All 20s;aliases=l4d1_20
+players=1;type=honorlist;ID=93;name=Left 4 Dead 1 All 30s;aliases=l4d1_30
+players=1;type=honorlist;ID=94;name=Left 4 Dead 1 All 40s;aliases=l4d1_40
+players=30;type=honorlist;ID=95;name=Left 4 Dead 2 All 20s;aliases=l4d2_20
+map=43;description=Defend the jukebox;records=368;aliases=jukebox;type=strategy;ID=96;name=juke
+map=43;description=Defend the upstairs;records=370;aliases=up;type=strategy;ID=97;name=upstairs
+map=43;description=Defend the small alley;records=369;aliases=alley_small;type=strategy;ID=98;name=smallalley
+map=42;description=Defend the Balcony;records=366;aliases=;type=strategy;ID=99;name=balcony
+map=42;description=Defend the Stairs;records=;aliases=;type=strategy;ID=100;name=stairs
+map=42;description=Defend the Far Stairs;records=367;aliases=;type=strategy;ID=101;name=farstairs
+map=60;description=Defend the Outside Alley;records=388;aliases=;type=strategy;ID=102;name=alley
+map=60;description=Defend the Restaurant;records=;aliases=;type=strategy;ID=103;name=restaurant
+map=61;description=Defend the Upstairs Cells;records=389,390,391;aliases=;type=strategy;ID=104;name=upstairs
+map=62;description=Defend the Bowling Alley;records=392;aliases=bowling,bowl,inside;type=strategy;ID=105;name=alley
+map=62;description=Defend the Outside;records=;aliases=;type=strategy;ID=106;name=outside
+map=5;description=Defend the Satellite Dish;records=;aliases=dish,tower;type=strategy;ID=106;name=satellite
+map=10;description=Defend the mounted gun;records=456;aliases=mounted gun,mounted,chaingun;type=strategy;ID=107;name=gun
+description=Tier 1 weapons only;name=tier1;records=556,565;mutation=no;type=gamemode;ID=108;aliases=t1,tier 1
+map=18;description=Defending inside the house near the medkits;records=562;aliases=medkits,house,indoors;type=strategy;ID=109;name=inside

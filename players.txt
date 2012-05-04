@@ -1,7 +1,7 @@
-name=guyguy;country=Canada;ID=1;aliases=GuyGuy
+name=guyguy;country=Canada;ID=1;aliases=GuyGuy,gai,GuyGuyDead
 name=sauce;country=Canada;ID=2;aliases=
 name=Kev;country=US;ID=3;aliases=TheKevSham
-name=Domino;country=Japan;ID=4;aliases=Domino Effect
+name=Domino;country=Japan;ID=4;aliases=Domino Effect,Dmnsn,Domino San
 name=Licksore;country=US;ID=5;aliases=
 name=Overdose;country=France;ID=6;aliases=
 name=accident;country=US;ID=7;aliases=
@@ -18,7 +18,7 @@ name=Sparkster;country=US;ID=17;aliases=[70th Blue Lions]Sparkster
 name=Maxim Hound;country=US;ID=18;aliases=
 name=mistabiswas;country=US;ID=19;aliases=
 name=Walmart;country=US;ID=20;aliases=Walmart Shoplifter
-name=Reminiscence;country=Japan;ID=21;aliases=
+name=Reminiscence;country=Japan;ID=21;aliases=Remi,Jenos,Reminiscences
 name=kris;country=UK;ID=22;aliases=
 name=MudFlap;country=US;ID=23;aliases=[WDF] MudFlap
 name=sLeeK;country=US;ID=24;aliases=
@@ -26,21 +26,21 @@ name=zeano;country=France;ID=25;aliases=
 name=Karl;country=UK;ID=26;aliases=Karl Pilkington
 name=trash;country=New Zealand;ID=27;aliases=trash4cash
 name=Adept;country=Latvia;ID=28;aliases=
-name=OSwald BB;country=France;ID=29;aliases=
+name=OSwald BB;country=France;ID=29;aliases=OSwald
 name=Snookray;country=UK;ID=30;aliases=
 name=Spoon;country=Germany;ID=31;aliases=That guy with the Spoon
 name=Jumpin' Jack;country=Australia;ID=32;aliases=Jumpin' Jack Flash
 name=phoenix;country=Australia;ID=33;aliases=phoenix_advance
 name=WaRLo;country=Australia;ID=34;aliases=
-name=Toshly;country=Unknown;ID=35;aliases=
+name=Toshly;country=UK;ID=35;aliases=
 name=Clockwatcher;country=US;ID=36;aliases=
 name=HtotheIzzle;country=Australia;ID=37;aliases=
-name=KICKER;country=Australia;ID=38;aliases=
-name=_|-|O;country=Japan;ID=39;aliases=
+name=KICKER;country=Australia;ID=38;aliases=K I C K E R
+name=_|-|O;country=Japan;ID=39;aliases=Wistaria
 name=funemui;country=Japan;ID=40;aliases=
 name=(-A-);country=Japan;ID=41;aliases=
 name=sectra100;country=Japan;ID=42;aliases=
-name=PIYA;country=Unknown;ID=43;aliases=PITA,Pain In Your Ass
+name=PIYA;country=France;ID=43;aliases=PITA,Pain In Your Ass
 name=KAMAKAZI;country=Japan;ID=44;aliases=RC XD KAMAKAZI
 name=Yongy;country=Australia;ID=45;aliases=
 name=Daz;country=UK;ID=46;aliases=
@@ -81,13 +81,13 @@ name=quickflint;country=US;ID=80;aliases=
 name=Taxi;country=US;ID=81;aliases=Taxi Service
 name=Kitten;country=US;ID=82;aliases=Kamakazi Kitten
 name=StarLight;country=France;ID=83;aliases=
-name=XBloodyR;country=Unknown;ID=84;aliases=
-name=Big Smoke;country=Unknown;ID=85;aliases=Big Smoke ^.^
+name=XBloodyR;country=Germany;ID=84;aliases=
+name=Big Smoke;country=France;ID=85;aliases=Big Smoke ^.^
 name=My Name Is;country=Unknown;ID=86;aliases=
-name=Tim TeBow;country=Unknown;ID=87;aliases=
+name=Tim TeBow;country=France;ID=87;aliases=
 name=Mr.Madness;country=Unknown;ID=88;aliases=
-name=Traf;country=Unknown;ID=89;aliases=
-name=TeSSai;country=Unknown;ID=90;aliases=
+name=Traf;country=France;ID=89;aliases=
+name=TeSSai;country=France;ID=90;aliases=
 name=Aaron;country=US;ID=91;aliases=
 name=Tom;country=US;ID=92;aliases=
 name=Stud Fox;country=US;ID=93;aliases=
@@ -103,7 +103,7 @@ name=Not Sure;country=Unknown;ID=102;aliases=
 name=NicNak;country=US;ID=103;aliases=
 name=Cello;country=US;ID=104;aliases=
 name=ptrance;country=Germany;ID=105;aliases=ptrance'raYn
-name=dAtaPuNK;country=Unknown;ID=106;aliases=
+name=dAtaPuNK;country=Sweden;ID=106;aliases=
 name=beatslaughter;country=Germany;ID=107;aliases=
 name=gbkickss;country=US;ID=108;aliases=
 name=Kahoner;country=US;ID=109;aliases=
@@ -111,34 +111,95 @@ name=Bud Fox;country=US;ID=110;aliases=
 name=Dr. Tran;country=US;ID=111;aliases=
 name=ST3V3nice;country=US;ID=112;aliases=
 name=Zombie Collector;country=US;ID=113;aliases=The Zombie Collector
-name=Prophet;country=Unknown;ID=114;aliases=
+name=Prophet;country=UK;ID=114;aliases=
 name=Didem;country=Unknown;ID=115;aliases=
-name=Bastel;country=Unknown;ID=116;aliases=
-name=JeGGu;country=Unknown;ID=117;aliases=
-name=KillerMiller;country=Unknown;ID=118;aliases=Killer Miller
-name=L.v;country=Unknown;ID=119;aliases=
-name=Negative;country=Unknown;ID=120;aliases=
-name=tejaO;country=Unknown;ID=121;aliases=
-name=30 Seconds;country=Unknown;ID=122;aliases=
+name=Bastel;country=Germany;ID=116;aliases=
+name=JeGGu;country=Finland;ID=117;aliases=
+name=KillerMiller;country=Spain;ID=118;aliases=Killer Miller
+name=L.v;country=UK;ID=119;aliases=
+name=Negative;country=Germany;ID=120;aliases=
+name=tejaO;country=Spain;ID=121;aliases=
+name=30 Seconds;country=France;ID=122;aliases=
 name=BAD 1;country=Norway;ID=123;aliases=
 name=Pere Noel;country=France;ID=124;aliases=
-name=6BIK;country=Unknown;ID=125;aliases=
-name=Vovan;country=Unknown;ID=126;aliases=Vovan s Urala
-name=XapaA;country=Unknown;ID=127;aliases=
-name=Vetinari;country=Unknown;ID=128;aliases=
+name=6BIK;country=Russia;ID=125;aliases=
+name=Vovan;country=Russia;ID=126;aliases=Vovan s Urala
+name=XapaA;country=Russia;ID=127;aliases=Харад
+name=Vetinari;country=Germany;ID=128;aliases=
 name=FR33Styl;country=Unknown;ID=129;aliases=
 name=Duke;country=Unknown;ID=130;aliases=
 name=n2;country=Unknown;ID=131;aliases=
-name=CioL_;country=Unknown;ID=132;aliases=
-name=3nickma;country=Unknown;ID=133;aliases=
-name=Iruil;country=Unknown;ID=134;aliases=
-name=Lion;country=Unknown;ID=135;aliases=
-name=Kakarotto;country=Unknown;ID=136;aliases=
+name=CioL_;country=Germany;ID=132;aliases=
+name=3nickma;country=Denmark;ID=133;aliases=
+name=Iruil;country=Russia;ID=134;aliases=
+name=Lion;country=Russia;ID=135;aliases=
+name=Kakarotto;country=Greece;ID=136;aliases=
 name=Igor;country=US;ID=137;aliases=
 name=Devil Jumper;country=Unknown;ID=138;aliases=
 name=Nanashi;country=Japan;ID=139;aliases=RC XD NANASHI
 name=Pasta;country=US;ID=140;aliases=
-name=BORNDEAD187;country=Unknown;ID=141;aliases=
+name=BORNDEAD187;country=UK;ID=141;aliases=
 name=linkinvarious;country=Unknown;ID=142;aliases=
 name=Vinnie Paz;country=US;ID=143;aliases=[eM] Vinnie Paz
 name=Dipity;country=US;ID=144;aliases=
+name=Chewbacca;country=US;ID=145;aliases=
+name=Nesisoth;country=US;ID=146;aliases=
+name=Brundlefly;country=US;ID=147;aliases=
+name=Scoot;country=US;ID=148;aliases=Scoot Puffmeister
+name=Yogotiss;country=US;ID=149;aliases=
+name=fry hole;country=US;ID=150;aliases=[WDF] fry hole
+name=everyone;country=US;ID=151;aliases=
+name=Formateur;country=Unknown;ID=152;aliases=Formateur Pro
+name=JeNoCiD;country=Unknown;ID=153;aliases=
+name=Pract;country=Canada;ID=154;aliases=
+name=seamonkey;country=US;ID=155;aliases=
+name=Hurricane;country=Unknown;ID=156;aliases=
+name=zombiekiller;country=US;ID=157;aliases=
+name=Linnear;country=US;ID=158;aliases=
+name=chief8787;country=Unknown;ID=159;aliases=
+name=SwagWEED;country=US;ID=160;aliases=[eM] SwagWEED
+name=ISOPRENE;country=US;ID=161;aliases=
+name=Mrs. Jims;country=Unknown;ID=162;aliases=
+name=Otay;country=Unknown;ID=163;aliases=
+name=GogeTa;country=Unknown;ID=164;aliases=
+name=Shirahama;country=Unknown;ID=165;aliases=Shirahama Kenichi
+name=Yamason;country=France;ID=166;aliases=
+name=sniper's;country=US;ID=167;aliases=sniper's-over-kill
+name=Schemer;country=US;ID=168;aliases=
+name=Justin;country=US;ID=169;aliases=Justin Time
+name=WoW;country=Unknown;ID=170;aliases=
+name=churchdemo;country=US;ID=171;aliases=
+name=SolitaryBeam;country=Unknown;ID=172;aliases=
+name=Thatguy213;country=Unknown;ID=173;aliases=
+name=Joel :);country=US;ID=174;aliases=Joel,[ME] Joel
+name=Forsaken;country=US;ID=175;aliases=ForsakenDamsel
+name=jmzAssailant;country=US;ID=176;aliases=
+name=President;country=Unknown;ID=177;aliases=
+name=Purple Kush;country=US;ID=178;aliases=
+name=ditogi;country=Unknown;ID=179;aliases=
+name=Spider-Miss;country=US;ID=180;aliases=
+name=Alika;country=US;ID=181;aliases=
+name=Zorro170;country=Unknown;ID=182;aliases=
+name=wade flash23;country=Unknown;ID=183;aliases=
+name=Raves;country=Denmark;ID=184;aliases=
+name=Berky;country=Liechtenstein;ID=185;aliases=
+name=Fulgore;country=Unknown;ID=186;aliases=
+name=Razor Blade;country=US;ID=187;aliases=||**|| Razor Blade ||**||
+name=Bert;country=Mexico;ID=188;aliases=
+name=Fuzz;country=US;ID=189;aliases=
+name=One;country=US;ID=190;aliases=
+name=Qui?;country=Unknown;ID=191;aliases=
+name=Jack has;country=Unknown;ID=192;aliases=Jack has a mental disorder
+name=diGital;country=Unknown;ID=193;aliases=
+name=Ez$;country=Unknown;ID=194;aliases=
+name=One Piece;country=Unknown;ID=195;aliases=
+name=OMEGA;country=Unknown;ID=196;aliases=
+name=Biggie MX;country=Unknown;ID=197;aliases=
+name=bim;country=Unknown;ID=198;aliases=
+name=itguy67;country=US;ID=199;aliases=
+name=Jackson;country=Unknown;ID=200;aliases=
+name=Cakes;country=Unknown;ID=201;aliases=
+name=Uzbek;country=Unknown;ID=202;aliases=The_Giant_Of_Uzbek,Giant_Of_Uzbek
+name=kamo;country=Unknown;ID=203;aliases=(GB) kamo 8
+name=notallthatfat;country=US;ID=204;aliases=not all that fat
+name=...;country=Unknown;ID=205;aliases=

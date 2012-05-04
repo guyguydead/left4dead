@@ -48,6 +48,12 @@ class SimpleCRUD:
     # Get the list of spreadsheets
     feed = self.gd_client.GetSpreadsheetsFeed()
     self._PrintFeed(feed)
+    print 'printing contents'
+    print '\n'.join([e.content.text for e in feed.entry])
+    print 'printing titles'
+    print '\n'.join([e.title.text for e in feed.entry])
+    print 'printing ids'
+    print '\n'.join([e.id.text for e in feed.entry])
     input = raw_input('\nSelection: ')
     id_parts = feed.entry[string.atoi(input)].id.text.split('/')
     self.curr_key = id_parts[len(id_parts) - 1]

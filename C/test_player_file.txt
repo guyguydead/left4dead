@@ -1,0 +1,7 @@
+name=guyguy;country=Canada;ID=1;aliases=GuyGuy
+name=sauce;country=Canada;ID=2;aliases=
+name=Kev;country=US;ID=3;aliases=TheKevSham
+name=Domino;country=Japan;ID=4;aliases=Domino Effect,Dmnsn,Domino San
+name=Licksore;country=US;ID=5;aliases=
+name=Overdose;country=France;ID=6;aliases=
+name=accident;country=US;ID=7;aliases=

@@ -1,46 +1,46 @@
 name=Generator Room;campaign=No Mercy;game=1;ID=2;aliases=Gen,Gen Room;type=official
 name=Gas Station;campaign=No Mercy;game=1;ID=3;aliases=Gas;type=official
 name=Hospital;campaign=No Mercy;game=1;ID=4;type=official
-name=Rooftop;campaign=No Mercy;game=1;ID=5;type=official
-name=Bridge (CC);campaign=Crash Course;game=1;ID=6;aliases=CC Bridge;type=official
-name=Truck Depot;campaign=Crash Course;game=1;ID=7;aliases=Truck;type=official
-name=Drains;campaign=Death Toll;game=1;ID=8;type=official
+name=Rooftop;campaign=No Mercy;game=1;ID=5;type=official;aliases=roof
+name=Bridge (CC);campaign=Crash Course;game=1;ID=6;aliases=ccb,CC Bridge;type=official
+name=Truck Depot;campaign=Crash Course;game=1;ID=7;aliases=depot,Truck;type=official
+name=Drains;campaign=Death Toll;game=1;ID=8;type=official;aliases=drain
 name=Church;campaign=Death Toll;game=1;ID=9;type=official
-name=Street;campaign=Death Toll;game=1;ID=10;aliases=The Streets;type=official
+name=Street;campaign=Death Toll;game=1;ID=10;aliases=st,The Streets;type=official
 name=Boathouse;campaign=Death Toll;game=1;ID=11;aliases=Boat;type=official
 name=Crane;campaign=Dead Air;game=1;ID=12;type=official
 name=Construction Site;campaign=Dead Air;game=1;ID=13;aliases=Con,Cons;type=official
 name=Terminal;campaign=Dead Air;game=1;ID=14;aliases=Term;type=official
 name=Runway;campaign=Dead Air;game=1;ID=15;aliases=run;type=official
 name=Warehouse;campaign=Blood Harvest;game=1;ID=16;aliases=ware;type=official
-name=Bridge (BH);campaign=Blood Harvest;game=1;ID=17;type=official
-name=Farmhouse;campaign=Blood Harvest;game=1;ID=18;type=official
-name=Lighthouse;campaign=Last Stand;game=1;ID=19;type=official
-name=Traincar;campaign=Sacrifice;game=1;ID=20;type=official
+name=Bridge (BH);campaign=Blood Harvest;game=1;ID=17;type=official;aliases=bh bridge
+name=Farmhouse;campaign=Blood Harvest;game=1;ID=18;type=official;aliases=farm,barn
+name=Lighthouse;campaign=Last Stand;game=1;ID=19;type=official;aliases=light,light house,lh
+name=Traincar;campaign=Sacrifice;game=1;ID=20;type=official;aliases=train,tc
 name=Port;campaign=Sacrifice;game=1;ID=21;type=official
-name=Mall Atrium;campaign=Dead Center;game=2;ID=1;type=official
-name=Riverbank;campaign=The Passing;game=2;ID=22;type=official
-name=Underground;campaign=The Passing;game=2;ID=23;type=official
-name=Port (P);campaign=The Passing;game=2;ID=24;type=official
-name=Motel;campaign=Dark Carnival;game=2;ID=25;type=official
+name=Mall Atrium;campaign=Dead Center;game=2;ID=1;type=official;aliases=mall,atrium
+name=Riverbank;campaign=The Passing;game=2;ID=22;type=official;aliases=river
+name=Underground;campaign=The Passing;game=2;ID=23;type=official;aliases=bedlam,ug
+name=Port (P);campaign=The Passing;game=2;ID=24;type=official;aliases=pp
+name=Motel;campaign=Dark Carnival;game=2;ID=25;type=official;aliases=mot
 name=Stadium Gate;campaign=Dark Carnival;game=2;ID=26;type=official;aliases=stadium,stadium gates,stad
-name=Concert;campaign=Dark Carnival;game=2;ID=27;type=official
-name=Gator Village;campaign=Swamp Fever;game=2;ID=28;type=official
-name=Plantation;campaign=Swamp Fever;game=2;ID=29;type=official
-name=Burger Tank;campaign=Hard Rain;game=2;ID=30;type=official
-name=Sugar Mill;campaign=Hard Rain;game=2;ID=31;type=official
-name=Bus Depot;campaign=The Parish;game=2;ID=32;type=official
+name=Concert;campaign=Dark Carnival;game=2;ID=27;type=official;aliases=con
+name=Gator Village;campaign=Swamp Fever;game=2;ID=28;type=official;aliases=gator,gator ville,village
+name=Plantation;campaign=Swamp Fever;game=2;ID=29;type=official;aliases=plant
+name=Burger Tank;campaign=Hard Rain;game=2;ID=30;type=official;aliases=burger
+name=Sugar Mill;campaign=Hard Rain;game=2;ID=31;type=official;aliases=sug,sugar,mill,mills,sugar mills
+name=Bus Depot;campaign=The Parish;game=2;ID=32;type=official;aliases=bus,depot
 name=Bridge;campaign=The Parish;game=2;ID=33;type=official
-name=Generator Room;campaign=No Mercy;game=2;ID=34;type=official
-name=Traincar;campaign=No Mercy;game=2;ID=35;type=official
-name=Port (S);campaign=The Sacrifice;game=2;ID=36;type=official
-name=Rooftop;campaign=No Mercy;game=2;ID=37;type=official
+name=Generator Room;campaign=No Mercy;game=2;ID=34;type=official;aliases=gen,gen room,gens
+name=Traincar;campaign=No Mercy;game=2;ID=35;type=official;aliases=tc,train
+name=Port (S);campaign=The Sacrifice;game=2;ID=36;type=official;aliases=port sacrifice,sac port,ports
+name=Rooftop;campaign=No Mercy;game=2;ID=37;type=official;aliases=roof
 name=Dark Bus Depot;campaign=Dark Parish;game=2;ID=38;type=custom;url=http://www.l4dmaps.com/details.php?file=12863
 name=Helm's Deep Reborn;campaign=Helm's Deep;game=2;ID=39;type=custom;url=http://www.l4dmaps.com/details.php?file=7302
 name=Mc Donald's;campaign=Mc Donald's;game=1;ID=40;type=custom;url=http://www.l4dmaps.com/details.php?file=5432
 name=Dark Mall;campaign=Dark Center;game=2;ID=41;type=custom;url=http://rghost.net/1728898
-name=Dark Parade;campaign=Dark Parish;game=2;ID=42;type=custom;url=http://www.l4dmaps.com/details.php?file=12863
-name=Dark Parish1;campaign=Dark Parish;game=2;ID=43;type=custom;url=http://www.l4dmaps.com/details.php?file=12863
+name=Dark Parade;campaign=Dark Parish;game=2;ID=42;type=custom;url=http://www.l4dmaps.com/details.php?file=12863;aliases=Parade
+name=Waterfront;campaign=Dark Parish;game=2;ID=43;type=custom;url=http://www.l4dmaps.com/details.php?file=12863;aliases=Dark Waterfront,Dark Parish1
 name=My Apartment;campaign=My Apartment;game=2;ID=44;type=custom;url=http://www.l4dmaps.com/details.php?file=15980
 name=Dead Forest;campaign=Dead Forest;game=2;ID=45;type=custom;url=http://www.gamebanana.com/l4d2/maps/164213
 name=Left4Pinball;campaign=Left4Pinball;game=2;ID=46;type=custom;url=http://www.l4dmaps.com/details.php?file=15679
@@ -57,3 +57,6 @@ name=Lighthouse;campaign=Back to Blood Harvest;game=2;ID=56;type=custom;url=http
 name=Cornfield;campaign=Back to Blood Harvest;game=2;ID=57;type=custom;url=http://www.l4dmaps.com/details.php?file=3947
 name=Hilltop;campaign=Back to Blood Harvest;game=2;ID=58;type=custom;url=http://www.l4dmaps.com/details.php?file=3947
 name=Club Dali;campaign=Club Dali;game=2;ID=59;type=custom;url=http://www.l4dmaps.com/details.php?file=13722
+name=Riverwalk;campaign=Suicide Blitz 2;game=2;ID=60;type=custom;url=http://www.l4dmaps.com/details.php?file=9754
+name=Prison;campaign=Suicide Blitz 2;game=2;ID=61;type=custom;url=http://www.l4dmaps.com/details.php?file=9754;aliases=jail
+name=Bowling Alley;campaign=Suicide Blitz 2;game=2;ID=62;type=custom;url=http://www.l4dmaps.com/details.php?file=9754;aliases=bowling,bowl

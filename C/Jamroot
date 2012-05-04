@@ -1,0 +1,12 @@
+using python ;
+
+lib libboost_python : : <name>boost_python ;
+lib libboost_date_time : : <name>boost_date_time ;
+
+project
+	: requirements <library>libboost_python <library>libboost_date_time
+;
+
+python-extension survival : records_python.cpp records.cpp
+;
+

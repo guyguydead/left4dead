@@ -1,5 +1,6 @@
 survival record scripts
 
-The purpose of these scripts is to record information of left4dead survival games so that statistics can be run on them. The information is kept on three files: records.txt, players.txt, and maps.txt. These files should not be edited manually but can be edited through the python scripts.
+The purpose of these scripts is to record information of left4dead survival games so that statistics can be run on them. The information is kept on four files: records.txt, players.txt, groups.txt, and maps.txt. These files should not be edited manually but can be edited through the python scripts.
 
 main script file: survival_records.py
+documentation: doc/survival_doc.pdf
