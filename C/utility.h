@@ -6,6 +6,7 @@
 #include <locale>
 #include <string>
 #include <iostream>
+#include <cmath>
 
 //==================================================
 // class StringTokenizer
@@ -109,6 +110,21 @@ inline std::string &rtrim(std::string &s)
 inline std::string &trim(std::string &s)
 {
 	return ltrim(rtrim(s));
+}
+
+inline double round(double number)
+{
+	return number < 0.0 ? std::ceil(number - 0.5) : std::floor(number + 0.5);
+}
+
+inline float round(float number)
+{
+	return number < 0.0 ? std::ceil(number - 0.5) : std::floor(number + 0.5);
+}
+
+inline float round(float number, int n)
+{
+	return round(number * std::pow(10, n)) / std::pow(10, n);
 }
 
 #ifndef NO_BOOST_

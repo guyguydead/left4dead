@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "./survival_records_c.py", line 2175, in <module>
+    main()
+  File "./survival_records_c.py", line 2129, in main
+    add_records_google_spreadsheet_rt(2, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_record2_wksht, verbose = True)
+  File "./survival_records_c.py", line 1230, in add_records_google_spreadsheet_rt
+    err_msg = create_record_from_strings_rt(rt, 2, v['date'], v['time'], v['map'], v['players'], v['groups'], v['common'], v['hunters'], v['smokers'], v['boomers'], v['tanks'], chargers=v['chargers'], jockeys=v['jockeys'], spitters=v['spitters'])
+  File "./survival_records_c.py", line 793, in create_record_from_strings_rt
+    mp = [m for m in rt.maps if (equal_name(m.name, map_name) or is_alias(map_name, m.aliases)) and m.game == game]
+AttributeError: 'int' object has no attribute 'maps'

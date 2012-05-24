@@ -1,0 +1,136 @@
+-	Bio Hazzard Bob	US
+-	guyguy	CA
+-	sauce	CA
+-	Licksore	Unknown
+-	Lone Wolf McQuade	US
+-	Domino Effect	JP
+add	hryrdnt	Unknown
+add	Internet Soldier	US
+-	itguy67	US
+-	Mr.Nice	US
+add	Prime	Unknown
+add	Ron Paul 2012	US	Jester
+-	Thal	US
+-	[WDF] MudFlap	Unknown
+-	[WDF] Ripperwolf	Unknown
+add	|UCC|BLAZE & AMAZE	Unknown
+-	::	DE
+-	bobodia	Unknown
+add	Eriksson	DE
+-	Fatty Ding Dongs	US
+add	GeeKztAr	Unknown
+-	General Mirrors	Unknown
+-	Hitman	Unknown
+add	I Fucked Waffles!	Unknown
+-	Igor	US
+-	Im sorry I thought you was corn	US
+add	M0k2	Unknown
+add	Meat	US
+add	nicole	US
+add	nINA	RU
+-	notallthatfat	US
+-	Papa Licksore	Unknown
+-	phoenix_advance	AU
+add	Pink Floyd	US
+add	quickflint	US
+add	Schemer	US
+add	smitty3472	Unknown
+add	that guy called Turito	MX
+add	Thugzilla Zombiekilla	US
+add	tolazytothink	Unknown
+add	trash	NZ
+add	WaRLo	AU
+-	[WDF] Taxi Service	US
+add	[WPH] Kratos	US
+add	Thock & Runder	US
+add	Aaron	Unknown
+-	AK<Fritz	US
+-	AnGeR	ES
+-	ANKER	US
+-	Arkron	US
+-	aTastyCookie	Unknown
+-	Azimuth	AU
+add	bim	Unknown
+add	Clutch McDoogle	US
+add	D.o.G.	US
+-	Dipity	US
+add	Ez$	Unknown
+add	gtxcr2000	Unknown
+add	Hanky Danglers	US
+add	highvelocity	Unknown
+add	HoboMan725	Unknown
+add	honey_girl	Unknown
+add	j5	US
+add	Jayden James	CA
+add	Jeff	US
+add	Jeremy Usborne (Jez)	Unknown
+add	Jie is the best	CA
+add	jowlstral	US
+add	Justin Time (T`D`S)	US
+add	KeairaPhoenix	Unknown
+add	let it bleed	Unknown
+add	Lucky	US
+add	Mist	FJ
+add	NakeD	FR
+add	nezerach	Unknown
+add	Norse	Unknown
+add	pantsmcpantons	US
+add	PillsStealer	US
+add	Prototype 2 power of Cold	US
+add	Redmage	CA
+add	Scarlet Serenity	US
+add	Spartan M.E.	Unknown
+add	Spider-Miss	Unknown
+add	stephieteffy	Unknown
+add	Tom	Unknown
+add	Trippin Balls Man	US
+add	YZR-8000	CA
+add	zeano	Unknown
+add	zombiekiller	US
+-	|UCC|RAMBO	Unknown
+add	willdoanythingforcrack	Unknown
+add	Lefty	Unknown
+add	Tough Jeansmith HKQ	Unknown
+add	FLUX	AU
+add	ISOPRENE	US
+add	~Foxy Pink Assassin~	SE
+add	Clyde Clearwater	US
+add	[eM] Pazmanian Devil	Unknown
+add	sLeeK	US
+add	TRUSTY	Unknown
+add	Felonious	Unknown
+add	iClaimSB	Unknown
+add	gssecretary1	US
+add	That guy with the Spoon	DE
+add	Faramir	US
+add	Kannon	Unknown
+add	Ratix	US
+add	VooDoo Child	US
+add	Psy	Unknown
+add	Kanthor	Unknown
+add	niserron	US
+add	Nny	US
+add	Sgt_Badping1111	Unknown
+add	Courpse_moon	RU
+add	Overdose	Unknown
+add	Pockygirl	US
+add	The Zombie Collector	Unknown
+add	Traf >	Unknown
+add	ydoc #away	US
+add	[WDF] fry hole	US
+add	Ludo	FX
+add	Nightmare	Unknown
+add	Death Dealer	US
+add	Vincent	Unknown
+add	GaiusMarius	US
+add	[eM] ForsakenDamsel	US
+add	Croucher	US
+add	andy	Unknown
+add	paulklannon	US
+add	Kaze	US
+add	Maximus	Unknown
+add	Toastylicious	Unknown
+add	P.I.T.A : Pain In The Ass	Unknown
+add	SirWillington	Unknown
+add	Jew In SPAAACE	Unknown
+add	Animal Love-a	Unknown

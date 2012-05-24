@@ -1,18 +1,15 @@
-warning: No toolsets are configured.
-warning: Configuring default toolset "gcc".
-warning: If the default is wrong, your build may not work correctly.
-warning: Use the "toolset=xxxxx" option to override our guess.
-warning: For more configuration options, please consult
-warning: http://boost.org/boost-build2/doc/html/bbv2/advanced/configuration.html
-...found 40 targets...
-...updating 2 targets...
-gcc.compile.c++ bin/gcc-4.6.1/debug/records_python.o
-records_python.cpp: In function ‘void init_module_survival()’:
-records_python.cpp:83:67: error: invalid static_cast from type ‘const string& (Group::*)()const {aka const std::basic_string<char>& (Group::*)()const}’ to type ‘void (Strategy::*)(const string&) {aka void (Strategy::*)(const std::basic_string<char>&)}’
-
-    "g++"  -ftemplate-depth-128 -O0 -fno-inline -Wall -g -fPIC    -I"/usr/include/python2.7" -c -o "bin/gcc-4.6.1/debug/records_python.o" "records_python.cpp"
-
-...failed gcc.compile.c++ bin/gcc-4.6.1/debug/records_python.o...
-...skipped <pbin/gcc-4.6.1/debug>survival.so for lack of <pbin/gcc-4.6.1/debug>records_python.o...
-...failed updating 1 target...
-...skipped 1 target...
+====================
+Read 302 players
+Read 62 maps
+Read 606 records
+Read 71 strategies
+     18 gamemodes
+     20 playergroups
+     4 honorlists
+     113 total groups
+====================
+adding new players
+  Added 0 players
+adding l4d1 records
+  Added 0 records
+adding l4d2 records
