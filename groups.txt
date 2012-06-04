@@ -1,6 +1,6 @@
-ID=1;description=;name=North American Survivors;aliases=nas,na;type=playergroup;abbreviation=NAS;players=228,91,230,288,8,295,64,50,12,15,107,197,73,13,213,145,76,264,252,278,287,231,298,284,144,4,111,214,296,194,270,16,267,175,263,150,70,215,216,269,232,1,233,234,235,63,236,206,217,268,137,208,199,237,238,239,240,207,294,241,242,169,271,274,290,244,3,82,61,261,245,5,246,282,219,291,220,247,19,74,23,248,221,283,222,275,276,249,204,9,250,62,289,33,55,251,223,279,154,209,80,272,253,210,71,2,254,168,277,293,24,224,17,255,180,256,81,81,77,225,229,226,292,94,92,262,89,27,257,266,285,143,273,34,260,11,281,258,113,157,211,259;countries=Canada,Mexico,US
+ID=1;description=;name=North American Survivors;aliases=nas,na;type=playergroup;abbreviation=NAS;players=228,91,230,288,8,295,64,50,12,15,107,197,73,13,213,145,76,264,252,278,287,231,298,284,144,4,111,214,296,194,270,16,267,175,263,150,70,215,216,269,232,1,233,314,234,235,63,236,206,217,268,137,208,199,237,238,239,240,207,294,241,242,169,271,274,290,244,3,82,61,261,245,5,246,282,219,291,220,247,19,74,23,248,221,283,222,275,276,249,204,9,250,62,289,33,55,251,223,279,154,209,80,272,253,210,71,2,254,168,277,293,316,24,224,17,255,180,31,256,81,81,77,225,229,226,292,94,92,35,262,89,27,257,266,285,143,273,34,260,11,281,258,113,157,211,259;countries=Canada,Mexico,US
 ID=2;description=;name=European Survivors;aliases=;type=playergroup;abbreviation=ES;players=;countries=Czech Republic,Finland,France,Germany,Latvia,Norway,Poland,Portugal,Russia,Spain,Sweden,UK
-ID=3;description=Running the circuit;name=circuit;aliases=;type=strategy;map=1;records=464,194,566
+ID=3;description=Running the circuit;name=circuit;aliases=;type=strategy;map=1;records=464,194,566,662
 ID=4;description=;name=Adventures of Tin Tin;aliases=;type=playergroup;abbreviation=TinTin;players=4,1,44,54,2;countries=
 ID=5;description=Defending the bridge;name=mallbridge;aliases=;type=strategy;map=1;records=254,314,503,548,604
 ID=6;description=Did not move any items in Left 4 Dead 2;name=nomv;aliases=NoMove,No Moved Items,No Moved;type=gamemode;mutation=no;game=2;records=250,507,548,565,580,251,315,372,261,234,317,209,235,249,242,246,236,395,158,260,450,492,256,556,480,237,531,530,373,252,313,470,481,579,259,311,451,532,533,138,262,371,506,601,448,447,446,330,331,332,333,392,389,390,391,388;numplayers=-1
@@ -63,7 +63,7 @@ ID=62;description=One player only;name=solo;aliases=;type=gamemode;mutation=no;g
 ID=63;description=;name=House of Sauce;aliases=;type=playergroup;abbreviation=HoS;players=1,2,11;countries=
 ID=64;description=Three players only;name=trio;aliases=;type=gamemode;mutation=no;game=-1;records=;numplayers=3
 ID=65;description=;name=House of Cookie;aliases=;type=playergroup;abbreviation=HoC;players=;countries=
-ID=66;description=;name=randomgroup21;aliases=;type=playergroup;abbreviation=rnd21;players=26,22,6,30,11;countries=
+ID=66;description=;name=randomgroup21;aliases=;type=playergroup;abbreviation=rnd21;players=26,22,6,30,35,11;countries=
 ID=67;description=;name=24 Carat Survival;aliases=;type=playergroup;abbreviation=24KtSvL;players=1,2,11;countries=
 ID=68;description=;name=L4D Pro Survivors;aliases=;type=playergroup;abbreviation=L4DPS;players=70;countries=
 ID=69;description=Two players only;name=duo;aliases=;type=gamemode;mutation=no;game=-1;records=;numplayers=2
@@ -111,3 +111,4 @@ ID=110;description=Defending the saferoom;name=saferoom;aliases=;type=strategy;m
 ID=111;description=;name=House of Panda;aliases=;type=playergroup;abbreviation=HoP;players=139;countries=
 ID=112;description=Defend the top floor;name=upstairs;aliases=topfloor,top;type=strategy;map=2;records=
 ID=113;description=Defend the Satellite Dish;name=satellite;aliases=dish,tower;type=strategy;map=5;records=
+ID=114;description=Hard 20 Mutation;name=hard20;aliases=hard 20;type=gamemode;mutation=yes;game=2;records=;numplayers=-1

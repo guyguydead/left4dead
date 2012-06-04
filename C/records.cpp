@@ -675,9 +675,10 @@ void PlayerGroup::write_out(std::ostream & o) const
 	o << ";abbreviation=" << abbreviation();
 	o << ";players=";
 
-	for (PlayerList::const_iterator i = players().begin(); i != players().end(); ++i)
+	multiset<Player *, EqualIDPtr<Player> > playerlist(players().begin(), players().end());
+	for (PlayerList::const_iterator i = playerlist.begin(); i != playerlist.end(); ++i)
 	{
-		if (i != players().begin())
+		if (i != playerlist.begin())
 			o << ",";
 
 		o << (*i)->id();
@@ -1531,7 +1532,7 @@ public:
 //!
 //! \brief Finds the records that belong to the given map. \details Note: do not send a NULL pointer to the map parameter
 //! \param[in] m The map to find the records for. This cannot be NULL.
-//! \param[in] n The number of records to find
+//! \param[in] n The number of records to find. Use a value of -1 to find all.
 //! \param[in] factor The factor by which the records are sorted. Records are sorted in reverse order by the factor
 //! \return A list of the matching records. It is not sorted in any particular order.
 //--------------------------------------------------
@@ -1539,8 +1540,15 @@ vector<Record *> RecordTracker::find_map_records_sorted(Map * m, int n, const Fa
 {
 	vector<Record *> rlist(find_map_records(m));
 	sort(rlist.rbegin(), rlist.rend(), factor_less(factor));
-	//cout << "found " << rlist.size() << " maps\n";
-	return vector<Record *>(rlist.begin(), rlist.size() > (unsigned int)n ? rlist.begin() + n : rlist.end());
+
+	if (n < 0)
+	{
+		return vector<Record *>(rlist.begin(), rlist.end());
+	}
+	else
+	{
+		return vector<Record *>(rlist.begin(), rlist.size() > (unsigned int)n ? rlist.begin() + n : rlist.end());
+	}
 }
 
 //--------------------------------------------------

@@ -1,3 +1,4 @@
+ID=0;name=;country=;aliases=;steamid_hash=
 ID=41;name=(-A-);country=Japan;aliases=;steamid_hash=
 ID=205;name=...;country=Unknown;aliases=;steamid_hash=
 ID=122;name=30 Seconds;country=France;aliases=;steamid_hash=
@@ -26,7 +27,7 @@ ID=107;name=beatslaughter;country=Germany;aliases=::;steamid_hash=
 ID=185;name=Berky;country=Liechtenstein;aliases=;steamid_hash=
 ID=188;name=Bert;country=Mexico;aliases=;steamid_hash=
 ID=85;name=Big Smoke;country=France;aliases=Big Smoke ^.^;steamid_hash=
-ID=197;name=Biggie MX;country=Unknown;aliases=;steamid_hash=
+ID=197;name=Biggie MX;country=Unknown;aliases=Biggie;steamid_hash=
 ID=198;name=bim;country=Unknown;aliases=;steamid_hash=
 ID=73;name=Blaksilver;country=US;aliases=[eM] Blaksilver;steamid_hash=
 ID=13;name=Bob;country=US;aliases=Bio Hazzard Bob;steamid_hash=
@@ -70,6 +71,7 @@ ID=214;name=Eriksson;country=Germany;aliases=;steamid_hash=
 ID=296;name=Erin;country=Unknown;aliases=;steamid_hash=
 ID=151;name=everyone;country=US;aliases=;steamid_hash=
 ID=51;name=explicit;country=US;aliases=;steamid_hash=
+ID=310;name=EyeSeeNoEvil;country=Unknown;aliases=;steamid_hash=
 ID=194;name=Ez$;country=Unknown;aliases=;steamid_hash=
 ID=270;name=Faramir;country=US;aliases=;steamid_hash=
 ID=16;name=Fatty;country=US;aliases=Fatty Ding Dongs,World War Fatty;steamid_hash=
@@ -95,6 +97,7 @@ ID=269;name=gssecretary1;country=US;aliases=;steamid_hash=
 ID=232;name=gtxcr2000;country=Unknown;aliases=;steamid_hash=
 ID=1;name=guyguy;country=Canada;aliases=GuyGuy,gai,GuyGuyDead;steamid_hash=
 ID=233;name=Hanky Danglers;country=US;aliases=;steamid_hash=
+ID=314;name=HERRO;country=US;aliases=;steamid_hash=
 ID=234;name=highvelocity;country=Unknown;aliases=;steamid_hash=
 ID=49;name=Hitman;country=Unknown;aliases=;steamid_hash=
 ID=235;name=HoboMan725;country=Unknown;aliases=;steamid_hash=
@@ -105,6 +108,7 @@ ID=37;name=HtotheIzzle;country=Australia;aliases=;steamid_hash=
 ID=156;name=Hurricane;country=Unknown;aliases=;steamid_hash=
 ID=217;name=I Fucked Waffles!;country=Unknown;aliases=;steamid_hash=
 ID=99;name=I like it;country=Unknown;aliases=;steamid_hash=
+ID=313;name=ic3m4n;country=Unknown;aliases=;steamid_hash=
 ID=268;name=iClaimSB;country=Unknown;aliases=;steamid_hash=
 ID=137;name=Igor;country=US;aliases=;steamid_hash=
 ID=208;name=Internet Soldier;country=US;aliases=;steamid_hash=
@@ -130,6 +134,7 @@ ID=174;name=Joel :);country=US;aliases=Joel,[ME] Joel;steamid_hash=
 ID=60;name=Johnny Cage;country=US;aliases=-MK- Johnny Cage;steamid_hash=
 ID=65;name=Jordan.17;country=Czech Republic;aliases=;steamid_hash=
 ID=242;name=jowlstral;country=US;aliases=;steamid_hash=
+ID=311;name=Juicy;country=US;aliases=;steamid_hash=
 ID=32;name=Jumpin' Jack;country=Australia;aliases=Jumpin' Jack Flash;steamid_hash=
 ID=169;name=Justin;country=US;aliases=Justin Time,Justin Time (T`D`S);steamid_hash=
 ID=109;name=Kahoner;country=US;aliases=;steamid_hash=
@@ -154,13 +159,16 @@ ID=5;name=Licksore;country=US;aliases=;steamid_hash=
 ID=142;name=linkinvarious;country=Unknown;aliases=;steamid_hash=
 ID=158;name=Linnear;country=US;aliases=;steamid_hash=
 ID=135;name=Lion;country=Russia;aliases=;steamid_hash=
+ID=315;name=LOST BATTALION;country=Unknown;aliases=;steamid_hash=
 ID=246;name=Lucky;country=US;aliases=;steamid_hash=
 ID=282;name=Ludo;country=FX;aliases=;steamid_hash=
 ID=219;name=M0k2;country=Unknown;aliases=;steamid_hash=
+ID=319;name=MaDpRoFFesoR666;country=US;aliases=;steamid_hash=
 ID=10;name=maniak;country=US;aliases=maniak-e/park ranger;steamid_hash=
 ID=18;name=Maxim Hound;country=US;aliases=;steamid_hash=
 ID=291;name=Maximus;country=Unknown;aliases=;steamid_hash=
 ID=220;name=Meat;country=US;aliases=;steamid_hash=
+ID=317;name=MeShi;country=Hungary;aliases=MeShiKiAriZ;steamid_hash=
 ID=247;name=Mist;country=FJ;aliases=;steamid_hash=
 ID=19;name=mistabiswas;country=US;aliases=;steamid_hash=
 ID=88;name=Mr.Madness;country=Unknown;aliases=;steamid_hash=
@@ -178,6 +186,7 @@ ID=248;name=nezerach;country=Unknown;aliases=;steamid_hash=
 ID=103;name=NicNak;country=US;aliases=;steamid_hash=
 ID=221;name=nicole;country=US;aliases=;steamid_hash=
 ID=283;name=Nightmare;country=Unknown;aliases=;steamid_hash=
+ID=320;name=Niko Bellic;country=Unknown;aliases=Niko Bellic champion DK;steamid_hash=
 ID=222;name=nINA;country=RU;aliases=;steamid_hash=
 ID=275;name=niserron;country=US;aliases=;steamid_hash=
 ID=276;name=Nny;country=US;aliases=;steamid_hash=
@@ -206,6 +215,7 @@ ID=43;name=PIYA;country=France;aliases=PITA,Pain In Your Ass;steamid_hash=
 ID=279;name=Pockygirl;country=US;aliases=;steamid_hash=
 ID=154;name=Pract;country=Canada;aliases=;steamid_hash=
 ID=177;name=President;country=Unknown;aliases=;steamid_hash=
+ID=312;name=Prez MX;country=Unknown;aliases=Prez;steamid_hash=
 ID=209;name=Prime;country=Unknown;aliases=;steamid_hash=
 ID=114;name=Prophet;country=UK;aliases=;steamid_hash=
 ID=48;name=Psy;country=Russia;aliases=Miku Hatsune;steamid_hash=
@@ -238,6 +248,7 @@ ID=100;name=ShadowRico;country=US;aliases=;steamid_hash=
 ID=305;name=shawnm332;country=Unknown;aliases=;steamid_hash=
 ID=165;name=Shirahama;country=Unknown;aliases=Shirahama Kenichi;steamid_hash=
 ID=293;name=SirWillington;country=Unknown;aliases=;steamid_hash=
+ID=316;name=Skyheart;country=US;aliases=;steamid_hash=
 ID=24;name=sLeeK;country=US;aliases=;steamid_hash=
 ID=224;name=smitty3472;country=Unknown;aliases=;steamid_hash=
 ID=167;name=sniper's;country=US;aliases=sniper's-over-kill;steamid_hash=
@@ -280,6 +291,7 @@ ID=183;name=wade flash23;country=Unknown;aliases=;steamid_hash=
 ID=101;name=Wahl;country=Unknown;aliases=;steamid_hash=
 ID=20;name=Walmart;country=US;aliases=Walmart Shoplifter;steamid_hash=
 ID=34;name=WaRLo;country=Australia;aliases=;steamid_hash=
+ID=318;name=whis;country=Unknown;aliases=;steamid_hash=
 ID=260;name=willdoanythingforcrack;country=Unknown;aliases=;steamid_hash=
 ID=72;name=wilson2234;country=US;aliases=;steamid_hash=
 ID=11;name=Wolf;country=US;aliases=Lone Wolf McQuade;steamid_hash=

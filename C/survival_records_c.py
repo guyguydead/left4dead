@@ -2,8 +2,7 @@
 # survival_records.py - Script to keep track of left 4 dead survival records. The information is tracked inside of dictionaries, which can be imported and exported to text files.
 #
 # TODO list:
-# - NAS group list
-# - high honors
+# player steamid hashes
 #==================================================
 import datetime
 import sys
@@ -12,38 +11,6 @@ import getopt
 import survival as sv
 
 DAYS = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
-
-"""
-def import_list(filename, list):
-	f = open(filename, 'r')
-	lists = [ dict(item.split('=') for item in line.strip().split(';')) for line in f.readlines()]
-	list += lists
-	f.close()
-"""
-#--------------------------------------------------
-# import_list(filename, list)
-#--------------------------------------------------
-def import_list(filename, list):
-	f = open(filename, 'r')
-	for line in f.readlines():
-		lists = dict([ (item[:item.index('=')], item[item.index('=')+1:]) for item in line.strip().split(';') ])
-		list.append(lists)
-	f.close()
-
-#--------------------------------------------------
-# create_timedelta(time_str)
-#--------------------------------------------------
-def create_timedelta(time_str):
-	times = time_str.split(':')
-	ln = []
-	ln += (times[:-1])
-	ln += (times[-1].split('.'))
-
-	times = map(int, ln)
-	if len(times) == 3:
-		return datetime.timedelta(minutes=times[0], seconds=times[1], milliseconds=10*times[2])
-	elif len(times) == 4:
-		return datetime.timedelta(hours=times[0], minutes=times[1], seconds=times[2], milliseconds=10*times[3])
 
 def equal_name(name1, name2):
 	return re.sub(r'\s', '', name1).lower() == re.sub(r'\s', '', name2).lower()
@@ -285,93 +252,61 @@ def export_batch_text_google_spreadsheet(user, pw, text, gd_client = None, curr_
 	if curr_wksht_id == None:
 		curr_wksht_id = get_wksht(gd_client, curr_key)
 
-	cells = gd_client.GetCellsFeed(curr_key, wksht_id = curr_wksht_id)
+	if verbose:
+		print '   Getting cells feed...'
+
+	query = gdata.spreadsheet.service.CellQuery()
+	query.return_empty = "true"
+	cells = gd_client.GetCellsFeed(curr_key, wksht_id = curr_wksht_id, query=query)
+
 	batchRequest = gdata.spreadsheet.SpreadsheetsCellsFeed()
-	update = lambda r,c,v: update_cell(gd_client, curr_key, curr_wksht_id, r, c, v)
+
+	if verbose == True:
+		print '   reading current cells...'
+
+	max_row_spreadsheet = max(map(int, [entry.cell.row for entry in cells.entry]))
+	max_col_spreadsheet = max(map(int, [entry.cell.col for entry in cells.entry]))
+	max_row_text = len(text)
+	max_col_text = 1
 
 	batch_count = 0
-	single_update_list = []
+
 	for i,r in enumerate(text):
 		for j,c in enumerate(splitting(r, ';')):
-			entry = find(lambda entry: entry != None and int(entry.cell.row) == i+1 and int(entry.cell.col) == j+1, cells.entry)
-			if entry != None:
-				if entry.cell.text.strip() != c.strip():
+
+			if j + 1 > max_col_text:
+				max_col_text = j + 1
+
+			if i < max_row_spreadsheet and j < max_col_spreadsheet:
+				entry = cells.entry[i * max_col_spreadsheet + j]
+				if (entry.cell.text != None and entry.cell.text.strip() != c.strip()) or (entry.cell.text == None and c.strip() != ''):
 					entry.cell.text = c
 					entry.cell.inputValue = c
 					batchRequest.AddUpdate(entry)
 					batch_count += 1
-			elif entry == None and c.strip() != '':
-				single_update_list.append((i+1, j+1, c))
 
 	if remove_extra_text == True:
-		row_list = []
-		for i,r in enumerate(text):
-			for j,c in enumerate(splitting(r, ';')):
-				if c.strip() != '':
-					row_list.append((i+1, j+1))
-
-		for entry in cells.entry:
-			if (int(entry.cell.row), int(entry.cell.col)) not in row_list and entry.cell.text.strip() != '':
-				entry.cell.text = ''
-				entry.cell.inputValue = ''
-				batch_count += 1
-				batchRequest.AddUpdate(entry)
+		# remove extra rows
+		if max_row_spreadsheet > max_row_text:
+			for entry in cells.entry[max_row_text * max_col_spreadsheet:]:
+				if entry.cell.text != None:
+					entry.cell.text = ''
+					entry.cell.inputValue = ''
+					batchRequest.AddUpdate(entry)
+					batch_count += 1
+		# remove extra columns
+		if max_col_spreadsheet > max_col_text:
+			for r in range(max_row_spreadsheet):
+				for entry in cells.entry[r * max_col_spreadsheet + max_col_text : (r+1) * max_col_spreadsheet]:
+					if entry.cell.text != None:
+						entry.cell.text = ''
+						entry.cell.inputValue = ''
+						batchRequest.AddUpdate(entry)
+						batch_count += 1
 
 	if verbose == True:
 		print '   batch update %d cells...' % (batch_count)
 	updated = gd_client.ExecuteBatch(batchRequest, cells.GetBatchLink().href)
-
-	if verbose == True:
-		print '   single update %d cells...' % (len(single_update_list))
-	for (r, c, v) in single_update_list:
-		update(r,c,v)
-
-"""
-=(ROUND(REGEXEXTRACT(I12, "(.*):")*60+REGEXEXTRACT(I12, ":(.*)"))+(J12/2)+(K12*6+L12*6+M12*6)+(P12*25))
-"""
-def score_factor_rt(r):
-	if r.map.game == 1:
-		return int(round(r.time.seconds + r.time.microseconds / 1e6) + r.common/2.0 + (r.hunters + r.smokers + r.boomers) * 6 + r.tanks * 25)
-	elif r.map.game == 2:
-		si_score = (r.hunters + r.smokers + r.boomers + r.chargers + r.spitters + r.jockeys) * 6
-		si_per_min = round((r.hunters + r.smokers + r.boomers + r.chargers + r.spitters + r.jockeys) / (r.time.seconds + r.time.microseconds / 1e6) * 60, 2)
-		bonus = (si_per_min / 10 + 1) * si_score
-		return int(round(r.time.seconds + r.time.microseconds / 1e6) + round(r.common * 0.5) + bonus + r.tanks * 25)
-
-def kill_factor_rt(record):
-	"""average SI kills per minute"""
-	average = lambda x: sum(x) / len(x)
-	if record.map.game == 1:
-		minutes = record.time.seconds / 60.0
-		kills = average([float(getattr(record, si)) for si in ['hunters', 'smokers', 'boomers', 'tanks']])
-		return kills / minutes
-
-	elif record.map.game == 2:
-		minutes = record.time.seconds / 60.0
-		kills = average([float(getattr(record, si)) for si in ['hunters', 'smokers', 'boomers', 'spitters', 'chargers', 'jockeys', 'tanks']])
-		return kills / minutes
-
-def gore_factor_rt(record):
-	"""total si kills"""
-	if record.map.game == 1:
-		return sum([getattr(record, si) for si in ['hunters', 'smokers', 'boomers', 'tanks']])
-
-	elif record.map.game == 2:
-		return sum([getattr(record, si) for si in ['hunters', 'smokers', 'boomers', 'spitters', 'chargers', 'jockeys', 'tanks']])
-
-def trash_factor_rt(record):
-	"""ideas for kill factor:
-	trash: highest time is cool but what you want is the hightest kill factor which is way better.what you do is add all si killed without the tanks and divide by the minutes and you get a number. in l4d the number should be over 7 and l4d2 the number should be over 6. the best or most fun games are over 9
-	"""
-	if record.map.game == 1:
-		minutes = record.time.seconds / 60.0
-		kills = sum([getattr(record,si) for si in ['hunters', 'smokers', 'boomers']])
-		return kills / minutes
-
-	elif record.map.game == 2:
-		minutes = record.time.seconds / 60.0
-		kills = sum([getattr(record,si) for si in ['hunters', 'smokers', 'boomers', 'spitters', 'chargers', 'jockeys']])
-		return kills / minutes
 
 #--------------------------------------------------
 # Checks that the record does not use a gamemode that is a mutation
@@ -1544,7 +1479,7 @@ def weekly_achievements_rt(rt, players, message_list = [], display_date = dateti
 			for m in (rt.official_maps_1 if game == 1 else rt.official_maps_2):
 				# determine the best time on this map
 				try:
-					best_time = sorted(filter(lambda r: r.map == m and r.date <= end_day and player in r.players, records), key = lambda r: r.time, reverse = True)[0]
+					best_time = filter(lambda r: r.date <= end_day and player in r.players, rt.find_map_records_sorted(m, -1, sv.Record.TimeFactor))[0]
 					best_time_thresh = datetime.timedelta(days = best_time.time.days * 0.9, seconds = best_time.time.seconds * 0.9, microseconds = best_time.time.microseconds * 0.9)
 				except IndexError:
 					best_time = None
@@ -1555,7 +1490,7 @@ def weekly_achievements_rt(rt, players, message_list = [], display_date = dateti
 					best_rec = sorted(filter(lambda r: r.map == m and player in r.players, week_records), key = lambda r: r.time, reverse = True)[0]
 
 					if ((game == 1 and best_rec.time >= l4d1_thresh) or (game == 2 and best_rec.time >= l4d2_thresh)) and best_rec.time >= best_time_thresh:
-						pb = sorted(filter(lambda r: r.map == m and r.date <= best_rec.date and player in r.players, records), key = lambda r: r.time, reverse = True)[0]
+						pb = filter(lambda r: r.date <= best_rec.date and player in r.players, rt.find_map_records_sorted(m, -1, sv.Record.TimeFactor))[0]
 						player_records.append((player, best_rec, best_rec == pb))
 				except IndexError:
 					pass
@@ -2118,6 +2053,11 @@ def main():
 		group_wksht = get_wksht(gd_client, curr_key, prompt=False, input=raw_input('group wksht: '))
 
 	verbose = True
+
+	testing = False
+	if testing:
+		export_batch_text_google_spreadsheet_test(user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = records_wksht)
+		return;
 
 	print 'adding new players'
 	add_players_google_spreadsheet_rt(rt, user, pw, gd_client = gd_client, curr_key = curr_key, curr_wksht_id = add_player_wksht, verbose = False)

@@ -19,6 +19,8 @@ ID=501;date=2012-04-16;time=00:27:39.87;players=144,1,5,155;map=3;common=1550;hu
 ID=523;date=2012-04-16;time=00:47:27.97;players=197,1,5,196;map=3;common=2823;hunters=115;smokers=101;boomers=8;tanks=65
 ID=504;date=2012-04-17;time=01:16:48.03;players=158,10,9,155;map=3;common=4744;hunters=42;smokers=128;boomers=0;tanks=125
 ID=594;date=2012-05-10;time=00:54:27.03;players=298,14,1,5;map=3;common=3166;hunters=136;smokers=120;boomers=18;tanks=74
+ID=633;date=2012-05-25;time=00:53:48.20;players=197,1,204,17;map=3;common=3330;hunters=78;smokers=92;boomers=37;tanks=77
+ID=631;date=2012-05-27;time=01:10:07.30;players=197,1,5,204;map=3;common=4359;hunters=78;smokers=62;boomers=4;tanks=121
 ID=269;date=2011-05-25;time=00:51:38.73;players=123,66,118,120;map=4;common=6646;hunters=384;smokers=348;boomers=66;tanks=50
 ID=430;date=2011-09-22;time=00:25:48.07;players=14,158,178,93;map=4;common=2554;hunters=170;smokers=158;boomers=26;tanks=25
 ID=270;date=2011-11-11;time=00:48:42.57;players=116,118,120,124;map=4;common=6178;hunters=356;smokers=294;boomers=58;tanks=46
@@ -36,6 +38,7 @@ ID=505;date=2012-04-13;time=00:29:09.50;players=103,6,30,35;map=4;common=2974;hu
 ID=483;date=2012-04-13;time=00:33:51.03;players=158,103,155,30;map=4;common=3742;hunters=221;smokers=172;boomers=43;tanks=42
 ID=546;date=2012-04-27;time=00:33:47.50;players=200,118,119,9;map=4;common=3726;hunters=232;smokers=191;boomers=50;tanks=28
 ID=576;date=2012-05-05;time=00:15:45.60;players=1,204,301,113;map=4;common=937;hunters=71;smokers=71;boomers=16;tanks=18
+ID=637;date=2012-06-02;time=00:42:44.30;players=107,320,128;map=4;common=4725;hunters=273;smokers=259;boomers=57;tanks=41
 ID=266;date=2011-07-27;time=01:09:53.30;players=15,37,33,34;map=2;common=5998;hunters=238;smokers=180;boomers=179;tanks=96
 ID=435;date=2011-09-17;time=00:33:59.87;players=70,5,158,93;map=2;common=2604;hunters=127;smokers=105;boomers=83;tanks=37
 ID=403;date=2011-11-13;time=00:20:26.77;players=1,3,9,157;map=2;common=1357;hunters=93;smokers=37;boomers=23;tanks=23
@@ -55,6 +58,7 @@ ID=516;date=2012-04-18;time=00:33:17.90;players=108,158,93,77;map=2;common=2283;
 ID=560;date=2012-04-27;time=00:52:38.37;players=7,110,10,19;map=2;common=4220;hunters=266;smokers=106;boomers=57;tanks=64
 ID=557;date=2012-05-02;time=00:22:07.57;players=137,203,204,202;map=2;common=1460;hunters=78;smokers=50;boomers=30;tanks=28
 ID=570;date=2012-05-09;time=00:58:59.57;players=298,1,5,34;map=2;common=4803;hunters=109;smokers=168;boomers=121;tanks=89
+ID=621;date=2012-05-30;time=00:39:26.23;players=197,5,18,204;map=2;common=3135;hunters=208;smokers=82;boomers=77;tanks=50
 ID=76;date=2001-11-16;time=00:23:37.73;players=1,60,3,11;map=5;common=1419;hunters=67;smokers=23;boomers=6;tanks=25
 ID=272;date=2011-07-25;time=00:35:55.27;players=107,117,48,30;map=5;common=2989;hunters=106;smokers=27;boomers=15;tanks=59
 ID=271;date=2011-07-26;time=00:40:32.27;players=125,48,126,127;map=5;common=3363;hunters=148;smokers=30;boomers=24;tanks=67
@@ -85,6 +89,7 @@ ID=413;date=2012-04-07;time=00:37:49.20;players=7,10,93,94;map=6;common=3199;hun
 ID=522;date=2012-04-17;time=00:31:41.93;players=15,1,5,34;map=6;common=2501;hunters=166;smokers=50;boomers=60;tanks=41
 ID=572;date=2012-05-07;time=00:27:22.47;players=1,103,9,79;map=6;common=2063;hunters=125;smokers=45;boomers=68;tanks=31
 ID=569;date=2012-05-09;time=00:15:25.63;players=296,70,1,297;map=6;common=895;hunters=64;smokers=18;boomers=8;tanks=17
+ID=632;date=2012-05-26;time=00:28:14.57;players=144,1,5,204;map=6;common=2225;hunters=110;smokers=47;boomers=58;tanks=36
 ID=454;date=2011-09-09;time=00:19:59.67;players=110,70,163,180;map=7;common=1321;hunters=77;smokers=0;boomers=13;tanks=22
 ID=221;date=2011-10-07;time=00:21:48.07;players=110,70,93,20;map=7;common=1495;hunters=87;smokers=4;boomers=19;tanks=25
 ID=275;date=2011-11-08;time=00:36:41.30;players=15,38,33,34;map=7;common=2878;hunters=197;smokers=8;boomers=46;tanks=52
@@ -97,6 +102,9 @@ ID=325;date=2012-04-01;time=00:17:02.17;players=14,1,5,34;map=7;common=1065;hunt
 ID=476;date=2012-04-11;time=00:16:44.43;players=7,1,9,77;map=7;common=1054;hunters=75;smokers=8;boomers=23;tanks=19
 ID=477;date=2012-04-11;time=00:17:02.93;players=7,1,9,77;map=7;common=1044;hunters=72;smokers=1;boomers=9;tanks=18
 ID=564;date=2012-05-01;time=00:25:31.63;players=158,10,9,155;map=7;common=1923;hunters=87;smokers=7;boomers=30;tanks=37
+ID=617;date=2012-05-02;time=00:21:25.30;players=197,10,204,155;map=7;common=1436;hunters=117;smokers=1;boomers=23;tanks=22
+ID=615;date=2012-05-16;time=00:27:02.50;players=107,1,105,30;map=7;common=2119;hunters=176;smokers=9;boomers=17;tanks=34
+ID=634;date=2012-05-24;time=00:22:06.33;players=111,1,204,9;map=7;common=1521;hunters=51;smokers=10;boomers=20;tanks=28
 ID=277;date=2011-07-23;time=00:54:43.90;players=107,105,30,128;map=8;common=4002;hunters=221;smokers=4;boomers=38;tanks=46
 ID=276;date=2011-11-30;time=01:09:23.47;players=129,117,124,83;map=8;common=4828;hunters=229;smokers=5;boomers=15;tanks=70
 ID=98;date=2011-12-03;time=01:17:21.43;players=69,48,67,30;map=8;common=5587;hunters=345;smokers=16;boomers=60;tanks=78
@@ -137,6 +145,8 @@ ID=559;date=2012-05-01;time=01:06:55.17;players=7,158,103,93;map=10;common=4603;
 ID=571;date=2012-05-07;time=00:39:03.77;players=1,82,9,155;map=10;common=2614;hunters=184;smokers=66;boomers=62;tanks=39
 ID=592;date=2012-05-11;time=00:23:35.37;players=304,298,1,305;map=10;common=1390;hunters=114;smokers=35;boomers=12;tanks=23
 ID=587;date=2012-05-12;time=00:27:56.77;players=298,1,302,5;map=10;common=1761;hunters=142;smokers=28;boomers=44;tanks=26
+ID=630;date=2012-05-28;time=00:19:24.87;players=1,314,5,204;map=10;common=1175;hunters=73;smokers=35;boomers=23;tanks=17
+ID=624;date=2012-06-02;time=00:46:35.43;players=1,314,5,204;map=10;common=3079;hunters=238;smokers=65;boomers=60;tanks=52
 ID=510;date=2011-12-20;time=00:52:09.37;players=65,48,67,30;map=11;common=4981;hunters=294;smokers=100;boomers=90;tanks=49
 ID=22;date=2011-12-31;time=00:32:47.80;players=14,3,5,20;map=11;common=2837;hunters=156;smokers=80;boomers=56;tanks=29
 ID=101;date=2012-02-20;time=01:07:11.57;players=66,48,67,30;map=11;common=6671;hunters=354;smokers=184;boomers=115;tanks=66
@@ -157,6 +167,8 @@ ID=552;date=2012-04-30;time=00:56:49.07;players=107,66,1,3;map=11;common=5462;hu
 ID=563;date=2012-05-01;time=00:34:17.83;players=7,158,10,103;map=11;common=2925;hunters=172;smokers=64;boomers=52;tanks=33
 ID=575;date=2012-05-05;time=00:24:45.87;players=300,1,5,9;map=11;common=1905;hunters=112;smokers=64;boomers=37;tanks=25
 ID=567;date=2012-05-05;time=00:32:16.10;players=197,144,5,204;map=11;common=2730;hunters=155;smokers=53;boomers=58;tanks=31
+ID=616;date=2012-05-17;time=00:39:00.20;players=158,10,103,9;map=11;common=3220;hunters=190;smokers=24;boomers=54;tanks=39
+ID=635;date=2012-05-21;time=00:49:35.27;players=70,10,93,72;map=11;common=4730;hunters=234;smokers=45;boomers=93;tanks=55
 ID=208;date=2011-08-04;time=00:11:48.73;players=104,16,5,80;map=9;common=647;hunters=30;smokers=32;boomers=10;tanks=11
 ID=437;date=2011-09-09;time=00:19:59.87;players=181,158,163,157;map=9;common=1514;hunters=81;smokers=42;boomers=27;tanks=20
 ID=432;date=2011-09-19;time=00:26:03.67;players=110,108,60,158;map=9;common=2069;hunters=62;smokers=57;boomers=8;tanks=39
@@ -172,6 +184,8 @@ ID=99;date=2012-03-14;time=01:01:51.40;players=66,48,67,30;map=9;common=6242;hun
 ID=419;date=2012-03-31;time=00:24:44.37;players=7,109,18,93;map=9;common=1958;hunters=89;smokers=85;boomers=24;tanks=23
 ID=329;date=2012-04-01;time=00:19:49.27;players=144,1,5,113;map=9;common=1454;hunters=75;smokers=67;boomers=26;tanks=18
 ID=478;date=2012-04-12;time=00:26:04.63;players=144,1,5,113;map=9;common=1954;hunters=86;smokers=77;boomers=6;tanks=33
+ID=619;date=2012-04-29;time=00:11:48.07;players=197,313,204,312;map=9;common=687;hunters=39;smokers=39;boomers=18;tanks=11
+ID=612;date=2012-05-29;time=00:55:32.53;players=1,3,5,11;map=9;common=5505;hunters=137;smokers=81;boomers=91;tanks=93
 ID=128;date=2011-02-14;time=00:25:09.17;players=15,47,37,75;map=12;common=1427;hunters=115;smokers=58;boomers=43;tanks=25
 ID=284;date=2011-08-18;time=00:30:36.67;players=15,37,38,34;map=12;common=1972;hunters=142;smokers=57;boomers=38;tanks=36
 ID=405;date=2011-09-24;time=00:17:17.40;players=13,70,93,157;map=12;common=979;hunters=80;smokers=36;boomers=26;tanks=18
@@ -196,6 +210,9 @@ ID=497;date=2012-04-15;time=00:15:28.23;players=144,1,5,33;map=12;common=809;hun
 ID=574;date=2012-05-05;time=00:16:31.93;players=300,1,5,9;map=12;common=928;hunters=66;smokers=38;boomers=21;tanks=16
 ID=596;date=2012-05-09;time=00:16:27.77;players=111,70,1,3;map=12;common=912;hunters=63;smokers=35;boomers=27;tanks=18
 ID=593;date=2012-05-10;time=00:17:31.13;players=298,14,1,5;map=12;common=963;hunters=83;smokers=48;boomers=20;tanks=18
+ID=628;date=2012-05-31;time=00:19:52.17;players=197,1,204,9;map=12;common=1222;hunters=80;smokers=32;boomers=37;tanks=23
+ID=626;date=2012-06-01;time=00:27:51.20;players=197,1,5,77;map=12;common=1823;hunters=130;smokers=62;boomers=55;tanks=32
+ID=625;date=2012-06-01;time=00:30:03.50;players=1,5,204,77;map=12;common=2014;hunters=122;smokers=53;boomers=62;tanks=35
 ID=431;date=2011-09-20;time=00:27:43.43;players=110,179,158,93;map=13;common=2180;hunters=63;smokers=20;boomers=66;tanks=31
 ID=428;date=2011-09-26;time=00:31:19.40;players=14,108,158,93;map=13;common=2608;hunters=52;smokers=14;boomers=66;tanks=43
 ID=286;date=2011-10-20;time=01:01:34.17;players=69,85,48,30;map=13;common=4536;hunters=173;smokers=34;boomers=31;tanks=70
@@ -258,7 +275,9 @@ ID=9;date=2012-03-06;time=00:52:08.37;players=16,14,1,5;map=16;common=3723;hunte
 ID=466;date=2012-04-10;time=00:19:48.17;players=1,158,9,72;map=16;common=1197;hunters=65;smokers=20;boomers=23;tanks=15
 ID=518;date=2012-04-19;time=00:37:05.77;players=7,110,93,77;map=16;common=2297;hunters=62;smokers=112;boomers=6;tanks=33
 ID=526;date=2012-04-21;time=00:23:53.93;players=15,1,5,71;map=16;common=1428;hunters=59;smokers=47;boomers=27;tanks=17
+ID=618;date=2012-05-01;time=00:23:42.53;players=197,204,100,79;map=16;common=1389;hunters=33;smokers=15;boomers=7;tanks=17
 ID=583;date=2012-05-11;time=00:48:59.63;players=197,1,204,9;map=16;common=3149;hunters=88;smokers=72;boomers=33;tanks=44
+ID=638;date=2012-06-03;time=01:19:17.90;players=107,66,67,30;map=16;common=6184;hunters=226;smokers=83;boomers=79;tanks=98
 ID=77;date=2011-01-25;time=00:36:37.77;players=4,1,3,11;map=17;common=3235;hunters=73;smokers=76;boomers=1;tanks=37
 ID=295;date=2011-11-20;time=00:41:10.40;players=125,85,66,129;map=17;common=3781;hunters=40;smokers=63;boomers=20;tanks=42
 ID=294;date=2011-12-20;time=00:41:12.57;players=47,58,38,33;map=17;common=3905;hunters=55;smokers=79;boomers=9;tanks=45
@@ -275,6 +294,7 @@ ID=479;date=2012-04-12;time=00:28:56.93;players=144,1,5,113;map=17;common=2286;h
 ID=538;date=2012-04-25;time=00:32:28.03;players=107,1,3,35;map=17;common=2821;hunters=15;smokers=14;boomers=18;tanks=47
 ID=550;date=2012-05-02;time=00:16:02.03;players=201,145,144,1;map=17;common=970;hunters=64;smokers=9;boomers=9;tanks=15
 ID=561;date=2012-05-02;time=00:34:59.50;players=110,158,10,103;map=17;common=3083;hunters=12;smokers=23;boomers=5;tanks=40
+ID=620;date=2012-05-30;time=00:30:13.77;players=197,3,204,100;map=17;common=2575;hunters=51;smokers=20;boomers=46;tanks=37
 ID=296;date=2011-07-19;time=01:28:41.03;players=15,37,38,34;map=18;common=7183;hunters=282;smokers=467;boomers=107;tanks=108
 ID=426;date=2011-09-28;time=00:32:44.50;players=1,3,158,9;map=18;common=2344;hunters=111;smokers=170;boomers=33;tanks=29
 ID=218;date=2011-11-28;time=01:04:56.90;players=14,109,93,20;map=18;common=5761;hunters=127;smokers=73;boomers=71;tanks=65
@@ -285,6 +305,7 @@ ID=178;date=2012-03-18;time=00:43:12.93;players=7,10,93,94;map=18;common=3253;hu
 ID=200;date=2012-03-20;time=01:51:10.93;players=14,1,5,11;map=18;common=8865;hunters=436;smokers=701;boomers=122;tanks=119
 ID=562;date=2012-05-03;time=00:45:47.07;players=158,10,103,93;map=18;common=4181;hunters=183;smokers=112;boomers=102;tanks=45
 ID=585;date=2012-05-12;time=00:34:02.53;players=197,144,1,204;map=18;common=2436;hunters=143;smokers=207;boomers=15;tanks=37
+ID=613;date=2012-05-29;time=01:09:18.37;players=10,155,77,94;map=18;common=5457;hunters=212;smokers=329;boomers=39;tanks=78
 ID=109;date=2011-10-26;time=00:44:03.13;players=69,48,67,30;map=19;common=2644;hunters=75;smokers=99;boomers=47;tanks=56
 ID=298;date=2012-01-14;time=00:30:19.03;players=118,119,120,124;map=19;common=1953;hunters=106;smokers=60;boomers=47;tanks=35
 ID=119;date=2012-01-14;time=00:36:30.90;players=70,3,18,11;map=19;common=1969;hunters=52;smokers=99;boomers=26;tanks=44
@@ -297,6 +318,9 @@ ID=365;date=2012-04-02;time=00:20:57.30;players=147,1,5,146;map=19;common=1346;h
 ID=398;date=2012-04-07;time=00:19:23.90;players=110,158,10,157;map=19;common=1273;hunters=57;smokers=54;boomers=32;tanks=19
 ID=568;date=2012-05-09;time=00:19:37.27;players=296,70,1,297;map=19;common=1241;hunters=72;smokers=35;boomers=27;tanks=20
 ID=595;date=2012-05-10;time=00:19:19.57;players=298,14,1,5;map=19;common=688;hunters=50;smokers=46;boomers=15;tanks=19
+ID=636;date=2012-05-26;time=00:18:57.40;players=197,3,5,204;map=19;common=677;hunters=27;smokers=42;boomers=8;tanks=19
+ID=614;date=2012-05-26;time=00:34:07.10;players=107,66,105,30;map=19;common=1660;hunters=86;smokers=111;boomers=40;tanks=27
+ID=623;date=2012-06-03;time=00:18:58.00;players=197,1,204,77;map=19;common=904;hunters=47;smokers=49;boomers=16;tanks=20
 ID=301;date=2011-07-26;time=00:28:58.73;players=107,67,30,128;map=20;common=2388;hunters=169;smokers=32;boomers=34;tanks=34
 ID=299;date=2012-01-17;time=00:31:48.83;players=125,66,117,121;map=20;common=2685;hunters=182;smokers=22;boomers=59;tanks=37
 ID=16;date=2012-01-28;time=00:34:25.43;players=1,3,5,11;map=20;common=2946;hunters=198;smokers=30;boomers=67;tanks=44
@@ -310,6 +334,7 @@ ID=408;date=2012-04-02;time=00:20:39.43;players=66,164,137,67;map=20;common=1442
 ID=551;date=2012-04-30;time=00:28:59.40;players=107,66,1,3;map=20;common=2400;hunters=164;smokers=36;boomers=53;tanks=35
 ID=590;date=2012-05-11;time=00:17:47.17;players=298,4,1,303;map=20;common=1184;hunters=81;smokers=22;boomers=29;tanks=19
 ID=589;date=2012-05-11;time=00:22:15.80;players=298,4,1,303;map=20;common=1655;hunters=112;smokers=20;boomers=39;tanks=25
+ID=627;date=2012-05-31;time=00:24:48.50;players=197,1,204,9;map=20;common=1911;hunters=128;smokers=34;boomers=42;tanks=26
 ID=303;date=2010-12-26;time=00:46:50.80;players=125,134,135,126;map=21;common=3092;hunters=180;smokers=26;boomers=89;tanks=49
 ID=319;date=2011-07-23;time=00:50:29.87;players=133,123,107,30;map=21;common=3474;hunters=166;smokers=45;boomers=55;tanks=69
 ID=434;date=2011-09-17;time=00:30:17.57;players=110,14,158,93;map=21;common=1879;hunters=94;smokers=15;boomers=56;tanks=33
@@ -332,6 +357,7 @@ ID=487;date=2012-04-13;time=01:03:57.50;players=144,1,5,11;map=21;common=4756;hu
 ID=489;date=2012-04-14;time=01:37:19.27;players=15,1,5,11;map=21;common=7644;hunters=434;smokers=104;boomers=224;tanks=124
 ID=499;date=2012-04-15;time=01:41:58.37;players=66,195,67,30;map=21;common=7736;hunters=434;smokers=115;boomers=219;tanks=131
 ID=544;date=2012-04-27;time=01:03:09.73;players=107,66,48,30;map=21;common=4582;hunters=250;smokers=141;boomers=127;tanks=79
+ID=629;date=2012-05-29;time=00:57:03.03;players=197,1,3,204;map=21;common=4270;hunters=230;smokers=77;boomers=107;tanks=66
 ID=464;date=2011-04-28;time=00:22:08.77;players=188,189,1,190;map=1;common=469;hunters=12;smokers=16;boomers=8;tanks=13;chargers=10;jockeys=10;spitters=15
 ID=445;date=2011-06-01;time=00:07:19.20;players=56,175,176,174;map=1;common=227;hunters=9;smokers=11;boomers=4;tanks=6;chargers=11;jockeys=5;spitters=3
 ID=418;date=2011-08-05;time=00:06:56.97;players=171,2,170;map=1;common=123;hunters=6;smokers=3;boomers=3;tanks=4;chargers=3;jockeys=2;spitters=5
@@ -375,6 +401,9 @@ ID=566;date=2012-05-03;time=00:27:41.87;players=8;map=1;common=101;hunters=4;smo
 ID=580;date=2012-05-06;time=00:17:43.83;players=91,12,1,2;map=1;common=589;hunters=24;smokers=22;boomers=6;tanks=16;chargers=19;jockeys=22;spitters=19
 ID=599;date=2012-05-08;time=00:28:19.73;players=8;map=1;common=68;hunters=1;smokers=3;boomers=0;tanks=1;chargers=3;jockeys=1;spitters=1
 ID=604;date=2012-05-10;time=00:12:58.53;players=27;map=1;common=472;hunters=8;smokers=10;boomers=10;tanks=11;chargers=9;jockeys=9;spitters=17
+ID=656;date=2012-05-25;time=00:19:31.30;players=12,70,1,2;map=1;common=678;hunters=23;smokers=26;boomers=19;tanks=19;chargers=21;jockeys=25;spitters=21
+ID=660;date=2012-05-27;time=00:31:50.73;players=8;map=1;common=54;hunters=3;smokers=3;boomers=2;tanks=0;chargers=0;jockeys=4;spitters=0
+ID=662;date=2012-05-31;time=01:03:37.77;players=8,32,31,97;map=1;common=1160;hunters=32;smokers=44;boomers=22;tanks=11;chargers=29;jockeys=38;spitters=38
 ID=147;date=2012-01-01;time=00:22:11.87;players=50,1,3,38;map=24;common=1331;hunters=24;smokers=24;boomers=38;tanks=22;chargers=11;jockeys=26;spitters=18
 ID=37;date=2012-01-29;time=00:29:45.20;players=41,4,21,42;map=24;common=2585;hunters=33;smokers=36;boomers=20;tanks=65;chargers=27;jockeys=35;spitters=28
 ID=36;date=2012-02-03;time=00:30:06.57;players=26,22,29,30;map=24;common=2379;hunters=24;smokers=28;boomers=20;tanks=64;chargers=34;jockeys=30;spitters=13
@@ -386,6 +415,7 @@ ID=310;date=2012-03-29;time=00:19:46.13;players=26,22,6,35;map=24;common=1320;hu
 ID=338;date=2012-03-30;time=00:22:38.03;players=28,26,6,35;map=24;common=1854;hunters=50;smokers=51;boomers=33;tanks=39;chargers=47;jockeys=56;spitters=40
 ID=315;date=2012-04-01;time=00:21:45.97;players=8,26,22,29;map=24;common=1661;hunters=40;smokers=39;boomers=29;tanks=33;chargers=39;jockeys=43;spitters=36
 ID=372;date=2012-04-03;time=00:24:13.83;players=26,29,59,35;map=24;common=1701;hunters=49;smokers=41;boomers=28;tanks=29;chargers=48;jockeys=54;spitters=34
+ID=651;date=2012-05-29;time=00:26:20.77;players=1,3,2,11;map=24;common=2118;hunters=27;smokers=37;boomers=17;tanks=51;chargers=32;jockeys=31;spitters=19
 ID=375;date=2012-07-01;time=00:23:54.17;players=28,57,6,87;map=24;common=1870;hunters=42;smokers=26;boomers=14;tanks=45;chargers=31;jockeys=32;spitters=33
 ID=38;date=2012-11-04;time=00:24:51.53;players=15,3,38,33;map=24;common=1901;hunters=26;smokers=29;boomers=14;tanks=48;chargers=23;jockeys=39;spitters=22
 ID=33;date=2011-06-22;time=00:24:04.70;players=15,37,38,34;map=22;common=1340;hunters=24;smokers=27;boomers=13;tanks=37;chargers=16;jockeys=34;spitters=16
@@ -397,6 +427,9 @@ ID=31;date=2012-02-19;time=00:47:56.57;players=26,22,6,35;map=22;common=2956;hun
 ID=261;date=2012-03-17;time=00:22:27.87;players=26,22,6,59;map=22;common=1456;hunters=37;smokers=44;boomers=25;tanks=36;chargers=38;jockeys=28;spitters=31
 ID=234;date=2012-03-17;time=00:23:27.27;players=26,22,6,59;map=22;common=1456;hunters=37;smokers=44;boomers=25;tanks=36;chargers=38;jockeys=28;spitters=31
 ID=317;date=2012-04-02;time=00:39:22.87;players=8,22,29,35;map=22;common=2541;hunters=35;smokers=43;boomers=27;tanks=79;chargers=45;jockeys=41;spitters=24
+ID=647;date=2012-05-30;time=00:31:35.77;players=12,1,81,35;map=22;common=1824;hunters=25;smokers=30;boomers=18;tanks=55;chargers=29;jockeys=20;spitters=20
+ID=640;date=2012-06-02;time=00:15:29.27;players=70,1,5,77;map=22;common=835;hunters=16;smokers=15;boomers=12;tanks=18;chargers=14;jockeys=16;spitters=17
+ID=642;date=2012-06-02;time=00:28:19.53;players=1,5,33,35;map=22;common=1596;hunters=26;smokers=26;boomers=24;tanks=47;chargers=30;jockeys=41;spitters=16
 ID=444;date=2011-04-18;time=01:11:05.20;players=56,36,174,81;map=23;common=4340;hunters=29;smokers=37;boomers=27;tanks=174;chargers=30;jockeys=16;spitters=9
 ID=145;date=2011-10-05;time=00:46:07.43;players=3,33,2,11;map=23;common=2481;hunters=53;smokers=48;boomers=25;tanks=102;chargers=56;jockeys=54;spitters=41
 ID=146;date=2011-11-17;time=00:24:29.60;players=50,4,1,11;map=23;common=1120;hunters=37;smokers=31;boomers=8;tanks=36;chargers=27;jockeys=33;spitters=23
@@ -406,6 +439,7 @@ ID=34;date=2012-02-11;time=03:06:58.43;players=26,22,29,6;map=23;common=11068;hu
 ID=185;date=2012-03-18;time=00:23:37.17;players=91,12,2,81;map=23;common=1220;hunters=34;smokers=45;boomers=22;tanks=34;chargers=33;jockeys=35;spitters=34
 ID=209;date=2012-03-20;time=00:38:29.73;players=26,22,6,35;map=23;common=1839;hunters=57;smokers=46;boomers=32;tanks=70;chargers=46;jockeys=60;spitters=30
 ID=600;date=2012-05-07;time=00:24:53.83;players=8,307,192,32;map=23;common=1212;hunters=24;smokers=30;boomers=18;tanks=35;chargers=26;jockeys=32;spitters=17
+ID=653;date=2012-05-26;time=00:18:57.97;players=4,1,5,2;map=23;common=821;hunters=22;smokers=22;boomers=20;tanks=23;chargers=36;jockeys=32;spitters=26
 ID=46;date=2011-04-21;time=00:23:09.67;players=15,47,38,33;map=25;common=1198;hunters=28;smokers=27;boomers=21;tanks=35;chargers=23;jockeys=24;spitters=19
 ID=41;date=2011-06-17;time=00:33:16.93;players=15,38,33,34;map=25;common=2025;hunters=37;smokers=43;boomers=37;tanks=60;chargers=44;jockeys=49;spitters=37
 ID=148;date=2011-11-01;time=00:32:54.67;players=1,3,2,11;map=25;common=1995;hunters=36;smokers=43;boomers=36;tanks=61;chargers=37;jockeys=32;spitters=46
@@ -431,6 +465,8 @@ ID=26;date=2012-02-27;time=00:57:46.40;players=3,23,24,11;map=26;common=3516;hun
 ID=248;date=2012-03-23;time=01:07:29.03;players=66,6,48,35;map=26;common=4174;hunters=26;smokers=19;boomers=14;tanks=106;chargers=16;jockeys=18;spitters=2
 ID=249;date=2012-03-25;time=00:48:08.93;players=26,22,6,43;map=26;common=3099;hunters=23;smokers=29;boomers=13;tanks=110;chargers=19;jockeys=27;spitters=17
 ID=253;date=2012-03-27;time=01:06:15.33;players=8,4,6,48;map=26;common=4137;hunters=15;smokers=22;boomers=11;tanks=165;chargers=12;jockeys=20;spitters=11
+ID=641;date=2012-06-02;time=00:12:00.30;players=12,1,33,35;map=26;common=578;hunters=15;smokers=13;boomers=4;tanks=11;chargers=16;jockeys=10;spitters=6
+ID=644;date=2012-06-02;time=00:14:34.10;players=1,317,31,318;map=26;common=755;hunters=8;smokers=9;boomers=3;tanks=15;chargers=15;jockeys=10;spitters=13
 ID=44;date=2011-06-12;time=00:21:56.43;players=15,38,33,45;map=27;common=1406;hunters=33;smokers=31;boomers=19;tanks=32;chargers=22;jockeys=31;spitters=23
 ID=133;date=2011-09-15;time=00:22:35.47;players=64,52,1,2;map=27;common=1281;hunters=9;smokers=7;boomers=26;tanks=32;chargers=6;jockeys=11;spitters=17
 ID=132;date=2011-09-22;time=00:24:03.03;players=76,1,3,11;map=27;common=1338;hunters=19;smokers=18;boomers=27;tanks=45;chargers=19;jockeys=5;spitters=25
@@ -449,6 +485,8 @@ ID=47;date=2011-10-18;time=01:13:48.00;players=49,43,48,30;map=28;common=6830;hu
 ID=48;date=2011-10-30;time=01:13:14.93;players=50,4,1,2;map=28;common=6600;hunters=65;smokers=64;boomers=55;tanks=210;chargers=30;jockeys=58;spitters=46
 ID=345;date=2012-03-02;time=00:54:13.87;players=3,24,81,27;map=28;common=4628;hunters=42;smokers=59;boomers=39;tanks=141;chargers=44;jockeys=47;spitters=34
 ID=246;date=2012-03-25;time=01:41:03.57;players=6,114,48,35;map=28;common=9596;hunters=108;smokers=114;boomers=69;tanks=301;chargers=109;jockeys=113;spitters=79
+ID=654;date=2012-05-26;time=00:52:33.33;players=4,1,5,2;map=28;common=4462;hunters=79;smokers=71;boomers=46;tanks=139;chargers=64;jockeys=71;spitters=43
+ID=643;date=2012-06-02;time=00:19:54.10;players=1,317,31,318;map=28;common=1305;hunters=19;smokers=31;boomers=20;tanks=31;chargers=31;jockeys=27;spitters=19
 ID=91;date=2011-08-17;time=00:16:54.33;players=64,63,2;map=29;common=803;hunters=15;smokers=12;boomers=8;tanks=18;chargers=12;jockeys=14;spitters=12
 ID=51;date=2011-12-23;time=00:34:05.20;players=4,40,21,2;map=29;common=1895;hunters=52;smokers=45;boomers=19;tanks=65;chargers=33;jockeys=43;spitters=27
 ID=149;date=2012-01-01;time=00:31:25.17;players=1,3,2,11;map=29;common=1692;hunters=42;smokers=43;boomers=23;tanks=55;chargers=29;jockeys=20;spitters=36
@@ -458,6 +496,8 @@ ID=236;date=2012-03-18;time=00:31:14.40;players=26,22,29,59;map=29;common=1746;h
 ID=395;date=2012-04-04;time=00:27:47.37;players=8,85,26,29;map=29;common=1514;hunters=37;smokers=36;boomers=13;tanks=44;chargers=31;jockeys=39;spitters=25
 ID=610;date=2012-05-21;time=00:24:09.33;players=4,52,1,81;map=29;common=1187;hunters=32;smokers=29;boomers=15;tanks=38;chargers=18;jockeys=31;spitters=4
 ID=609;date=2012-05-21;time=00:32:23.30;players=4,52,1,81;map=29;common=1758;hunters=34;smokers=33;boomers=23;tanks=55;chargers=32;jockeys=44;spitters=30
+ID=645;date=2012-05-30;time=00:25:22.57;players=12,52,1,5;map=29;common=1298;hunters=23;smokers=26;boomers=13;tanks=37;chargers=32;jockeys=27;spitters=19
+ID=639;date=2012-06-03;time=00:08:23.73;players=70,1,2,77;map=29;common=398;hunters=7;smokers=9;boomers=6;tanks=7;chargers=8;jockeys=11;spitters=8
 ID=92;date=2011-10-17;time=00:19:04.93;players=4,1,3,2;map=30;common=1042;hunters=32;smokers=35;boomers=23;tanks=22;chargers=25;jockeys=30;spitters=29
 ID=88;date=2011-10-19;time=00:19:39.33;players=4,1,3,11;map=30;common=1153;hunters=36;smokers=24;boomers=24;tanks=25;chargers=34;jockeys=25;spitters=24
 ID=87;date=2011-10-19;time=00:21:18.93;players=4,1,3,2;map=30;common=1220;hunters=34;smokers=36;boomers=26;tanks=28;chargers=29;jockeys=36;spitters=28
@@ -474,6 +514,9 @@ ID=450;date=2012-04-09;time=00:23:29.17;players=26,29,6,59;map=30;common=1536;hu
 ID=491;date=2012-04-12;time=00:18:22.37;players=8,193,31,97;map=30;common=1092;hunters=8;smokers=6;boomers=9;tanks=25;chargers=10;jockeys=10;spitters=6
 ID=490;date=2012-04-13;time=00:14:41.07;players=8,192,32;map=30;common=892;hunters=8;smokers=13;boomers=10;tanks=16;chargers=10;jockeys=8;spitters=6
 ID=492;date=2012-04-13;time=00:26:14.40;players=26,22,29,6;map=30;common=1699;hunters=36;smokers=44;boomers=38;tanks=37;chargers=34;jockeys=40;spitters=38
+ID=649;date=2012-05-30;time=00:12:02.80;players=15,1,3,5;map=30;common=622;hunters=22;smokers=28;boomers=15;tanks=11;chargers=21;jockeys=18;spitters=18
+ID=648;date=2012-05-30;time=00:13:08.50;players=52,1,5,2;map=30;common=732;hunters=19;smokers=18;boomers=16;tanks=12;chargers=20;jockeys=16;spitters=17
+ID=646;date=2012-05-30;time=00:16:04.90;players=52,1,3,5;map=30;common=880;hunters=24;smokers=32;boomers=18;tanks=17;chargers=18;jockeys=31;spitters=21
 ID=54;date=2011-07-10;time=00:44:13.10;players=15,37,38,33;map=31;common=3050;hunters=43;smokers=47;boomers=28;tanks=71;chargers=40;jockeys=43;spitters=31
 ID=136;date=2011-10-29;time=00:56:24.13;players=26,22,29,25;map=31;common=4039;hunters=48;smokers=65;boomers=36;tanks=123;chargers=54;jockeys=45;spitters=43
 ID=150;date=2011-12-01;time=00:39:53.20;players=1,3,2,11;map=31;common=2685;hunters=43;smokers=51;boomers=21;tanks=68;chargers=39;jockeys=34;spitters=41
@@ -487,6 +530,7 @@ ID=459;date=2012-04-08;time=00:33:29.97;players=12,150,23,187;map=31;common=2200
 ID=556;date=2012-05-02;time=00:11:18.47;players=15,1,2,11;map=31;common=552;hunters=13;smokers=14;boomers=11;tanks=10;chargers=13;jockeys=13;spitters=12
 ID=578;date=2012-05-09;time=00:33:49.07;players=1,3,2,11;map=31;common=2233;hunters=40;smokers=39;boomers=23;tanks=63;chargers=34;jockeys=43;spitters=26
 ID=608;date=2012-05-23;time=00:33:41.57;players=91,12,1,2;map=31;common=1830;hunters=39;smokers=47;boomers=19;tanks=58;chargers=22;jockeys=33;spitters=28
+ID=652;date=2012-05-28;time=00:32:10.30;players=15,1,5,2;map=31;common=2063;hunters=37;smokers=41;boomers=30;tanks=59;chargers=46;jockeys=35;spitters=27
 ID=137;date=2011-01-01;time=00:51:06.93;players=46,26,29,25;map=32;common=3969;hunters=14;smokers=28;boomers=16;tanks=127;chargers=24;jockeys=21;spitters=5
 ID=59;date=2011-05-06;time=00:32:57.87;players=15,37,38,33;map=32;common=1240;hunters=12;smokers=31;boomers=20;tanks=52;chargers=18;jockeys=18;spitters=26
 ID=376;date=2011-07-16;time=00:43:03.20;players=107,26,22,25;map=32;common=3192;hunters=22;smokers=20;boomers=27;tanks=103;chargers=34;jockeys=12;spitters=40
@@ -500,6 +544,9 @@ ID=56;date=2012-02-13;time=00:42:52.50;players=3,33,2,11;map=32;common=2328;hunt
 ID=169;date=2012-02-18;time=00:28:01.94;players=26,22,6,30;map=32;common=1642;hunters=46;smokers=38;boomers=35;tanks=47;chargers=43;jockeys=64;spitters=36
 ID=85;date=2012-03-06;time=00:35:15.80;players=4,1,33,11;map=32;common=1944;hunters=56;smokers=76;boomers=42;tanks=72;chargers=51;jockeys=62;spitters=46
 ID=480;date=2012-04-12;time=00:46:50.90;players=26,6,59,35;map=32;common=3461;hunters=45;smokers=36;boomers=46;tanks=111;chargers=42;jockeys=46;spitters=22
+ID=657;date=2012-05-25;time=00:16:52.73;players=12,1,5,11;map=32;common=889;hunters=32;smokers=31;boomers=17;tanks=18;chargers=27;jockeys=33;spitters=25
+ID=622;date=2012-05-30;time=00:55:43.90;players=4,1,5,2;map=32;common=3247;hunters=87;smokers=93;boomers=73;tanks=130;chargers=77;jockeys=96;spitters=76
+ID=661;date=2012-06-03;time=00:16:52.47;players=70,1,2,77;map=32;common=982;hunters=16;smokers=12;boomers=18;tanks=22;chargers=12;jockeys=9;spitters=20
 ID=237;date=2011-05-17;time=01:35:39.50;players=107,106,105,30;map=33;common=6716;hunters=90;smokers=76;boomers=89;tanks=263;chargers=67;jockeys=67;spitters=16
 ID=61;date=2011-06-24;time=05:05:03.13;players=15,37,38,33;map=33;common=23462;hunters=221;smokers=192;boomers=246;tanks=919;chargers=184;jockeys=81;spitters=19
 ID=60;date=2011-09-11;time=05:41:49.40;players=4,40,44,21;map=33;common=24513;hunters=162;smokers=140;boomers=149;tanks=993;chargers=144;jockeys=121;spitters=54
@@ -547,6 +594,8 @@ ID=318;date=2012-04-01;time=00:39:09.00;players=26,29,6,35;map=35;common=2854;hu
 ID=451;date=2012-04-06;time=00:40:48.77;players=26,22,29,59;map=35;common=2881;hunters=73;smokers=69;boomers=44;tanks=100;chargers=72;jockeys=72;spitters=43
 ID=532;date=2012-04-20;time=00:12:35.87;players=1,5,71,11;map=35;common=690;hunters=13;smokers=27;boomers=20;tanks=14;chargers=19;jockeys=24;spitters=22
 ID=533;date=2012-04-20;time=00:18:48.10;players=1,5,71,11;map=35;common=1038;hunters=28;smokers=29;boomers=21;tanks=29;chargers=39;jockeys=35;spitters=24
+ID=659;date=2012-05-22;time=00:51:09.57;players=26,22,29,35;map=35;common=3828;hunters=94;smokers=77;boomers=56;tanks=135;chargers=95;jockeys=78;spitters=67
+ID=655;date=2012-05-25;time=00:15:05.20;players=12,70,1,2;map=35;common=837;hunters=30;smokers=24;boomers=17;tanks=20;chargers=30;jockeys=28;spitters=19
 ID=116;date=2011-05-19;time=00:16:09.07;players=37,58,38,33;map=37;common=879;hunters=16;smokers=17;boomers=13;tanks=19;chargers=20;jockeys=15;spitters=4
 ID=439;date=2011-10-19;time=00:12:48.83;players=3,168,30,25;map=37;common=673;hunters=15;smokers=14;boomers=15;tanks=11;chargers=15;jockeys=15;spitters=7
 ID=414;date=2011-10-22;time=00:13:23.30;players=1,3,21,2;map=37;common=783;hunters=15;smokers=31;boomers=25;tanks=13;chargers=30;jockeys=24;spitters=19
@@ -575,6 +624,8 @@ ID=500;date=2012-04-15;time=00:26:02.53;players=1,3,2,11;map=36;common=1352;hunt
 ID=506;date=2012-04-17;time=00:28:36.30;players=22,29,6,35;map=36;common=1530;hunters=39;smokers=41;boomers=35;tanks=17;chargers=38;jockeys=33;spitters=22
 ID=577;date=2012-05-09;time=00:27:35.00;players=91,4,23,2;map=36;common=1703;hunters=39;smokers=42;boomers=21;tanks=27;chargers=37;jockeys=33;spitters=0
 ID=601;date=2012-05-13;time=00:29:03.10;players=26,22,59,35;map=36;common=1393;hunters=32;smokers=33;boomers=29;tanks=17;chargers=32;jockeys=36;spitters=28
+ID=658;date=2012-05-25;time=00:17:47.00;players=1,3,5,2;map=36;common=1014;hunters=28;smokers=19;boomers=22;tanks=17;chargers=23;jockeys=34;spitters=20
+ID=650;date=2012-05-29;time=00:23:36.70;players=1,3,2,11;map=36;common=1225;hunters=36;smokers=25;boomers=26;tanks=19;chargers=42;jockeys=33;spitters=30
 ID=343;date=2012-03-08;time=00:16:11.97;players=27;map=48;common=708;hunters=2;smokers=10;boomers=12;tanks=16;chargers=13;jockeys=7;spitters=0
 ID=357;date=2011-11-18;time=00:12:18.53;players=27;map=57;common=630;hunters=5;smokers=4;boomers=5;tanks=8;chargers=7;jockeys=6;spitters=4
 ID=358;date=2011-11-17;time=00:13:55.77;players=27;map=58;common=894;hunters=14;smokers=9;boomers=1;tanks=12;chargers=12;jockeys=18;spitters=12

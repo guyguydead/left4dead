@@ -1,15 +1,11 @@
 ====================
-Read 302 players
+Read 314 players
 Read 62 maps
-Read 606 records
+Read 662 records
 Read 71 strategies
-     18 gamemodes
+     19 gamemodes
      20 playergroups
      4 honorlists
-     113 total groups
+     114 total groups
 ====================
-adding new players
-  Added 0 players
-adding l4d1 records
-  Added 0 records
-adding l4d2 records
+Getting cells feed

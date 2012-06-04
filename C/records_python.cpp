@@ -56,6 +56,11 @@ bool EqualRecord(const Record & r1, const Record & r2)
 	return Record::EqualPtr().operator()(&r1, &r2);
 }
 
+bool EqualPlayer(const Player & p1, const Player & p2)
+{
+	return Player::Equal().operator()(p1, p2);
+}
+
 void set_player_aliases(Player & p, bp::object & o)
 {
 	bp::extract<bp::list> l(o);
@@ -202,6 +207,8 @@ BOOST_PYTHON_MODULE(survival)
 			//static_cast<void (Player::*)(const Player::NameList &)>(&Player::aliases)
 			static_cast<void (*)(Player &, bp::object &)>(set_player_aliases)
 		)
+
+		.def("__eq__", &EqualPlayer)
 		;
 
 	{
@@ -333,6 +340,10 @@ BOOST_PYTHON_MODULE(survival)
 		.add_property("description",
 			make_function(static_cast<const string &(PlayerGroup::*)() const>(&PlayerGroup::description), return_value_policy<copy_const_reference>()),
 			static_cast<void (PlayerGroup::*)(const string &)>(&PlayerGroup::description)
+		)
+		.add_property("abbreviation",
+			make_function(static_cast<const string &(PlayerGroup::*)() const>(&PlayerGroup::abbreviation), return_value_policy<copy_const_reference>()),
+			static_cast<void (PlayerGroup::*)(const string &)>(&PlayerGroup::abbreviation)
 		)
 
 		.add_property("id",

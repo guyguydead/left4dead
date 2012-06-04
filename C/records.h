@@ -76,6 +76,7 @@ public:
 
 	class LessPtr;
 	class EqualIDPtr;
+	class Equal;
 
 	void name(const std::string & n);
 	void country(const std::string & n);
@@ -249,6 +250,20 @@ inline bool Player::EqualIDPtr::operator()(const Player * p1, const Player * p2)
 {
 	assert(p1 != NULL && p2 != NULL);
 	return p1->id() == p2->id();
+}
+
+//==================================================
+// class Player::Equal
+//==================================================
+class Player::Equal : public std::binary_function<Player, Player, bool>
+{
+public:
+	bool operator()(const Player & p1, const Player & p2) const;
+};
+
+inline bool Player::Equal::operator()(const Player & p1, const Player & p2) const
+{
+	return p1.name() == p2.name() && p1.country() == p2.country() && p1.id() == p2.id();
 }
 
 inline std::map<std::string, int> Map::create_campaign_order_map_1()
@@ -913,6 +928,7 @@ public:
 	PlayerGroup(const unsigned int & id, const std::string & abbreviation, const std::string & name, const std::string & description, const PlayerList & players, const std::string & aliases = "", const std::string & countries = "", const std::string & url = "", const ExtraInfo & ei = ExtraInfo());
 	const std::string & abbreviation() const;
 	std::string & abbreviation();
+	void abbreviation(const std::string & a);
 	const PlayerList & players() const;
 	PlayerList & players();
 	const CountryList & countries() const;
@@ -925,15 +941,9 @@ public:
 	virtual void write_out(std::ostream & o) const;
 };
 
-inline std::string & PlayerGroup::abbreviation()
-{
-	return abbreviation_;
-}
-
-inline const std::string & PlayerGroup::abbreviation() const
-{
-	return abbreviation_;
-}
+inline std::string & PlayerGroup::abbreviation() { return abbreviation_; }
+inline const std::string & PlayerGroup::abbreviation() const { return abbreviation_; }
+inline void PlayerGroup::abbreviation(const std::string & a) { abbreviation_ = a; }
 
 inline PlayerGroup::PlayerList & PlayerGroup::players()
 {
