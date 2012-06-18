@@ -2,5 +2,9 @@ survival record scripts
 
 The purpose of these scripts is to record information of left4dead survival games so that statistics can be run on them. The information is kept on four files: records.txt, players.txt, groups.txt, and maps.txt. These files should not be edited manually but can be edited through the python scripts.
 
-main script file: survival_records.py
+After some code refactoring to improve the performance, the program has been implememented half in C++ (the backend), and half in python. The code is linked together using the boost python API. Unfortunately I have not yet provided documentation on these recent changes so those who are trying to use the latest version will not find any help on the installation procedure in the documentation. The old python-only version is still in survival_records.py
+
+Future updates will incorporate an SQLite database into the system. The database code will first be created in python and then migrated into the C++ backend.
+
+main script file: C/survival_records_c.py
 documentation: doc/survival_doc.pdf
